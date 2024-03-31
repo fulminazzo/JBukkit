@@ -2,6 +2,7 @@ package it.fulminazzo.jbukkit.inventory.meta;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
 import it.fulminazzo.jbukkit.persistence.MockPersistentDataContainer;
 import lombok.Getter;
@@ -178,5 +179,11 @@ public class MockItemMeta implements ItemMeta {
     @Override
     public Map<String, Object> serialize() {
         return new HashMap<>();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof ItemMeta) return ReflectionUtils.equalsFields(this, o);
+        return super.equals(o);
     }
 }
