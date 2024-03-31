@@ -35,6 +35,10 @@ public class MockItemMeta implements ItemMeta {
     private final CustomItemTagContainer customTagContainer = new MockCustomItemTagContainer();
     private int version;
 
+    public int getCustomModelData() {
+        return this.customModelData;
+    }
+
     @Override
     public boolean hasDisplayName() {
         return this.displayName != null;
