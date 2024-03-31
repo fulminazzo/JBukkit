@@ -1,7 +1,6 @@
 package it.fulminazzo.jbukkit.inventory;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
-import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import it.fulminazzo.jbukkit.inventory.meta.MockDamageable;
 import it.fulminazzo.jbukkit.inventory.meta.MockEnchantmentStorageMeta;
 import org.bukkit.Color;
@@ -42,7 +41,7 @@ public class MockItemFactory implements ItemFactory {
     }
 
     public boolean equals(@Nullable ItemMeta meta1, @Nullable ItemMeta meta2) throws IllegalArgumentException {
-        return meta1 != null && ReflectionUtils.equalsFields(meta1, meta2);
+        return meta1 != null && meta1.equals(meta2);
     }
 
     @Nullable
