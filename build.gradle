@@ -8,6 +8,7 @@ version = '1.0'
 repositories {
     mavenCentral()
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://repo.fulminazzo.it/releases/' }
 }
 
 dependencies {
@@ -15,6 +16,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
     compileOnly 'org.jetbrains:annotations:24.1.0'
     annotationProcessor 'org.jetbrains:annotations:24.1.0'
+
+    implementation 'it.fulminazzo:FulmiCollection:1.4.2'
 
     compileOnly 'org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT'
 
