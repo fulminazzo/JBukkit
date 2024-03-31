@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 group = 'it.fulminazzo'
@@ -28,4 +29,42 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+tasks.register('sourcesJar', Jar) {
+    from sourceSets
+    archiveClassifier = 'sources'
+}
+
+tasks.register('javadocJar', Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = "${rootProject.group}"
+            artifactId = "${rootProject.name}"
+            version = "${rootProject.version}"
+
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+
+    //TODO: soon
+//    repositories {
+//        maven {
+//            url "https://repo.fulminazzo.it/releases"
+//            credentials {
+//                username = System.getenv("REPO_USERNAME")
+//                password = System.getenv("REPO_PASSWORD")
+//            }
+//            authentication {
+//                basic(BasicAuthentication)
+//            }
+//        }
+//    }
 }
