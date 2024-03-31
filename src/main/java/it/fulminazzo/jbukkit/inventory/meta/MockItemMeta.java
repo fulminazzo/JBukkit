@@ -37,7 +37,7 @@ public class MockItemMeta implements ItemMeta {
     private int version;
 
     public int getCustomModelData() {
-        return this.customModelData;
+        return this.customModelData == null ? 0 : this.customModelData;
     }
 
     public boolean hasDisplayName() {
