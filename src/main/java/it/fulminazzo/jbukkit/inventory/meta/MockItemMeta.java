@@ -40,42 +40,34 @@ public class MockItemMeta implements ItemMeta {
         return this.customModelData;
     }
 
-    @Override
     public boolean hasDisplayName() {
         return this.displayName != null;
     }
 
-    @Override
     public boolean hasLocalizedName() {
         return this.localizedName != null;
     }
 
-    @Override
     public boolean hasLore() {
         return this.localizedName != null;
     }
 
-    @Override
     public boolean hasCustomModelData() {
         return this.customModelData != null;
     }
 
-    @Override
     public boolean hasEnchants() {
         return !this.enchants.isEmpty();
     }
 
-    @Override
     public boolean hasEnchant(@NotNull Enchantment ench) {
         return this.enchants.containsKey(ench);
     }
 
-    @Override
     public int getEnchantLevel(@NotNull Enchantment ench) {
         return this.enchants.getOrDefault(ench, 0);
     }
 
-    @Override
     public boolean addEnchant(@NotNull Enchantment ench, int level, boolean ignoreLevelRestriction) {
         int max = ench.getMaxLevel();
         if (level <= max || ignoreLevelRestriction) {
@@ -85,7 +77,6 @@ public class MockItemMeta implements ItemMeta {
         return false;
     }
 
-    @Override
     public boolean removeEnchant(@NotNull Enchantment ench) {
         if (hasEnchant(ench)) {
             this.enchants.remove(ench);
@@ -94,38 +85,31 @@ public class MockItemMeta implements ItemMeta {
         return false;
     }
 
-    @Override
     public void removeEnchantments() {
         this.enchants.clear();
     }
 
-    @Override
     public boolean hasConflictingEnchant(@NotNull Enchantment ench) {
         return this.enchants.keySet().stream().anyMatch(e -> e.conflictsWith(ench));
     }
 
-    @Override
     public void addItemFlags(@NotNull ItemFlag... itemFlags) {
         this.itemFlags.addAll(Arrays.asList(itemFlags));
     }
 
-    @Override
     public void removeItemFlags(@NotNull ItemFlag... itemFlags) {
         for (ItemFlag i : itemFlags) this.itemFlags.remove(i);
     }
 
-    @Override
     public boolean hasItemFlag(@NotNull ItemFlag flag) {
         return this.itemFlags.contains(flag);
     }
 
-    @Override
     public boolean hasAttributeModifiers() {
         return this.attributeModifiers.isEmpty();
     }
 
     @NotNull
-    @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(@NotNull EquipmentSlot slot) {
         Multimap<Attribute, AttributeModifier> modifiers = ArrayListMultimap.create();
         this.attributeModifiers.asMap().forEach((k, v) -> modifiers.putAll(k, v.stream().filter(m -> m.getSlot() == slot).collect(Collectors.toList())));
@@ -133,40 +117,33 @@ public class MockItemMeta implements ItemMeta {
     }
 
     @Nullable
-    @Override
     public Collection<AttributeModifier> getAttributeModifiers(@NotNull Attribute attribute) {
         return this.attributeModifiers.asMap().get(attribute);
     }
 
-    @Override
     public boolean addAttributeModifier(@NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
         return this.attributeModifiers.put(attribute, modifier);
     }
 
-    @Override
     public boolean removeAttributeModifier(@NotNull Attribute attribute) {
         return !this.attributeModifiers.removeAll(attribute).isEmpty();
     }
 
-    @Override
     public boolean removeAttributeModifier(@NotNull EquipmentSlot slot) {
         this.attributeModifiers.asMap().forEach((a, c) -> c.removeIf(m -> m.getSlot() == slot));
         return true;
     }
 
-    @Override
     public boolean removeAttributeModifier(@NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
         return this.attributeModifiers.remove(attribute, modifier);
     }
 
     @NotNull
-    @Override
     public String getAsString() {
         return "Unimplemented";
     }
 
     @NotNull
-    @Override
     public ItemMeta clone() {
         try {
             return (ItemMeta) super.clone();
@@ -176,12 +153,10 @@ public class MockItemMeta implements ItemMeta {
     }
 
     @NotNull
-    @Override
     public Map<String, Object> serialize() {
         return new HashMap<>();
     }
 
-    @Override
     public boolean equals(Object o) {
         if (o instanceof ItemMeta) return ReflectionUtils.equalsFields(this, o);
         return super.equals(o);

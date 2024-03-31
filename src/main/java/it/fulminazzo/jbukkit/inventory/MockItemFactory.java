@@ -29,28 +29,23 @@ public class MockItemFactory implements ItemFactory {
     }
 
     @Nullable
-    @Override
     public ItemMeta getItemMeta(@NotNull Material material) {
         return new Refl<>(getMaterialClass(material), new Object[0]).getObject();
     }
 
-    @Override
     public boolean isApplicable(@Nullable ItemMeta meta, @Nullable ItemStack stack) throws IllegalArgumentException {
         return stack != null && isApplicable(meta, stack.getType());
     }
 
-    @Override
     public boolean isApplicable(@Nullable ItemMeta meta, @Nullable Material material) throws IllegalArgumentException {
         return meta != null && material != null && getMaterialClass(material).isAssignableFrom(meta.getClass());
     }
 
-    @Override
     public boolean equals(@Nullable ItemMeta meta1, @Nullable ItemMeta meta2) throws IllegalArgumentException {
         return meta1 != null && ReflectionUtils.equalsFields(meta1, meta2);
     }
 
     @Nullable
-    @Override
     public ItemMeta asMetaFor(@NotNull ItemMeta meta, @NotNull ItemStack stack) throws IllegalArgumentException {
         ItemMeta itemMeta = stack.getItemMeta();
         Refl<?> m1 = new Refl<>(meta);
@@ -66,49 +61,41 @@ public class MockItemFactory implements ItemFactory {
     }
 
     @Nullable
-    @Override
     public ItemMeta asMetaFor(@NotNull ItemMeta meta, @NotNull Material material) throws IllegalArgumentException {
         return getItemMeta(material);
     }
 
     @NotNull
-    @Override
     public Color getDefaultLeatherColor() {
         return Color.MAROON;
     }
 
     @NotNull
-    @Override
     public ItemStack createItemStack(@NotNull String input) throws IllegalArgumentException {
         return new ItemStack(Material.valueOf(input.toUpperCase()));
     }
 
     @NotNull
-    @Override
     public Material updateMaterial(@NotNull ItemMeta meta, @NotNull Material material) throws IllegalArgumentException {
         return material;
     }
 
     @Nullable
-    @Override
     public Material getSpawnEgg(@NotNull EntityType type) {
         return Material.valueOf(type.name().toUpperCase() + "_SPAWN_EGG");
     }
 
     @NotNull
-    @Override
     public ItemStack enchantItem(@NotNull Entity entity, @NotNull ItemStack item, int level, boolean allowTreasures) {
         return item;
     }
 
     @NotNull
-    @Override
     public ItemStack enchantItem(@NotNull World world, @NotNull ItemStack item, int level, boolean allowTreasures) {
         return item;
     }
 
     @NotNull
-    @Override
     public ItemStack enchantItem(@NotNull ItemStack item, int level, boolean allowTreasures) {
         return item;
     }

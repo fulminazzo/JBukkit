@@ -12,22 +12,18 @@ import java.util.Map;
 public class MockEnchantmentStorageMeta extends MockDamageable implements EnchantmentStorageMeta {
     private final Map<Enchantment, Integer> storedEnchants = new HashMap<>();
 
-    @Override
     public boolean hasStoredEnchants() {
         return !this.storedEnchants.isEmpty();
     }
 
-    @Override
     public boolean hasStoredEnchant(@NotNull Enchantment ench) {
         return this.storedEnchants.containsKey(ench);
     }
 
-    @Override
     public int getStoredEnchantLevel(@NotNull Enchantment ench) {
         return this.storedEnchants.getOrDefault(ench, 0);
     }
 
-    @Override
     public boolean addStoredEnchant(@NotNull Enchantment ench, int level, boolean ignoreLevelRestriction) {
         int max = ench.getMaxLevel();
         if (level <= max || ignoreLevelRestriction) {
@@ -37,17 +33,14 @@ public class MockEnchantmentStorageMeta extends MockDamageable implements Enchan
         return false;
     }
 
-    @Override
     public boolean removeStoredEnchant(@NotNull Enchantment ench) throws IllegalArgumentException {
         return this.storedEnchants.remove(ench) != null;
     }
 
-    @Override
     public boolean hasConflictingStoredEnchant(@NotNull Enchantment ench) {
         return this.storedEnchants.keySet().stream().anyMatch(e -> e.conflictsWith(ench));
     }
 
-    @Override
     public @NotNull MockEnchantmentStorageMeta clone() {
         return (MockEnchantmentStorageMeta) super.clone();
     }
