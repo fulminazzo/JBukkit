@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 public class MockItemMeta extends Equable implements ItemMeta {
-    private String displayName;
+    private String displayName = "";
     private String localizedName;
-    private List<String> lore;
+    private List<String> lore = new LinkedList<>();
     private Integer customModelData;
     private final Map<Enchantment, Integer> enchants = new HashMap<>();
     private final Set<ItemFlag> itemFlags = new HashSet<>();
