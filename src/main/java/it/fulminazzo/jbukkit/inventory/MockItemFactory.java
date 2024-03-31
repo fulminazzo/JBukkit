@@ -48,6 +48,17 @@ public class MockItemFactory implements ItemFactory {
     @Nullable
     public ItemMeta asMetaFor(@NotNull ItemMeta meta, @NotNull ItemStack stack) throws IllegalArgumentException {
         ItemMeta itemMeta = stack.getItemMeta();
+        return copyMeta(meta, itemMeta);
+    }
+
+    @Nullable
+    public ItemMeta asMetaFor(@NotNull ItemMeta meta, @NotNull Material material) throws IllegalArgumentException {
+        ItemMeta itemMeta = getItemMeta(material);
+        return copyMeta(meta, itemMeta);
+    }
+
+    @Nullable
+    private ItemMeta copyMeta(@NotNull ItemMeta meta, ItemMeta itemMeta) {
         Refl<?> m1 = new Refl<>(meta);
         Refl<?> m2 = new Refl<>(itemMeta);
         for (Field field : m1.getNonStaticFields())
@@ -58,11 +69,6 @@ public class MockItemFactory implements ItemFactory {
 
             }
         return itemMeta;
-    }
-
-    @Nullable
-    public ItemMeta asMetaFor(@NotNull ItemMeta meta, @NotNull Material material) throws IllegalArgumentException {
-        return getItemMeta(material);
     }
 
     @NotNull
