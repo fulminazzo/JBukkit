@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.enchantments;
 
+import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.NamespacedKey;
@@ -38,5 +39,10 @@ public class MockEnchantment extends Enchantment {
 
     public boolean canEnchantItem(@NotNull ItemStack itemStack) {
         return this.itemTarget != null && this.itemTarget.includes(itemStack);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return Equable.equals(this, obj) || super.equals(obj);
     }
 }

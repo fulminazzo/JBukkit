@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.inventory.meta.tags;
 
+import it.fulminazzo.jbukkit.Equable;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 import org.bukkit.inventory.meta.tags.ItemTagAdapterContext;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("deprecation")
-public class MockCustomItemTagContainer implements CustomItemTagContainer {
+public class MockCustomItemTagContainer extends Equable implements CustomItemTagContainer {
     private final Map<NamespacedKey, DataContainer<?, ?>> data = new HashMap<>();
 
     public <P, C> void setCustomTag(@NotNull NamespacedKey key, @NotNull ItemTagType<P, C> type, @NotNull C value) {

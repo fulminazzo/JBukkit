@@ -2,8 +2,7 @@ package it.fulminazzo.jbukkit.inventory.meta;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import it.fulminazzo.fulmicollection.objects.Printable;
-import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
+import it.fulminazzo.jbukkit.Equable;
 import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
 import it.fulminazzo.jbukkit.persistence.MockPersistentDataContainer;
 import lombok.Getter;
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class MockItemMeta extends Printable implements ItemMeta {
+public class MockItemMeta extends Equable implements ItemMeta {
     private String displayName;
     private String localizedName;
     private List<String> lore;
@@ -156,10 +155,5 @@ public class MockItemMeta extends Printable implements ItemMeta {
     @NotNull
     public Map<String, Object> serialize() {
         return new HashMap<>();
-    }
-
-    public boolean equals(Object o) {
-        if (o instanceof ItemMeta) return ReflectionUtils.equalsFields(this, o);
-        return super.equals(o);
     }
 }
