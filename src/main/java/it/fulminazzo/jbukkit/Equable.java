@@ -11,6 +11,8 @@ public class Equable extends Printable {
     }
 
     public static boolean equals(Object o1, Object o2) {
-        return ReflectionUtils.equalsClass(o1, o2) && ReflectionUtils.equalsFields(o1, o2);
+        if (o1 == null && o2 == null) return true;
+        if (o1 == null || o2 == null) return false;
+        return o1.getClass().equals(o2.getClass()) && ReflectionUtils.equalsFields(o1, o2);
     }
 }
