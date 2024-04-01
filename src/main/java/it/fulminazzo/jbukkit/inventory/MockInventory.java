@@ -207,6 +207,8 @@ public class MockInventory implements Inventory {
 
     @NotNull
     public InventoryType getType() {
+        for (InventoryType t : InventoryType.values())
+            if (t.getDefaultSize() == getSize()) return t;
         return InventoryType.CHEST;
     }
 
