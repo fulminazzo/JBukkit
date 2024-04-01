@@ -24,6 +24,15 @@ public class MockInventoryView extends InventoryView {
     }
 
     public MockInventoryView(PlayerInventory bottomInventory, String originalTitle) {
+        this(bottomInventory, null, originalTitle);
+    }
+
+    public MockInventoryView(PlayerInventory bottomInventory, Inventory topInventory) {
+        this(bottomInventory, topInventory, "");
+    }
+
+    public MockInventoryView(PlayerInventory bottomInventory, Inventory topInventory, String originalTitle) {
+        this.topInventory = topInventory;
         this.bottomInventory = bottomInventory;
         this.title = originalTitle;
         this.originalTitle = originalTitle;
