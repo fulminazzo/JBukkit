@@ -28,12 +28,11 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         put(EquipmentSlot.CHEST, HOT_BAR_SIZE + STORAGE_SIZE + 2);
         put(EquipmentSlot.HEAD, HOT_BAR_SIZE + STORAGE_SIZE + 3);
     }};
-    private final Player holder;
+    private Player holder;
     private int heldItemSlot;
 
-    public MockPlayerInventory(Player holder) {
+    public MockPlayerInventory() {
         super(MAX_PLAYER_SIZE);
-        this.holder = holder;
     }
 
     @NotNull
