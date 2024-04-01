@@ -32,7 +32,12 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
     private int heldItemSlot;
 
     public MockPlayerInventory() {
+        this(null);
+    }
+
+    public MockPlayerInventory(Player player) {
         super(MAX_PLAYER_SIZE);
+        setHolder(player);
     }
 
     @NotNull
