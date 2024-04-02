@@ -29,17 +29,6 @@ public class BukkitUtils {
     }
 
     public static void setupEnchantments() {
-        List<Enchantment> enchantments = new ArrayList<>();
-        for (Field field : Enchantment.class.getDeclaredFields())
-            if (field.getType().equals(Enchantment.class))
-                try {
-                    Enchantment enchant = (Enchantment) field.get(Enchantment.class);
-                    enchantments.add(new MockEnchantment(enchant.getKey()));
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-        // Register enchantments
-        Map<NamespacedKey, Enchantment> byKey = new Refl<>(Enchantment.class).getFieldObject("byKey");
-        if (byKey != null) enchantments.forEach(e -> byKey.put(e.getKey(), e));
+        MockEnchantment.setupEnchantments();
     }
 }
