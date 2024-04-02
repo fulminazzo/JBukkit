@@ -12,6 +12,25 @@ allprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'io.freefair.lombok'
 
+    group = "${rootProject.group}"
+    version = "${rootProject.version}"
+
+    this.ext.getParentFromProject = { project ->
+        return new HashMap<>(project.getProperties()).get("parent")
+    }
+
+    this.ext.getProjectGroupId = {
+        String groupId = ""
+        Project tmp = parent
+        while (tmp != null) {
+            groupId = "${tmp.name}.${groupId}"
+            tmp = getParentFromProject(tmp)
+        }
+        if (groupId.size() > 0)
+            groupId = "." + groupId.substring(0, groupId.length() - 1)
+        return "${rootProject.group}${groupId}"
+    }
+
     repositories {
         mavenCentral()
         maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
@@ -58,8 +77,8 @@ allprojects {
     publishing {
         publications {
             maven(MavenPublication) {
-                groupId = "${rootProject.group}"
-                artifactId = "${rootProject.name}"
+                groupId = getProjectGroupId()
+                artifactId = "${project.name}"
                 version = "${rootProject.version}"
 
                 from components.java
