@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.inventory;
 
+import it.fulminazzo.jbukkit.utils.MaterialUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -20,6 +21,7 @@ public class MockInventory implements Inventory {
     protected final ItemStack[] contents;
     private final List<HumanEntity> viewers = new LinkedList<>();
     private int maxStackSize = 64;
+    private String title;
 
     public MockInventory(int size) {
         this.contents = new ItemStack[size];
@@ -27,6 +29,10 @@ public class MockInventory implements Inventory {
 
     public int getSize() {
         return this.contents.length;
+    }
+
+    public String getName() {
+        return getType().name();
     }
 
     @Nullable
@@ -95,12 +101,20 @@ public class MockInventory implements Inventory {
         setContents(items);
     }
 
+    public boolean contains(int materialId) {
+        return contains(MaterialUtils.getMaterial(materialId));
+    }
+
     public boolean contains(@NotNull Material material) throws IllegalArgumentException {
         return Arrays.stream(this.contents).anyMatch(i -> i != null && i.getType().equals(material));
     }
 
     public boolean contains(@Nullable ItemStack item) {
         return Arrays.stream(this.contents).anyMatch(i -> i != null && i.equals(item));
+    }
+
+    public boolean contains(int materialId, int amount) {
+        return contains(MaterialUtils.getMaterial(materialId), amount);
     }
 
     public boolean contains(@NotNull Material material, int amount) throws IllegalArgumentException {
@@ -130,6 +144,10 @@ public class MockInventory implements Inventory {
         return false;
     }
 
+    public HashMap<Integer, ? extends ItemStack> all(int materialId) {
+        return all(MaterialUtils.getMaterial(materialId));
+    }
+
     @NotNull
     public HashMap<Integer, ? extends ItemStack> all(@NotNull Material material) throws IllegalArgumentException {
         HashMap<Integer, ItemStack> map = new HashMap<>();
@@ -148,6 +166,10 @@ public class MockInventory implements Inventory {
             if (itemStack != null && itemStack.equals(item)) map.put(i, itemStack);
         }
         return map;
+    }
+
+    public int first(int materialId) {
+        return first(MaterialUtils.getMaterial(materialId));
     }
 
     public int first(@NotNull Material material) throws IllegalArgumentException {
@@ -177,6 +199,10 @@ public class MockInventory implements Inventory {
             if (itemStack != null && itemStack.getType() != Material.AIR) return false;
         }
         return true;
+    }
+
+    public void remove(int materialId) {
+        remove(MaterialUtils.getMaterial(materialId));
     }
 
     public void remove(@NotNull Material material) throws IllegalArgumentException {
