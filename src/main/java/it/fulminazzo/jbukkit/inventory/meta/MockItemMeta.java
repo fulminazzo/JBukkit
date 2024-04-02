@@ -23,87 +23,10 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class MockItemMeta extends Equable implements ItemMeta {
-    private String displayName = "";
-    private String localizedName;
-    private List<String> lore = new LinkedList<>();
-    private Integer customModelData;
-    private final Map<Enchantment, Integer> enchants = new HashMap<>();
-    private final Set<ItemFlag> itemFlags = new HashSet<>();
+public class MockItemMeta extends AbstractMockItemMeta implements ItemMeta {
     private Multimap<Attribute, AttributeModifier> attributeModifiers = ArrayListMultimap.create();
-    private boolean unbreakable;
     private final PersistentDataContainer persistentDataContainer = new MockPersistentDataContainer();
     private final CustomItemTagContainer customTagContainer = new MockCustomItemTagContainer();
-    private int version;
-
-    public int getCustomModelData() {
-        return this.customModelData == null ? 0 : this.customModelData;
-    }
-
-    public boolean hasDisplayName() {
-        return this.displayName != null;
-    }
-
-    public boolean hasLocalizedName() {
-        return this.localizedName != null;
-    }
-
-    public boolean hasLore() {
-        return this.localizedName != null;
-    }
-
-    public boolean hasCustomModelData() {
-        return this.customModelData != null;
-    }
-
-    public boolean hasEnchants() {
-        return !this.enchants.isEmpty();
-    }
-
-    public boolean hasEnchant(@NotNull Enchantment ench) {
-        return this.enchants.containsKey(ench);
-    }
-
-    public int getEnchantLevel(@NotNull Enchantment ench) {
-        return this.enchants.getOrDefault(ench, 0);
-    }
-
-    public boolean addEnchant(@NotNull Enchantment ench, int level, boolean ignoreLevelRestriction) {
-        int max = ench.getMaxLevel();
-        if (level <= max || ignoreLevelRestriction) {
-            this.enchants.put(ench, level);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean removeEnchant(@NotNull Enchantment ench) {
-        if (hasEnchant(ench)) {
-            this.enchants.remove(ench);
-            return true;
-        }
-        return false;
-    }
-
-    public void removeEnchantments() {
-        this.enchants.clear();
-    }
-
-    public boolean hasConflictingEnchant(@NotNull Enchantment ench) {
-        return this.enchants.keySet().stream().anyMatch(e -> e.conflictsWith(ench));
-    }
-
-    public void addItemFlags(@NotNull ItemFlag... itemFlags) {
-        this.itemFlags.addAll(Arrays.asList(itemFlags));
-    }
-
-    public void removeItemFlags(@NotNull ItemFlag... itemFlags) {
-        for (ItemFlag i : itemFlags) this.itemFlags.remove(i);
-    }
-
-    public boolean hasItemFlag(@NotNull ItemFlag flag) {
-        return this.itemFlags.contains(flag);
-    }
 
     public boolean hasAttributeModifiers() {
         return this.attributeModifiers.isEmpty();
@@ -136,24 +59,5 @@ public class MockItemMeta extends Equable implements ItemMeta {
 
     public boolean removeAttributeModifier(@NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
         return this.attributeModifiers.remove(attribute, modifier);
-    }
-
-    @NotNull
-    public String getAsString() {
-        return "Unimplemented";
-    }
-
-    @NotNull
-    public ItemMeta clone() {
-        try {
-            return (ItemMeta) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @NotNull
-    public Map<String, Object> serialize() {
-        return new HashMap<>();
     }
 }
