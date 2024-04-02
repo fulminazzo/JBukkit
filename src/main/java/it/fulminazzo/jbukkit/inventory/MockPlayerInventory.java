@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.inventory;
 
+import it.fulminazzo.jbukkit.utils.MaterialUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
@@ -137,7 +138,20 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
     public void setItemInHand(@Nullable ItemStack stack) {
         setItemInMainHand(stack);
     }
-    
+
+    public int clear(int id, int data) {
+        Material material = MaterialUtils.getMaterial(id);
+        int cleared = 0;
+        for (int i = 0; i < getSize(); i++) {
+            ItemStack itemStack = getItem(i);
+            if (itemStack != null && itemStack.getType().equals(material)) {
+                setItem(i, null);
+                cleared++;
+            }
+        }
+        return cleared;
+    }
+
     private int convertSlot(EquipmentSlot slot) {
         if (slot == EquipmentSlot.HAND) return this.heldItemSlot;
         else return SLOT_CONVERTER.get(slot);
