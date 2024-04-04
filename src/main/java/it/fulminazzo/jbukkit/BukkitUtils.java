@@ -10,7 +10,6 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.inventory.Recipe;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.lang.reflect.AnnotatedElement;
@@ -30,7 +29,7 @@ public class BukkitUtils {
     private static final List<Recipe> RECIPES = new LinkedList<>();
     private static final String VERSION_FORMAT = "1\\.(\\d+)\\.(\\d+)-R\\d+\\.\\d+-SNAPSHOT";
     private static final String DEFAULT_VERSION = "1.20.4-R0.1-SNAPSHOT";
-    static final String VERSION_NAME = "minecraft-version";
+    static final String VERSION_NAME = "MINECRAFT_VERSION";
     @Getter
     static double numericalVersion;
 
