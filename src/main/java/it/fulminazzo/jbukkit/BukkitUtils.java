@@ -1,6 +1,7 @@
 package it.fulminazzo.jbukkit;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
+import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import it.fulminazzo.jbukkit.annotations.After1_;
 import it.fulminazzo.jbukkit.annotations.Before1_;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
@@ -78,7 +79,7 @@ public class BukkitUtils {
         // The third is the actual method of interest.
         StackTraceElement actualTrace = trace[2];
 
-        final Class<? extends StackTraceElement> clazz = actualTrace.getClass();
+        final Class<?> clazz = ReflectionUtils.getClass(actualTrace.getClassName());
         check(clazz);
 
         final String methodName = actualTrace.getMethodName();
