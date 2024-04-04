@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class BukkitUtils {
     private static final Logger LOGGER = Logger.getLogger("Bukkit");
     private static final List<Recipe> RECIPES = new LinkedList<>();
-    private static final String VERSION_FORMAT = "1\\.(\\d+)\\.(\\d+)-R\\d+\\.\\d+-SNAPSHOT";
+    private static final String VERSION_FORMAT = "1\\.(\\d+)(?:\\.(\\d+))?-R\\d+\\.\\d+-SNAPSHOT";
     private static final String DEFAULT_VERSION = "1.20.4-R0.1-SNAPSHOT";
     static final String VERSION_NAME = "MINECRAFT_VERSION";
     @Getter
@@ -48,7 +48,9 @@ public class BukkitUtils {
         Matcher matcher = Pattern.compile(VERSION_FORMAT).matcher(version);
         if (!matcher.matches())
             throw new IllegalArgumentException(String.format("Version '%s' did not match format '%s'", version, VERSION_FORMAT));
-        numericalVersion = Double.parseDouble(matcher.group(1) + "." + matcher.group(2));
+        String patch = matcher.group(2);
+        if (patch == null) patch = "0";
+        numericalVersion = Double.parseDouble(matcher.group(1) + "." + patch);
         LOGGER.info(String.format("Using version '1.%s'", numericalVersion));
     }
 

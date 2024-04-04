@@ -2,23 +2,20 @@ package it.fulminazzo.jbukkit.inventory.meta;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import it.fulminazzo.jbukkit.Equable;
 import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
 import it.fulminazzo.jbukkit.persistence.MockPersistentDataContainer;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Getter
