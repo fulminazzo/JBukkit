@@ -1,6 +1,8 @@
 package it.fulminazzo.jbukkit;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
+import it.fulminazzo.jbukkit.annotations.After1_;
+import it.fulminazzo.jbukkit.annotations.Before1_;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
 import it.fulminazzo.jbukkit.inventory.MockItemFactory;
 import lombok.Getter;
@@ -8,13 +10,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.inventory.Recipe;
 
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class BukkitUtils {
     private static final List<Recipe> RECIPES = new LinkedList<>();
@@ -59,5 +65,36 @@ public class BukkitUtils {
 
     public static void setupEnchantments() {
         MockEnchantment.setupEnchantments();
+    }
+
+    /**
+     * Allows to check the current method or class.
+     * If they are annotated with {@link After1_} or with {@link Before1_},
+     * and {@link #numericalVersion} does not match, then it is skipped.
+     */
+    public static void check() {
+        StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+        // The first should be getStackTrace, the second this method.
+        // The third is the actual method of interest.
+        StackTraceElement actualTrace = trace[2];
+
+        final Class<? extends StackTraceElement> clazz = actualTrace.getClass();
+        check(clazz);
+
+        final String methodName = actualTrace.getMethodName();
+        Method[] methods = clazz.getDeclaredMethods();
+        for (Method method : methods)
+            if (method.getName().equals(methodName)) check(method);
+    }
+
+    private static void check(AnnotatedElement element) {
+        if (element.isAnnotationPresent(Before1_.class)) {
+            double value = element.getAnnotation(Before1_.class).value();
+            assumeTrue(numericalVersion > value, String.format("Skipping checks before of version higher than 1.%s", value));
+        }
+        if (element.isAnnotationPresent(After1_.class)) {
+            double value = element.getAnnotation(After1_.class).value();
+            assumeTrue(numericalVersion < value, String.format("Skipping checks before of version lower than 1.%s", value));
+        }
     }
 }
