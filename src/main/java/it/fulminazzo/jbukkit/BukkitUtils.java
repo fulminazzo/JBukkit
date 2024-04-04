@@ -24,10 +24,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class BukkitUtils {
+    private static final Logger LOGGER = Logger.getLogger("Bukkit");
     private static final List<Recipe> RECIPES = new LinkedList<>();
     private static final String VERSION_FORMAT = "1\\.(\\d+)\\.(\\d+)-R\\d+\\.\\d+-SNAPSHOT";
-    static final String VERSION_NAME = "minecraft-version";
     private static final String DEFAULT_VERSION = "1.20.4-R0.1-SNAPSHOT";
+    static final String VERSION_NAME = "minecraft-version";
     @Getter
     static double numericalVersion;
 
@@ -57,6 +58,7 @@ public class BukkitUtils {
                 }
                 return null;
             });
+        when(server.getLogger()).thenReturn(LOGGER);
         when(server.getBukkitVersion()).thenReturn(String.format("1.%s-R0.1-SNAPSHOT", numericalVersion));
         when(server.addRecipe(any())).thenAnswer(r -> RECIPES.add(r.getArgument(0)));
         when(server.recipeIterator()).thenAnswer(r -> RECIPES.iterator());
