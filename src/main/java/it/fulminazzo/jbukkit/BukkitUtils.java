@@ -35,14 +35,14 @@ public class BukkitUtils {
     public static void setupVersion() {
         String version = System.getenv(VERSION_NAME);
         if (version == null) {
-            Logger.getGlobal().warning(String.format("Could not find set version '%s'. Defaulting to value '%s'", VERSION_NAME, DEFAULT_VERSION));
+            LOGGER.warning(String.format("Could not find set version '%s'. Defaulting to value '%s'", VERSION_NAME, DEFAULT_VERSION));
             version = DEFAULT_VERSION;
         }
         Matcher matcher = Pattern.compile(VERSION_FORMAT).matcher(version);
         if (!matcher.matches())
             throw new IllegalArgumentException(String.format("Version '%s' did not match format '%s'", version, VERSION_FORMAT));
         numericalVersion = Double.parseDouble(matcher.group(1) + "." + matcher.group(2));
-        Logger.getGlobal().info(String.format("Using version '%s'", numericalVersion));
+        LOGGER.info(String.format("Using version '%s'", numericalVersion));
     }
 
     public static void setupServer() {
@@ -93,11 +93,15 @@ public class BukkitUtils {
     private static void check(AnnotatedElement element) {
         if (element.isAnnotationPresent(Before1_.class)) {
             double value = element.getAnnotation(Before1_.class).value();
-            assumeTrue(numericalVersion < value, String.format("Skipping checks before of version higher than 1.%s", value));
+            final String message = String.format("Skipping checks before of version higher than 1.%s", value);
+            LOGGER.info(message);
+            assumeTrue(numericalVersion < value, message);
         }
         if (element.isAnnotationPresent(After1_.class)) {
             double value = element.getAnnotation(After1_.class).value();
-            assumeTrue(numericalVersion > value, String.format("Skipping checks before of version lower than 1.%s", value));
+            final String message = String.format("Skipping checks before of version lower than 1.%s", value);
+            LOGGER.info(message);
+            assumeTrue(numericalVersion > value, message);
         }
     }
 }
