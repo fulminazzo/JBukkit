@@ -107,13 +107,13 @@ public class BukkitUtils {
             double value = element.getAnnotation(Before1_.class).value();
             final String message = String.format("Skipping checks because of version higher than 1.%s", value);
             LOGGER.info(message);
-            assumeTrue(numericalVersion < value, message);
+            assumeTrue(numericalVersion <= value, message);
         }
         if (element.isAnnotationPresent(After1_.class)) {
             double value = element.getAnnotation(After1_.class).value();
             final String message = String.format("Skipping checks because of version lower than 1.%s", value);
             LOGGER.info(message);
-            assumeTrue(numericalVersion > value, message);
+            assumeTrue(numericalVersion >= value, message);
         }
     }
 }
