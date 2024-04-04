@@ -19,10 +19,10 @@ import static org.mockito.Mockito.*;
 public class BukkitUtils {
     private static final List<Recipe> RECIPES = new LinkedList<>();
     private static final String VERSION_FORMAT = "1\\.(\\d+)\\.(\\d+)-R\\d+\\.\\d+-SNAPSHOT";
-    private static final String VERSION_NAME = "minecraft-version";
+    static final String VERSION_NAME = "minecraft-version";
     private static final String DEFAULT_VERSION = "1.20.4-R0.1-SNAPSHOT";
     @Getter
-    private static double numericalVersion;
+    static double numericalVersion;
 
     public static void setupVersion() {
         String version = System.getenv(VERSION_NAME);
