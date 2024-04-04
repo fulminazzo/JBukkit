@@ -36,6 +36,7 @@ public class BukkitUtils {
 
     @BeforeEach
     protected void setUp() {
+        setupVersion();
         check();
     }
 
