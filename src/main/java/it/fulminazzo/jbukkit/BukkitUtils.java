@@ -49,7 +49,7 @@ public class BukkitUtils {
         if (!matcher.matches())
             throw new IllegalArgumentException(String.format("Version '%s' did not match format '%s'", version, VERSION_FORMAT));
         numericalVersion = Double.parseDouble(matcher.group(1) + "." + matcher.group(2));
-        LOGGER.info(String.format("Using version '%s'", numericalVersion));
+        LOGGER.info(String.format("Using version '1.%s'", numericalVersion));
     }
 
     public static void setupServer() {
