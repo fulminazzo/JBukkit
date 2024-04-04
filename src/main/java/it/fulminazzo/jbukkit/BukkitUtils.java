@@ -10,6 +10,8 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.inventory.Recipe;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
@@ -31,6 +33,11 @@ public class BukkitUtils {
     static final String VERSION_NAME = "minecraft-version";
     @Getter
     static double numericalVersion;
+
+    @BeforeEach
+    protected void setUp() {
+        check();
+    }
 
     public static void setupVersion() {
         String version = System.getenv(VERSION_NAME);
