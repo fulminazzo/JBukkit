@@ -88,6 +88,9 @@ public class BukkitUtils {
         // The first should be getStackTrace, the second this method.
         // The third is the actual method of interest.
         StackTraceElement actualTrace = trace[2];
+        // If BukkitUtils is being extended by another class
+        if (actualTrace.getClassName().equals(BukkitUtils.class.getCanonicalName()))
+            actualTrace = trace[3];
 
         final Class<?> clazz = ReflectionUtils.getClass(actualTrace.getClassName());
         check(clazz);
