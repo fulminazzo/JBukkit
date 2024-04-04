@@ -90,11 +90,11 @@ public class BukkitUtils {
     private static void check(AnnotatedElement element) {
         if (element.isAnnotationPresent(Before1_.class)) {
             double value = element.getAnnotation(Before1_.class).value();
-            assumeTrue(numericalVersion > value, String.format("Skipping checks before of version higher than 1.%s", value));
+            assumeTrue(numericalVersion < value, String.format("Skipping checks before of version higher than 1.%s", value));
         }
         if (element.isAnnotationPresent(After1_.class)) {
             double value = element.getAnnotation(After1_.class).value();
-            assumeTrue(numericalVersion < value, String.format("Skipping checks before of version lower than 1.%s", value));
+            assumeTrue(numericalVersion > value, String.format("Skipping checks before of version lower than 1.%s", value));
         }
     }
 }
