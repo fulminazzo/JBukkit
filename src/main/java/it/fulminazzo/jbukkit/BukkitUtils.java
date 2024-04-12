@@ -9,9 +9,13 @@ import it.fulminazzo.jbukkit.inventory.MockInventory;
 import it.fulminazzo.jbukkit.inventory.MockItemFactory;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Recipe;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.lang.reflect.AnnotatedElement;
@@ -28,6 +32,8 @@ import static org.mockito.Mockito.when;
 
 public class BukkitUtils {
     private static final Logger LOGGER = Logger.getLogger("Bukkit");
+    private static final List<Player> PLAYERS = new LinkedList<>();
+    private static final List<OfflinePlayer> OFFLINE_PLAYERS = new LinkedList<>();
     private static final List<Recipe> RECIPES = new LinkedList<>();
     private static final String VERSION_FORMAT = "1\\.(\\d+)(?:\\.(\\d+))?-R\\d+\\.\\d+-SNAPSHOT";
     private static final String DEFAULT_VERSION = "1.20.4-R0.1-SNAPSHOT";
@@ -99,6 +105,13 @@ public class BukkitUtils {
             inventory.setHolder(a.getArgument(0));
             return inventory;
         });
+        // Players
+        when(server.getPlayer(any(UUID.class))).thenAnswer(a -> getPlayer((UUID) a.getArgument(0)));
+        when(server.getPlayer(any(String.class))).thenAnswer(a -> getPlayer((String) a.getArgument(0)));
+        when(server.getOnlinePlayers()).thenAnswer(a -> PLAYERS);
+        when(server.getOfflinePlayer(any(UUID.class))).thenAnswer(a -> getOfflinePlayer((UUID) a.getArgument(0)));
+        when(server.getOfflinePlayer(any(String.class))).thenAnswer(a -> getOfflinePlayer((String) a.getArgument(0)));
+        when(server.getOfflinePlayers()).thenAnswer(a -> OFFLINE_PLAYERS.toArray(new OfflinePlayer[0]));
         new Refl<>(Bukkit.class).setFieldObject("server", server);
     }
 
@@ -127,6 +140,68 @@ public class BukkitUtils {
         Method[] methods = clazz.getDeclaredMethods();
         for (Method method : methods)
             if (method.getName().equals(methodName)) check(method);
+    }
+
+    public static @Nullable Player getPlayer(final @NotNull UUID uuid) {
+        return PLAYERS.stream().filter(p -> p.getUniqueId().equals(uuid)).findAny().orElse(null);
+    }
+
+    public static @Nullable Player getPlayer(final @NotNull String name) {
+        return PLAYERS.stream().filter(p -> p.getName().equals(name)).findAny().orElse(null);
+    }
+
+    public static @NotNull Player addPlayer(final @NotNull UUID uuid, final @NotNull String name) {
+        Player player = mock(Player.class);
+        when(player.getUniqueId()).thenReturn(uuid);
+        when(player.getName()).thenReturn(name);
+        return player;
+    }
+
+    public static @Nullable Player removePlayer(final @NotNull Player player) {
+        return removePlayer(player.getUniqueId());
+    }
+
+    public static @Nullable Player removePlayer(final @NotNull String uuid) {
+        Player player = getPlayer(uuid);
+        if (player != null) PLAYERS.remove(player);
+        return player;
+    }
+
+    public static @Nullable Player removePlayer(final @NotNull UUID uuid) {
+        Player player = getPlayer(uuid);
+        if (player != null) PLAYERS.remove(player);
+        return player;
+    }
+
+    public static @Nullable OfflinePlayer getOfflinePlayer(final @NotNull UUID uuid) {
+        return OFFLINE_PLAYERS.stream().filter(p -> p.getUniqueId().equals(uuid)).findAny().orElse(null);
+    }
+
+    public static @Nullable OfflinePlayer getOfflinePlayer(final @NotNull String name) {
+        return OFFLINE_PLAYERS.stream().filter(p -> p.getName().equals(name)).findAny().orElse(null);
+    }
+
+    public static @NotNull OfflinePlayer addOfflinePlayer(final @NotNull UUID uuid, final @NotNull String name) {
+        OfflinePlayer offlinePlayer = mock(OfflinePlayer.class);
+        when(offlinePlayer.getUniqueId()).thenReturn(uuid);
+        when(offlinePlayer.getName()).thenReturn(name);
+        return offlinePlayer;
+    }
+
+    public static @Nullable OfflinePlayer removeOfflinePlayer(final @NotNull OfflinePlayer offlinePlayer) {
+        return removeOfflinePlayer(offlinePlayer.getUniqueId());
+    }
+
+    public static @Nullable OfflinePlayer removeOfflinePlayer(final @NotNull String uuid) {
+        OfflinePlayer offlinePlayer = getOfflinePlayer(uuid);
+        if (offlinePlayer != null) OFFLINE_PLAYERS.remove(offlinePlayer);
+        return offlinePlayer;
+    }
+
+    public static @Nullable OfflinePlayer removeOfflinePlayer(final @NotNull UUID uuid) {
+        OfflinePlayer offlinePlayer = getOfflinePlayer(uuid);
+        if (offlinePlayer != null) OFFLINE_PLAYERS.remove(offlinePlayer);
+        return offlinePlayer;
     }
 
     private static void check(AnnotatedElement element) {
