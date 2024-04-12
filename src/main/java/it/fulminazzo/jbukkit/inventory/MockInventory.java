@@ -21,6 +21,7 @@ public class MockInventory implements Inventory {
     protected final ItemStack[] contents;
     private final List<HumanEntity> viewers = new LinkedList<>();
     private int maxStackSize = 64;
+    private InventoryHolder holder;
     private String title;
 
     public MockInventory(int size) {
@@ -236,11 +237,6 @@ public class MockInventory implements Inventory {
         for (InventoryType t : InventoryType.values())
             if (t.getDefaultSize() == getSize()) return t;
         return InventoryType.CHEST;
-    }
-
-    @Nullable
-    public InventoryHolder getHolder() {
-        return null;
     }
 
     @NotNull
