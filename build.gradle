@@ -31,6 +31,15 @@ allprojects {
         return "${rootProject.group}${groupId}"
     }
 
+    this.ext.getSpigotVersion = {
+        if (project.name != "common") {
+            if (project.name == "legacy")
+                return 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+            else
+                return 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT'
+        } else return 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+    }
+
     repositories {
         mavenCentral()
         maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
@@ -48,13 +57,10 @@ allprojects {
         api 'it.fulminazzo:FulmiCollection:1.4.2'
         implementation 'org.mockito:mockito-core:4.11.0'
 
-        if (!project.name.equals("common")) {
-            api project(":common")
-            if (project.name.equals("legacy"))
-                compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
-            else
-                compileOnly 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT'
-        } else compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+        if (!project.name.equals("common")) api project(":common")
+        String spigotVersion = getSpigotVersion()
+        compileOnly spigotVersion
+        testImplementation spigotVersion
 
         compileOnly platform('org.junit:junit-bom:5.9.1')
         compileOnly 'org.junit.jupiter:junit-jupiter'
