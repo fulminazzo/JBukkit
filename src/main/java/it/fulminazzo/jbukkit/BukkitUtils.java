@@ -154,6 +154,7 @@ public class BukkitUtils {
         Player player = mock(Player.class);
         when(player.getUniqueId()).thenReturn(uuid);
         when(player.getName()).thenReturn(name);
+        PLAYERS.add(player);
         return player;
     }
 
@@ -185,6 +186,7 @@ public class BukkitUtils {
         OfflinePlayer offlinePlayer = mock(OfflinePlayer.class);
         when(offlinePlayer.getUniqueId()).thenReturn(uuid);
         when(offlinePlayer.getName()).thenReturn(name);
+        OFFLINE_PLAYERS.add(offlinePlayer);
         return offlinePlayer;
     }
 
