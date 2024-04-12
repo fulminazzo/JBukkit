@@ -5,10 +5,12 @@ import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import it.fulminazzo.jbukkit.annotations.After1_;
 import it.fulminazzo.jbukkit.annotations.Before1_;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
+import it.fulminazzo.jbukkit.inventory.MockInventory;
 import it.fulminazzo.jbukkit.inventory.MockItemFactory;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Recipe;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -20,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -72,6 +74,31 @@ public class BukkitUtils {
         when(server.addRecipe(any())).thenAnswer(r -> RECIPES.add(r.getArgument(0)));
         when(server.recipeIterator()).thenAnswer(r -> RECIPES.iterator());
         when(server.getItemFactory()).thenReturn(new MockItemFactory());
+        // Inventories
+        when(server.createInventory(any(), anyInt())).thenAnswer(a -> {
+            MockInventory inventory = new MockInventory(a.getArgument(1));
+            inventory.setHolder(a.getArgument(0));
+            return inventory;
+        });
+        when(server.createInventory(any(), any(InventoryType.class))).thenAnswer(a -> {
+            InventoryType type = a.getArgument(1);
+            MockInventory inventory = new MockInventory(type.getDefaultSize());
+            inventory.setHolder(a.getArgument(0));
+            return inventory;
+        });
+        when(server.createInventory(any(), anyInt(), anyString())).thenAnswer(a -> {
+            MockInventory inventory = new MockInventory(a.getArgument(1));
+            inventory.setTitle(a.getArgument(2));
+            inventory.setHolder(a.getArgument(0));
+            return inventory;
+        });
+        when(server.createInventory(any(), any(InventoryType.class), anyString())).thenAnswer(a -> {
+            InventoryType type = a.getArgument(1);
+            MockInventory inventory = new MockInventory(type.getDefaultSize());
+            inventory.setTitle(a.getArgument(2));
+            inventory.setHolder(a.getArgument(0));
+            return inventory;
+        });
         new Refl<>(Bukkit.class).setFieldObject("server", server);
     }
 
