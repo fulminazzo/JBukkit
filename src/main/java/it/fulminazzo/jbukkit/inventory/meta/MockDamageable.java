@@ -15,6 +15,10 @@ public class MockDamageable extends MockItemMeta implements Damageable {
         return this.damage > 0;
     }
 
+    public int getMaxDamage() {
+        return this.maxDamage;
+    }
+
     @Override
     public boolean hasMaxDamage() {
         return this.maxDamage != null;
