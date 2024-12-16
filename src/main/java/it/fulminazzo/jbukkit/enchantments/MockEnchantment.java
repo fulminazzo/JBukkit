@@ -1,10 +1,11 @@
 package it.fulminazzo.jbukkit.enchantments;
 
-import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
@@ -13,11 +14,14 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @Getter
 @Setter
 public class MockEnchantment extends Enchantment {
+    private static final List<Enchantment> ENCHANTMENTS = new ArrayList<>();
     private final @NotNull NamespacedKey key;
     private int startLevel;
     private int maxLevel;
@@ -59,17 +63,17 @@ public class MockEnchantment extends Enchantment {
     }
 
     public static void setupEnchantments() {
-        List<Enchantment> enchantments = new ArrayList<>();
         for (Field field : Enchantment.class.getDeclaredFields())
             if (field.getType().equals(Enchantment.class))
-                try {
-                    Enchantment enchant = (Enchantment) field.get(Enchantment.class);
-                    enchantments.add(new MockEnchantment(enchant.getKey()));
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
+                ENCHANTMENTS.add(new MockEnchantment(NamespacedKey.minecraft(field.getName().toLowerCase())));
         // Register enchantments
-        Map<NamespacedKey, Enchantment> byKey = new Refl<>(Enchantment.class).getFieldObject("byKey");
-        if (byKey != null) enchantments.forEach(e -> byKey.put(e.getKey(), e));
+        Registry<Enchantment> registry = Bukkit.getRegistry(Enchantment.class);
+        when(registry.get(any())).thenAnswer(a -> {
+            NamespacedKey key = a.getArgument(0);
+            return ENCHANTMENTS.stream()
+                    .filter(e -> e.getKey().equals(key))
+                    .findFirst().orElseThrow(() ->
+                            new IllegalArgumentException("Could not find enchantment: " + key));
+        });
     }
 }
