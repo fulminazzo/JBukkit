@@ -57,19 +57,4 @@ public class MockItemMeta extends AbstractMockItemMeta implements ItemMeta {
     public boolean removeAttributeModifier(@NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
         return this.attributeModifiers.remove(attribute, modifier);
     }
-
-    @Override
-    public Spigot spigot() {
-        return new Spigot(){
-            @Override
-            public void setUnbreakable(boolean unbreakable) {
-                MockItemMeta.this.unbreakable = unbreakable;
-            }
-
-            @Override
-            public boolean isUnbreakable() {
-                return MockItemMeta.this.unbreakable;
-            }
-        };
-    }
 }
