@@ -1,4 +1,5 @@
 rootProject.name = 'JBukkit'
 include 'obsolete'
 include 'common'
+include 'legacy'
 
