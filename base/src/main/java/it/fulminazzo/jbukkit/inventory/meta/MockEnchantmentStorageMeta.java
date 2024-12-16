@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class MockEnchantmentStorageMeta extends MockItemMeta implements EnchantmentStorageMeta {
+public class MockEnchantmentStorageMeta extends MockDamageable implements EnchantmentStorageMeta {
     private final Map<Enchantment, Integer> storedEnchants = new HashMap<>();
 
     public boolean hasStoredEnchants() {
