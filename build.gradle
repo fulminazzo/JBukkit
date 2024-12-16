@@ -8,6 +8,17 @@ group = 'it.fulminazzo'
 version = '2.2'
 
 allprojects {
+    if (project.name.equals("JBukkit")) {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+            }
+        }
+        tasks.withType(JavaCompile) {
+            options.release.set(21)
+        }
+    }
+
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
     apply plugin: 'io.freefair.lombok'
