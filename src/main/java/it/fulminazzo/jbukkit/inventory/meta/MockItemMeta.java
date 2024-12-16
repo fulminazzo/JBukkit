@@ -60,13 +60,12 @@ public class MockItemMeta extends AbstractMockItemMeta implements ItemMeta {
     }
 
     @Override
-    public void setMaxStackSize(@Nullable Integer max) {
-        this.maxStackSize = max;
-    }
-
-    @Override
     public boolean hasItemName() {
         return this.itemName != null;
+    }
+
+    public int getEnchantable() {
+        return this.enchantable;
     }
 
     @Override
