@@ -43,7 +43,7 @@ allprojects {
     }
 
     this.ext.getSpigotVersion = {
-        if (project.name != "common") {
+        if (project.name != "base") {
             if (project.name == "obsolete")
                 return 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
             else return 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
@@ -67,7 +67,7 @@ allprojects {
         api 'it.fulminazzo:FulmiCollection:1.4.2'
         implementation 'org.mockito:mockito-core:4.11.0'
 
-        if (!project.name.equals('common')) api project(':common')
+        if (!project.name.equals('base')) api project(':base')
         String spigotVersion = getSpigotVersion()
         compileOnly spigotVersion
         testImplementation spigotVersion
