@@ -18,12 +18,18 @@ import java.util.Map;
 @Getter
 @Setter
 public class MockEnchantment extends Enchantment {
+    private final @NotNull NamespacedKey key;
     private int startLevel;
     private int maxLevel;
     private EnchantmentTarget itemTarget;
 
-    public MockEnchantment(@NotNull NamespacedKey key) {
-        super(key);
+    public MockEnchantment(final @NotNull NamespacedKey key) {
+        this.key = key;
+    }
+
+    @Override
+    public @NotNull String getTranslationKey() {
+        return getName();
     }
 
     @NotNull
