@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'it.fulminazzo'
-version = '2.2'
+version = '3.0'
 
 allprojects {
     if (project.name.equals("JBukkit")) {
