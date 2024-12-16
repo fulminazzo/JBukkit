@@ -9,9 +9,15 @@ import org.jetbrains.annotations.NotNull;
 @Setter
 public class MockDamageable extends MockItemMeta implements Damageable {
     private int damage;
+    private Integer maxDamage;
 
     public boolean hasDamage() {
         return this.damage > 0;
+    }
+
+    @Override
+    public boolean hasMaxDamage() {
+        return this.maxDamage != null;
     }
 
     public @NotNull Damageable clone() {
