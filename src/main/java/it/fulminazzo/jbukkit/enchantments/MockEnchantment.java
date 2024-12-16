@@ -62,7 +62,13 @@ public class MockEnchantment extends Enchantment {
         return Equable.equals(this, obj) || super.equals(obj);
     }
 
+    @Override
+    public String toString() {
+        return this.key.toString();
+    }
+
     public static void setupEnchantments() {
+        ENCHANTMENTS.clear();
         for (Field field : Enchantment.class.getDeclaredFields())
             if (field.getType().equals(Enchantment.class))
                 ENCHANTMENTS.add(new MockEnchantment(NamespacedKey.minecraft(field.getName().toLowerCase())));
@@ -70,6 +76,7 @@ public class MockEnchantment extends Enchantment {
         Registry<Enchantment> registry = Bukkit.getRegistry(Enchantment.class);
         when(registry.get(any())).thenAnswer(a -> {
             NamespacedKey key = a.getArgument(0);
+            if (key == null) return null;
             return ENCHANTMENTS.stream()
                     .filter(e -> e.getKey().equals(key))
                     .findFirst().orElseThrow(() ->
