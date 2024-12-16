@@ -37,6 +37,7 @@ public class BukkitUtils {
     private static final List<Recipe> RECIPES = new LinkedList<>();
     private static final String VERSION_FORMAT = "1\\.(\\d+)(?:\\.(\\d+))?-R\\d+\\.\\d+-SNAPSHOT";
     private static final String DEFAULT_VERSION = "1.20.4-R0.1-SNAPSHOT";
+    private static final Map<Class<?>, Object> REGISTRIES = new HashMap<>();
     static final String VERSION_NAME = "MINECRAFT_VERSION";
     @Getter
     static double numericalVersion;
@@ -112,6 +113,12 @@ public class BukkitUtils {
         when(server.getOfflinePlayer(any(UUID.class))).thenAnswer(a -> getOfflinePlayer((UUID) a.getArgument(0)));
         when(server.getOfflinePlayer(any(String.class))).thenAnswer(a -> getOfflinePlayer((String) a.getArgument(0)));
         when(server.getOfflinePlayers()).thenAnswer(a -> OFFLINE_PLAYERS.toArray(new OfflinePlayer[0]));
+        // Registries
+        when(new Refl<>(server).invokeMethod("getRegistry", any(Class.class))).thenAnswer(a -> {
+            Class<?> clazz = a.getArgument(0);
+            return REGISTRIES.computeIfAbsent(clazz, c ->
+                    mock(ReflectionUtils.getClass("org.bukkit.Registry")));
+        });
         new Refl<>(Bukkit.class).setFieldObject("server", server);
     }
 
