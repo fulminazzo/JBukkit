@@ -114,11 +114,15 @@ public class BukkitUtils {
         when(server.getOfflinePlayer(any(String.class))).thenAnswer(a -> getOfflinePlayer((String) a.getArgument(0)));
         when(server.getOfflinePlayers()).thenAnswer(a -> OFFLINE_PLAYERS.toArray(new OfflinePlayer[0]));
         // Registries
-        when(new Refl<>(server).invokeMethod("getRegistry", any(Class.class))).thenAnswer(a -> {
-            Class<?> clazz = a.getArgument(0);
-            return REGISTRIES.computeIfAbsent(clazz, c ->
-                    mock(ReflectionUtils.getClass("org.bukkit.Registry")));
-        });
+        try {
+            when(new Refl<>(server).invokeMethod("getRegistry", any(Class.class))).thenAnswer(a -> {
+                Class<?> clazz = a.getArgument(0);
+                return REGISTRIES.computeIfAbsent(clazz, c ->
+                        mock(ReflectionUtils.getClass("org.bukkit.Registry")));
+            });
+        } catch (IllegalArgumentException ignored) {
+            // Older versions
+        }
         new Refl<>(Bukkit.class).setFieldObject("server", server);
     }
 
