@@ -10,6 +10,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.mockito.invocation.InvocationOnMock;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -69,21 +71,21 @@ public class MockEnchantment extends Enchantment {
                 ENCHANTMENTS.add(new MockEnchantment(NamespacedKey.minecraft(field.getName().toLowerCase())));
         // Register enchantments
         Registry<Enchantment> registry = Bukkit.getRegistry(Enchantment.class);
-        when(registry.getOrThrow(any())).thenAnswer(a -> {
-            NamespacedKey key = a.getArgument(0);
-            if (key == null) return null;
-            return ENCHANTMENTS.stream()
-                    .filter(e -> e.getKey().equals(key))
-                    .findFirst().orElseThrow(() ->
-                            new IllegalArgumentException("Could not find enchantment: " + key));
-        });
+        when(registry.getOrThrow(any())).thenAnswer(a -> getOrThrow(a.getArgument(0)));
         when(registry.get(any())).thenAnswer(a -> {
-            NamespacedKey key = a.getArgument(0);
             try {
-                return registry.getOrThrow(key);
+                return getOrThrow(a.getArgument(0));
             } catch (IllegalArgumentException e) {
                 return null;
             }
         });
+    }
+
+    private static @Nullable Enchantment getOrThrow(NamespacedKey key) {
+        if (key == null) return null;
+        return ENCHANTMENTS.stream()
+                .filter(e -> e.getKey().equals(key))
+                .findFirst().orElseThrow(() ->
+                        new IllegalArgumentException("Could not find enchantment: " + key));
     }
 }
