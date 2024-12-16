@@ -76,6 +76,14 @@ public class MockEnchantment extends Enchantment {
         Registry<Enchantment> registry = Bukkit.getRegistry(Enchantment.class);
         when(registry.get(any())).thenAnswer(a -> {
             NamespacedKey key = a.getArgument(0);
+            try {
+                return registry.getOrThrow(key);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
+        });
+        when(registry.getOrThrow(any())).thenAnswer(a -> {
+            NamespacedKey key = a.getArgument(0);
             if (key == null) return null;
             return ENCHANTMENTS.stream()
                     .filter(e -> e.getKey().equals(key))
