@@ -62,11 +62,6 @@ public class MockEnchantment extends Enchantment {
         return Equable.equals(this, obj) || super.equals(obj);
     }
 
-    @Override
-    public String toString() {
-        return this.key.toString();
-    }
-
     public static void setupEnchantments() {
         ENCHANTMENTS.clear();
         for (Field field : Enchantment.class.getDeclaredFields())
