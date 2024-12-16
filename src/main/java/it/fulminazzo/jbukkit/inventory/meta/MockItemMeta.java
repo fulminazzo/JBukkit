@@ -50,9 +50,18 @@ public class MockItemMeta extends AbstractMockItemMeta implements ItemMeta {
     private EquippableComponent equippable;
     private JukeboxPlayableComponent jukeboxPlayable;
 
+    public int getMaxStackSize() {
+        return this.maxStackSize;
+    }
+
     @Override
     public boolean hasMaxStackSize() {
         return this.maxStackSize != null;
+    }
+
+    @Override
+    public void setMaxStackSize(@Nullable Integer max) {
+        this.maxStackSize = max;
     }
 
     @Override
