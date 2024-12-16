@@ -38,7 +38,7 @@ allprojects {
             else if (project.name == "legacy")
                 return 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT'
             else return 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
-        } else return 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+        } else return 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT'
     }
 
     repositories {
