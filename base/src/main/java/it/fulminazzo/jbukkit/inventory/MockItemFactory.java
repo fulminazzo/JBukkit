@@ -394,14 +394,15 @@ public class MockItemFactory implements ItemFactory {
     }
 
     public @NotNull ItemStack enchantItem(@NotNull Entity entity, @NotNull ItemStack item, int level, boolean allowTreasures) {
-        return null;
+        throw new NotImplementedException();
     }
 
     public @NotNull ItemStack enchantItem(@NotNull World world, @NotNull ItemStack item, int level, boolean allowTreasures) {
-        return null;
+        throw new NotImplementedException();
     }
 
     public @NotNull ItemStack enchantItem(@NotNull ItemStack item, int level, boolean allowTreasures) {
-        return null;
+        throw new NotImplementedException();
     }
+
 }
