@@ -352,7 +352,7 @@ public class MockItemFactory implements ItemFactory {
 
     @Override
     public Color getDefaultLeatherColor() {
-        return null;
+        return Color.MAROON;
     }
 
     public @NotNull ItemStack createItemStack(@NotNull String input) throws IllegalArgumentException {
