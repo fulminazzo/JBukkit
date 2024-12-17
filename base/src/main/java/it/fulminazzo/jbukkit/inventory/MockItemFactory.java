@@ -23,12 +23,13 @@ public class MockItemFactory implements ItemFactory {
 
     @Override
     public boolean isApplicable(@Nullable ItemMeta itemMeta, @Nullable ItemStack itemStack) throws IllegalArgumentException {
-        return false;
+        return itemStack != null && isApplicable(itemMeta, itemStack.getType());
     }
 
     @Override
     public boolean isApplicable(@Nullable ItemMeta itemMeta, @Nullable Material material) throws IllegalArgumentException {
-        return false;
+        return material != null && itemMeta != null &&
+                itemMeta.getClass().getSimpleName().equals(getItemMetaName(material));
     }
 
     /**
