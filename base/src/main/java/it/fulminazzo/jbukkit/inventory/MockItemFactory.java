@@ -1,5 +1,7 @@
 package it.fulminazzo.jbukkit.inventory;
 
+import it.fulminazzo.fulmicollection.structures.tuples.Tuple;
+import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import it.fulminazzo.jbukkit.Equable;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -11,6 +13,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 /**
  * Represents a mock implementation for {@link ItemFactory}.
@@ -342,12 +346,33 @@ public class MockItemFactory implements ItemFactory {
 
     @Override
     public ItemMeta asMetaFor(@NotNull ItemMeta itemMeta, @NotNull ItemStack itemStack) throws IllegalArgumentException {
-        return null;
+        return asMetaFor(itemMeta, itemStack.getType());
     }
 
     @Override
-    public ItemMeta asMetaFor(@NotNull ItemMeta itemMeta, @NotNull Material material) throws IllegalArgumentException {
-        return null;
+    public @Nullable ItemMeta asMetaFor(@NotNull ItemMeta itemMeta, @NotNull Material material) throws IllegalArgumentException {
+        String metaName = getItemMetaName(material);
+        if (metaName == null) return null;
+        ItemMeta actualMeta = getItemMeta(material);
+        ReflectionUtils.getFields(actualMeta).stream()
+                .map(ReflectionUtils::setAccessible)
+                .map(f -> f.orElseGet(null))
+                .filter(Objects::nonNull)
+                .map(f -> {
+                    try {
+                        return new Tuple<>(f, f.get(itemMeta));
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .forEach(t -> {
+                    try {
+                        t.getKey().set(actualMeta, t.getValue());
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        return actualMeta;
     }
 
     @Override
