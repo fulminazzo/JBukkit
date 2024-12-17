@@ -3,6 +3,7 @@ package it.fulminazzo.jbukkit.inventory;
 import it.fulminazzo.fulmicollection.structures.tuples.Tuple;
 import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import it.fulminazzo.jbukkit.Equable;
+import it.fulminazzo.jbukkit.NotImplementedException;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -381,11 +382,15 @@ public class MockItemFactory implements ItemFactory {
     }
 
     public @NotNull ItemStack createItemStack(@NotNull String input) throws IllegalArgumentException {
-        return null;
+        throw new NotImplementedException();
     }
 
     public @Nullable Material getSpawnEgg(@NotNull EntityType type) {
-        return null;
+        try {
+            return Material.valueOf(type.name() + "_SPAWN_EGG");
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public @NotNull ItemStack enchantItem(@NotNull Entity entity, @NotNull ItemStack item, int level, boolean allowTreasures) {
