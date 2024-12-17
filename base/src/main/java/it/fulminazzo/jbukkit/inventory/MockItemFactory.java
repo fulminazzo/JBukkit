@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.inventory;
 
+import it.fulminazzo.jbukkit.Equable;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -336,7 +337,7 @@ public class MockItemFactory implements ItemFactory {
 
     @Override
     public boolean equals(@Nullable ItemMeta meta1, @Nullable ItemMeta meta2) throws IllegalArgumentException {
-        return false;
+        return Equable.equals(meta1, meta2);
     }
 
     @Override
