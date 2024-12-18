@@ -13,6 +13,7 @@ public final class FileUtils {
 
     /**
      * Reads the given file and returns its output as a string.
+     * Throws {@link FileException} in case of failure.
      *
      * @param file the file
      * @return the output
@@ -24,6 +25,21 @@ public final class FileUtils {
             return builder.toString();
         } catch (IOException e) {
             throw new FileException("read", file, e);
+        }
+    }
+
+    /**
+     * Writes the given output to the file.
+     * Throws {@link FileException} in case of failure.
+     *
+     * @param file    the file
+     * @param content the content
+     */
+    public static void writeFile(final @NotNull File file, final @NotNull String content) {
+        try (FileOutputStream stream = new FileOutputStream(file)) {
+            stream.write(content.getBytes());
+        } catch (IOException e) {
+            throw new FileException("write", file, e);
         }
     }
 
