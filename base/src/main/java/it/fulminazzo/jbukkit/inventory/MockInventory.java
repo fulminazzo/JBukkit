@@ -34,9 +34,16 @@ public class MockInventory implements Inventory {
 
     @Override
     public void setContents(@NotNull ItemStack[] items) throws IllegalArgumentException {
-        if (items.length != this.contents.length)
-            throw new IllegalArgumentException("Cannot set contents of " + items.length + " items when size is " + getSize());
-        System.arraycopy(items, 0, this.contents, 0, items.length);
+        setContents(items, 0, items.length);
+    }
+
+    protected void setContents(@Nullable ItemStack[] items, int start, int end) {
+        if (items == null)
+            throw new IllegalArgumentException("items cannot be null");
+        int size = end - start;
+        if (items.length != size)
+            throw new IllegalArgumentException("Cannot set contents of " + items.length + " items when size is " + size);
+        System.arraycopy(items, 0, this.contents, start, items.length);
     }
 
     @Override
@@ -201,10 +208,7 @@ public class MockInventory implements Inventory {
     }
 
     public void setStorageContents(@NotNull ItemStack[] items) throws IllegalArgumentException {
-        int size = getStorageContentsSize();
-        if (items.length != size)
-            throw new IllegalArgumentException("Cannot set contents of " + items.length + " items when storage size is " + size);
-        System.arraycopy(items, 0, this.contents, 0, size);
+        setContents(items, 0, getStorageContentsSize());
     }
 
     private int getStorageContentsSize() {
