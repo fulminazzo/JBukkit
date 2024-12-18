@@ -1,5 +1,7 @@
 package it.fulminazzo.jbukkit.inventory;
 
+import it.fulminazzo.jbukkit.NotImplementedException;
+import it.fulminazzo.jbukkit.utils.MaterialUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -217,6 +219,11 @@ public class MockInventory implements Inventory {
     }
 
     @Override
+    public boolean contains(int materialId, int amount) {
+        return contains(MaterialUtils.getMaterial(materialId), amount);
+    }
+
+    @Override
     public boolean contains(@NotNull Material material, int amount) throws IllegalArgumentException {
         for (ItemStack itemStack : getContents())
             if (itemStack.getType().equals(material))
@@ -245,6 +252,11 @@ public class MockInventory implements Inventory {
     }
 
     @Override
+    public HashMap<Integer, ? extends ItemStack> all(int materialId) {
+        return all(MaterialUtils.getMaterial(materialId));
+    }
+
+    @Override
     public @NotNull HashMap<Integer, ? extends ItemStack> all(@NotNull Material material) throws IllegalArgumentException {
         HashMap<Integer, ItemStack> result = new HashMap<>();
         for (int i = 0; i < getSize(); i++) {
@@ -264,6 +276,11 @@ public class MockInventory implements Inventory {
             if (itemStack != null && itemStack.equals(item)) result.put(i, itemStack);
         }
         return result;
+    }
+
+    @Override
+    public int first(int materialId) {
+        return first(MaterialUtils.getMaterial(materialId));
     }
 
     @Override
@@ -293,6 +310,11 @@ public class MockInventory implements Inventory {
             if (itemStack == null) return i;
         }
         return -1;
+    }
+
+    @Override
+    public void remove(int materialId) {
+        remove(MaterialUtils.getMaterial(materialId));
     }
 
     public boolean isEmpty() {
@@ -325,6 +347,11 @@ public class MockInventory implements Inventory {
     @Override
     public void clear() {
         setContents(new ItemStack[getSize()]);
+    }
+
+    @Override
+    public String getTitle() {
+        return this.name;
     }
 
     @Override
