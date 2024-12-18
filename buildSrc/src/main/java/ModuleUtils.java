@@ -24,8 +24,7 @@ public final class ModuleUtils {
     public static void generateModule(final int module) {
         File parent = new File(System.getProperty("user.dir"));
         File targetModuleDir = new File(parent, String.valueOf(module));
-        if (!targetModuleDir.isDirectory() && !targetModuleDir.mkdir())
-            throw new RuntimeException("Failed to create directory " + targetModuleDir.getPath());
+        FileUtils.createDirIfNotExists(targetModuleDir);
 
         for (int i = 0; i < module; i++) {
             File moduleDir = new File(parent, String.valueOf(i));
@@ -38,14 +37,8 @@ public final class ModuleUtils {
     private static void generateBuildGradle(final int module) {
         File parent = new File(System.getProperty("user.dir"));
         File buildFile = new File(parent, module + File.separator + "build.gradle");
-        if (buildFile.exists() && !buildFile.delete())
-            throw new RuntimeException("Failed to delete file " + buildFile.getPath());
-        try {
-            buildFile.createNewFile();
-        } catch (IOException e) {
-            //TODO:
-            throw new RuntimeException(e);
-        }
+        FileUtils.deleteIfExists(buildFile);
+        FileUtils.createDirIfNotExists(buildFile);
         try (FileOutputStream output = new FileOutputStream(buildFile)) {
             output.write(BUILD_GRADLE_FORMAT
                     .replace("%current%", String.valueOf(module))
@@ -61,20 +54,13 @@ public final class ModuleUtils {
         if (module.isDirectory()) {
             File[] files = module.listFiles();
             if (files == null) return;
-            if (!targetModule.isDirectory() && !targetModule.mkdir())
-                throw new RuntimeException("Failed to create directory " + targetModule.getPath());
+            FileUtils.createDirIfNotExists(targetModule);
             for (File file : files)
                 copySingleModule(file, new File(targetModule, file.getName()));
         } else {
             if (!module.getName().endsWith(".java")) return;
-            if (targetModule.exists() && !targetModule.delete())
-                throw new RuntimeException("Failed to delete " + targetModule.getPath());
-            try {
-                if (!targetModule.createNewFile())
-                    throw new RuntimeException("Failed to create file " + targetModule.getPath());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            FileUtils.deleteIfExists(targetModule);
+            FileUtils.createFileIfNotExists(targetModule);
             try (FileInputStream input = new FileInputStream(module);
                  FileOutputStream output = new FileOutputStream(targetModule)) {
                 while (input.available() > 0) output.write(input.read());
@@ -115,27 +101,6 @@ public final class ModuleUtils {
             if (!targetModule.exists()) return;
             if (!targetModule.getName().endsWith(".java")) return;
             FileUtils.deleteIf(f -> FileUtils.sameContent(module, f), targetModule);
-        }
-    }
-
-    /**
-     * Verifies that two files have the same contents.
-     *
-     * @param first  the first file
-     * @param second the second file
-     * @return true if they match
-     */
-    public static boolean sameContent(final @NotNull File first, final @NotNull File second) {
-        if (!first.isFile()) throw new IllegalArgumentException(first.getPath() + " is not a file");
-        if (!second.isFile()) throw new IllegalArgumentException(second.getPath() + " is not a file");
-        try (FileInputStream firstStream = new FileInputStream(first);
-             FileInputStream secondStream = new FileInputStream(second)) {
-            if (firstStream.available() != secondStream.available()) return false;
-            while (firstStream.available() > 0)
-                if (firstStream.read() != secondStream.read()) return false;
-            return true;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
