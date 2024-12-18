@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.profile.PlayerProfile;
 
 /**
  * Represents a mock implementation for {@link SkullMeta}.
@@ -13,6 +14,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 public class MockSkullMeta extends MockItemMeta implements SkullMeta {
     private String owner;
     private OfflinePlayer owningPlayer;
+    private PlayerProfile ownerProfile;
 
     public boolean setOwner(String owner) {
         this.owner = owner;
