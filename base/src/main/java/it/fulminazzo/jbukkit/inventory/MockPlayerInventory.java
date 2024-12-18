@@ -3,6 +3,8 @@ package it.fulminazzo.jbukkit.inventory;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -10,21 +12,29 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 @Getter
 @Setter
 public class MockPlayerInventory extends MockInventory implements PlayerInventory {
     private static final int STORAGE_SIZE = 35;
     private int heldItemSlot;
+    private final Player holder;
 
-    public MockPlayerInventory() {
+    public MockPlayerInventory(final @NotNull Player holder) {
         super((Arrays.stream(EquipmentSlot.values()).anyMatch(v -> v.name().equals("OFF_HAND")) ?
                 EquipSlot.OFF_HAND.slot : EquipSlot.HELMET.slot) + 1);
+        this.holder = Objects.requireNonNull(holder);
+    }
+
+    @Override
+    public @Nullable HumanEntity getHolder() {
+        return this.holder;
     }
 
     @Override
     public @NotNull ItemStack[] getArmorContents() {
-        return Arrays.copyOfRange(getContents(), EquipSlot.BOOTS.slot, EquipSlot.HELMET.slot);
+        return Arrays.copyOfRange(getContents(), EquipSlot.BOOTS.slot, EquipSlot.OFF_HAND.slot);
     }
 
     @Override
@@ -64,12 +74,12 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
 
     @Override
     public void setArmorContents(@Nullable ItemStack[] items) {
-        setContents(items, EquipSlot.BOOTS.slot, EquipSlot.HELMET.slot);
+        setContents(items, EquipSlot.BOOTS.slot, EquipSlot.OFF_HAND.slot);
     }
 
     @Override
     public void setExtraContents(@Nullable ItemStack[] items) {
-        setContents(items, EquipSlot.OFF_HAND.slot, EquipSlot.OFF_HAND.slot);
+        setContents(items, EquipSlot.OFF_HAND.slot, EquipSlot.OFF_HAND.slot + 1);
     }
 
     @Override
