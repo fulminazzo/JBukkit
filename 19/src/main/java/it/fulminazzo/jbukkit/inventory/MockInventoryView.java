@@ -1,6 +1,7 @@
 package it.fulminazzo.jbukkit.inventory;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -14,7 +15,9 @@ import org.jetbrains.annotations.NotNull;
 public class MockInventoryView extends InventoryView {
     private final @NotNull Inventory topInventory;
     private final @NotNull Player player;
-    private final @NotNull String title;
+    private final @NotNull String originalTitle;
+    @Setter
+    private @NotNull String title;
 
     /**
      * Instantiates a new Mock inventory view.
@@ -27,6 +30,7 @@ public class MockInventoryView extends InventoryView {
         this.topInventory = topInventory;
         this.player = player;
         this.title = title;
+        this.originalTitle = title;
     }
 
     @Override
