@@ -1,9 +1,14 @@
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * A utility for modules of the project.
+ */
+@NoArgsConstructor
 public final class ModuleUtils {
 
     /**
@@ -44,7 +49,7 @@ public final class ModuleUtils {
     /**
      * Verifies that two files have the same contents.
      *
-     * @param first the first file
+     * @param first  the first file
      * @param second the second file
      * @return true if they match
      */
