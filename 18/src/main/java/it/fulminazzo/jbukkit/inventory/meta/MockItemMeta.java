@@ -182,6 +182,11 @@ public class MockItemMeta implements ItemMeta {
     }
 
     @Override
+    public @NotNull String getAsString() {
+        throw new NotImplementedException();
+    }
+
+    @Override
     public @NotNull CustomItemTagContainer getCustomTagContainer() {
         return this.customTagContainer;
     }
