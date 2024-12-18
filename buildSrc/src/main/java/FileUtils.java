@@ -2,6 +2,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.function.Predicate;
 
 /**
@@ -21,6 +22,23 @@ public final class FileUtils {
         deleteIf(File::isFile, dir);
         if (!dir.isDirectory() && !dir.mkdir())
             throw new FileException("create", dir);
+    }
+
+    /**
+     * Creates the given file if it not exists already.
+     * Throws {@link FileException} in case of failure.
+     * If the file already exists and is a directory, it will be deleted.
+     *
+     * @param file the file
+     */
+    public static void createFileIfNotExists(final @NotNull File file) {
+        deleteIf(File::isDirectory, file);
+        try {
+            if (!file.exists() && !file.createNewFile())
+                throw new FileException("create", file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
