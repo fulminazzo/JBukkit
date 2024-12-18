@@ -19,6 +19,11 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
         this.pages = new LinkedList<>();
     }
 
+    public boolean setTitle(String title) {
+        this.title = title;
+        return true;
+    }
+
     @Override
     public boolean hasTitle() {
         return this.title != null;

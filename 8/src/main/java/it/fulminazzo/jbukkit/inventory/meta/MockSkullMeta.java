@@ -9,6 +9,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 public class MockSkullMeta extends MockItemMeta implements SkullMeta {
     private String owner;
 
+    public boolean setOwner(String owner) {
+        this.owner = owner;
+        return true;
+    }
+
     @Override
     public boolean hasOwner() {
         return this.owner != null;

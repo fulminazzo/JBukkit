@@ -21,6 +21,11 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
         this.customEffects = new HashSet<>();
     }
 
+    public boolean setMainEffect(PotionEffectType mainEffect) {
+        this.mainEffect = mainEffect;
+        return true;
+    }
+
     @Override
     public boolean hasCustomEffects() {
         return !this.customEffects.isEmpty();
