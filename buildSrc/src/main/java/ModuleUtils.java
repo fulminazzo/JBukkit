@@ -22,7 +22,7 @@ public final class ModuleUtils {
         File parent = new File(System.getProperty("user.dir"));
         File targetModuleDir = new File(parent, String.valueOf(module));
         if (!targetModuleDir.isDirectory() && !targetModuleDir.mkdir())
-            throw new RuntimeException("Cannot create directory " + targetModuleDir.getPath());
+            throw new RuntimeException("Failed to create directory " + targetModuleDir.getPath());
 
         for (int i = 0; i < module; i++) {
             File moduleDir = new File(parent, String.valueOf(i));
@@ -42,7 +42,8 @@ public final class ModuleUtils {
                 copySingleModule(file, new File(targetModule, file.getName()));
         } else {
             if (!module.getName().endsWith(".java")) return;
-            if (targetModule.exists()) return;
+            if (targetModule.exists() && !targetModule.delete())
+                throw new RuntimeException("Failed to delete " + targetModule.getPath());
             try {
                 if (!targetModule.createNewFile())
                     throw new RuntimeException("Failed to create file " + targetModule.getPath());
@@ -89,7 +90,7 @@ public final class ModuleUtils {
             if (!targetModule.exists()) return;
             if (!targetModule.getName().endsWith(".java")) return;
             if (sameContent(module, targetModule) && !targetModule.delete())
-                throw new RuntimeException("Could not delete " + targetModule.getPath());
+                throw new RuntimeException("Failed to delete " + targetModule.getPath());
         }
     }
 
