@@ -331,17 +331,17 @@ public class MockInventory implements Inventory {
     }
 
     @Override
-    public @Nullable InventoryHolder getHolder() {
-        return null;
-    }
-
-    @Override
     public @NotNull ListIterator<ItemStack> iterator() {
-        return null;
+        return Arrays.asList(this.contents).listIterator();
     }
 
     @Override
     public @NotNull ListIterator<ItemStack> iterator(int index) {
+        return Arrays.asList(this.contents).subList(index, getSize()).listIterator();
+    }
+
+    @Override
+    public @Nullable InventoryHolder getHolder() {
         return null;
     }
 
