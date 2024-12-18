@@ -114,8 +114,7 @@ public final class ModuleUtils {
         } else {
             if (!targetModule.exists()) return;
             if (!targetModule.getName().endsWith(".java")) return;
-            if (sameContent(module, targetModule) && !targetModule.delete())
-                throw new RuntimeException("Failed to delete " + targetModule.getPath());
+            FileUtils.deleteIf(f -> FileUtils.sameContent(module, f), targetModule);
         }
     }
 

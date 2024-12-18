@@ -2,6 +2,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.function.Predicate;
 
@@ -66,6 +67,27 @@ public final class FileUtils {
 
     private static @NotNull String getFileType(final @NotNull File file) {
         return file.isDirectory() ? "directory" : file.isFile() ? "file" : "none";
+    }
+
+    /**
+     * Verifies that two files have the same contents.
+     *
+     * @param first  the first file
+     * @param second the second file
+     * @return true if they match
+     */
+    public static boolean sameContent(final @NotNull File first, final @NotNull File second) {
+        if (!first.isFile()) throw new IllegalArgumentException(first.getPath() + " is not a file");
+        if (!second.isFile()) throw new IllegalArgumentException(second.getPath() + " is not a file");
+        try (FileInputStream firstStream = new FileInputStream(first);
+             FileInputStream secondStream = new FileInputStream(second)) {
+            if (firstStream.available() != secondStream.available()) return false;
+            while (firstStream.available() > 0)
+                if (firstStream.read() != secondStream.read()) return false;
+            return true;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static class FileException extends RuntimeException {
