@@ -22,7 +22,7 @@ public final class ModuleUtils {
      * @param module the module number
      */
     public static void generateModule(final int module) {
-        File parent = new File(System.getProperty("user.dir"));
+        File parent = getParent();
         File targetModuleDir = new File(parent, String.valueOf(module));
         FileUtils.createDirIfNotExists(targetModuleDir);
 
@@ -35,8 +35,7 @@ public final class ModuleUtils {
     }
 
     private static void generateBuildGradle(final int module) {
-        File parent = new File(System.getProperty("user.dir"));
-        File buildFile = new File(parent, module + File.separator + "build.gradle");
+        File buildFile = new File(getParent(), module + File.separator + "build.gradle");
         FileUtils.deleteIfExists(buildFile);
         FileUtils.createDirIfNotExists(buildFile);
         try (FileOutputStream output = new FileOutputStream(buildFile)) {
@@ -78,7 +77,7 @@ public final class ModuleUtils {
      * @param module the module name
      */
     public static void checkModuleRepetitions(final int module) {
-        File parent = new File(System.getProperty("user.dir"));
+        File parent = getParent();
         File targetModuleDir = new File(parent, String.valueOf(module));
         if (!targetModuleDir.isDirectory())
             throw new IllegalArgumentException("Could not find module " + module);
@@ -102,6 +101,10 @@ public final class ModuleUtils {
             if (!targetModule.getName().endsWith(".java")) return;
             FileUtils.deleteIf(f -> FileUtils.sameContent(module, f), targetModule);
         }
+    }
+
+    private static @NotNull File getParent() {
+        return new File(System.getProperty("user.dir"));
     }
 
 }
