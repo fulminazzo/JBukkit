@@ -387,7 +387,7 @@ public class MockItemFactory implements ItemFactory {
     }
 
     @Override
-    public Color getDefaultLeatherColor() {
+    public @NotNull Color getDefaultLeatherColor() {
         return Color.MAROON;
     }
 
