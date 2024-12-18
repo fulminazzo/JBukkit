@@ -27,7 +27,12 @@ public class MockItemFactory implements ItemFactory {
     public @NotNull ItemMeta getItemMeta(@NotNull Material material) {
         @Nullable String className = getItemMetaName(material);
         if (className == null) throw new IllegalArgumentException("Unknown item meta type: " + material);
-        Class<?> clazz = ReflectionUtils.getClass(getClass().getPackage().getName() + ".meta." + className);
+        Class<?> clazz;
+        try {
+            clazz = ReflectionUtils.getClass(getClass().getPackage().getName() + ".meta." + className);
+        } catch (IllegalArgumentException e) {
+            clazz =  ReflectionUtils.getClass(getClass().getPackage().getName() + ".meta.MockItemMeta");
+        }
         Refl<?> object;
         try {
             object = new Refl<>(clazz);
