@@ -39,13 +39,18 @@ public final class ModuleUtils {
         FileUtils.deleteIfExists(buildFile);
         FileUtils.createDirIfNotExists(buildFile);
         try (FileOutputStream output = new FileOutputStream(buildFile)) {
-            output.write(BUILD_GRADLE_FORMAT
-                    .replace("%current%", String.valueOf(module))
-                    .replace("%previous%", String.valueOf(module - 1))
-                    .getBytes());
+            output.write(formatModule(BUILD_GRADLE_FORMAT, module));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static byte[] formatModule(final @NotNull String string,
+                                       final int module) {
+        return string
+                .replace("%current%", String.valueOf(module))
+                .replace("%previous%", String.valueOf(module - 1))
+                .getBytes();
     }
 
     private static void copySingleModule(final @NotNull File module,
