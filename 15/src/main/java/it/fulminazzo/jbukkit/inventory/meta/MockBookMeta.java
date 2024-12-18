@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.inventory.meta.BookMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -49,17 +50,17 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
     }
 
     @Override
-    public String getPage(int page) {
+    public @NotNull String getPage(int page) {
         return TextComponent.toLegacyText(spigot().getPage(page));
     }
 
     @Override
-    public void setPage(int page, String data) {
+    public void setPage(int page, @NotNull String data) {
         spigot().setPage(page, TextComponent.fromLegacyText(data));
     }
 
     @Override
-    public List<String> getPages() {
+    public @NotNull List<String> getPages() {
         return spigot().getPages().stream().map(TextComponent::toLegacyText).collect(Collectors.toList());
     }
 
@@ -84,12 +85,12 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
     }
 
     @Override
-    public MockBookMeta clone() {
+    public @NotNull MockBookMeta clone() {
         return (MockBookMeta) super.clone();
     }
 
     @Override
-    public BookMeta.Spigot spigot() {
+    public BookMeta.@NotNull Spigot spigot() {
         return new MockSpigot();
     }
 
@@ -111,12 +112,12 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
         }
 
         @Override
-        public List<BaseComponent[]> getPages() {
+        public @NotNull List<BaseComponent[]> getPages() {
             return this.pages;
         }
 
         @Override
-        public void setPages(List<BaseComponent[]> pages) {
+        public void setPages(@NotNull List<BaseComponent[]> pages) {
             this.pages.clear();
             this.pages.addAll(pages);
         }
