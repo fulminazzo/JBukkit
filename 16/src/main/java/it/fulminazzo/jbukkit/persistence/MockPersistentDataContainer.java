@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The type Mock persistent data container.
@@ -52,6 +53,11 @@ public class MockPersistentDataContainer implements PersistentDataContainer {
         Z value = get(key, type);
         if (value == null) return defaultValue;
         return value;
+    }
+
+    @Override
+    public @NotNull Set<NamespacedKey> getKeys() {
+        return this.data.keySet();
     }
 
     @Override
