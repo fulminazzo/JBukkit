@@ -1,6 +1,5 @@
 package it.fulminazzo.jbukkit.inventory.meta;
 
-import it.fulminazzo.jbukkit.map.MockMapView;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Color;
@@ -32,6 +31,11 @@ public class MockMapMeta extends MockItemMeta implements MapMeta {
     @Override
     public void setMapId(int id) {
         this.mapId = id;
+    }
+
+    @Override
+    public int getMapId() {
+        return this.mapId;
     }
 
     @Override
