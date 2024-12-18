@@ -81,8 +81,10 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         setItem(EquipSlot.fromEquipmentSlot(slot).slot, item);
     }
 
-    public @Nullable ItemStack getItem(@NotNull EquipmentSlot slot) {
-        return getItem(EquipSlot.fromEquipmentSlot(slot).slot);
+    public @NotNull ItemStack getItem(@NotNull EquipmentSlot slot) {
+        ItemStack itemStack = getItem(EquipSlot.fromEquipmentSlot(slot).slot);
+        if (itemStack == null) itemStack = new ItemStack(Material.AIR);
+        return itemStack;
     }
 
     @Override
