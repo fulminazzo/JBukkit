@@ -402,10 +402,23 @@ public class MockItemFactory implements ItemFactory {
         throw new NotImplementedException();
     }
 
+    /**
+     * TODO: NOT IMPLEMENTED.
+     *
+     * @param input the input
+     * @return the item stack
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public @NotNull ItemStack createItemStack(@NotNull String input) throws IllegalArgumentException {
         throw new NotImplementedException();
     }
 
+    /**
+     * TODO: NOT IMPLEMENTED.
+     *
+     * @param type the type
+     * @return the spawn egg
+     */
     public @Nullable Material getSpawnEgg(@NotNull EntityType type) {
         try {
             return Material.valueOf(type.name() + "_SPAWN_EGG");
@@ -414,14 +427,40 @@ public class MockItemFactory implements ItemFactory {
         }
     }
 
+    /**
+     * TODO: NOT IMPLEMENTED.
+     *
+     * @param entity         the entity
+     * @param item           the item
+     * @param level          the level
+     * @param allowTreasures the allow treasures
+     * @return the item stack
+     */
     public @NotNull ItemStack enchantItem(@NotNull Entity entity, @NotNull ItemStack item, int level, boolean allowTreasures) {
         throw new NotImplementedException();
     }
 
+    /**
+     * TODO: NOT IMPLEMENTED.
+     *
+     * @param world          the world
+     * @param item           the item
+     * @param level          the level
+     * @param allowTreasures the allow treasures
+     * @return the item stack
+     */
     public @NotNull ItemStack enchantItem(@NotNull World world, @NotNull ItemStack item, int level, boolean allowTreasures) {
         throw new NotImplementedException();
     }
 
+    /**
+     * TODO: NOT IMPLEMENTED.
+     *
+     * @param item           the item
+     * @param level          the level
+     * @param allowTreasures the allow treasures
+     * @return the item stack
+     */
     public @NotNull ItemStack enchantItem(@NotNull ItemStack item, int level, boolean allowTreasures) {
         throw new NotImplementedException();
     }
