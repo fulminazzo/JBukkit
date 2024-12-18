@@ -250,7 +250,6 @@ public class MockInventory implements Inventory {
         return itemStack != null && Arrays.stream(getContents()).anyMatch(i -> i.equals(itemStack));
     }
 
-    @Override
     public boolean contains(int materialId, int amount) {
         return contains(MaterialUtils.getMaterial(materialId), amount);
     }
@@ -283,7 +282,6 @@ public class MockInventory implements Inventory {
         return false;
     }
 
-    @Override
     public HashMap<Integer, ? extends ItemStack> all(int materialId) {
         return all(MaterialUtils.getMaterial(materialId));
     }
@@ -310,7 +308,6 @@ public class MockInventory implements Inventory {
         return result;
     }
 
-    @Override
     public int first(int materialId) {
         return first(MaterialUtils.getMaterial(materialId));
     }
@@ -344,7 +341,6 @@ public class MockInventory implements Inventory {
         return -1;
     }
 
-    @Override
     public void remove(int materialId) {
         remove(MaterialUtils.getMaterial(materialId));
     }
@@ -381,7 +377,6 @@ public class MockInventory implements Inventory {
         setContents(new ItemStack[getSize()]);
     }
 
-    @Override
     public String getTitle() {
         return this.name;
     }
