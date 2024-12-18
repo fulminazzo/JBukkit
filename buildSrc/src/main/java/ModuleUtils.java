@@ -6,13 +6,23 @@ import java.io.IOException;
 
 public final class ModuleUtils {
 
+    /**
+     * Looks for a module named <code>module</code> in the project folder.
+     * Then, for every other numerical module present, checks if there are
+     * repetitions of <b>.java</b> files and deletes them.
+     *
+     * @param module the module name
+     */
     public static void checkModuleRepetitions(final int module) {
-        File moduleDir = new File(System.getProperty("user.dir"), String.valueOf(module));
-        if (!moduleDir.isDirectory())
+        File parent = new File(System.getProperty("user.dir"));
+        File targetModuleDir = new File(parent, String.valueOf(module));
+        if (!targetModuleDir.isDirectory())
             throw new IllegalArgumentException("Could not find module " + module);
 
         for (int i = 0; i < module; i++) {
-
+            File moduleDir = new File(parent, String.valueOf(i));
+            if (moduleDir.isDirectory())
+                checkSingleModuleRepetitions(moduleDir, targetModuleDir);
         }
     }
 
