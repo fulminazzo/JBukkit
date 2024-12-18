@@ -274,7 +274,7 @@ public class MockInventory implements Inventory {
 
     @Override
     public boolean contains(final @Nullable ItemStack itemStack) {
-        return itemStack != null && Arrays.stream(getContents()).anyMatch(i -> i.equals(itemStack));
+        return itemStack != null && Arrays.asList(getContents()).contains(itemStack);
     }
 
     /**
