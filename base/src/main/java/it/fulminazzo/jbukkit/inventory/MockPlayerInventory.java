@@ -14,8 +14,13 @@ import java.util.Arrays;
 @Getter
 @Setter
 public class MockPlayerInventory extends MockInventory implements PlayerInventory {
-    private static final int STORAGE_SIZE = 36;
+    private static final int STORAGE_SIZE = 35;
     private int heldItemSlot;
+
+    public MockPlayerInventory() {
+        super((Arrays.stream(EquipmentSlot.values()).anyMatch(v -> v.name().equals("OFF_HAND")) ?
+                EquipSlot.OFF_HAND.slot : EquipSlot.HELMET.slot) + 1);
+    }
 
     @Override
     public @NotNull ItemStack[] getArmorContents() {
