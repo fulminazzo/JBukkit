@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.inventory;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.structures.tuples.Tuple;
 import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import it.fulminazzo.jbukkit.Equable;
@@ -24,7 +25,16 @@ public class MockItemFactory implements ItemFactory {
 
     @Override
     public @NotNull ItemMeta getItemMeta(@NotNull Material material) {
-        return null;
+        @Nullable String className = getItemMetaName(material);
+        if (className == null) throw new IllegalArgumentException("Unknown item meta type: " + material);
+        Class<?> clazz = ReflectionUtils.getClass(getClass().getPackage().getName() + ".meta." + className);
+        Refl<?> object;
+        try {
+            object = new Refl<>(clazz);
+        } catch (IllegalArgumentException e) {
+            object = new Refl<>(clazz, material);
+        }
+        return (ItemMeta) object.getObject();
     }
 
     @Override
