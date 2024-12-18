@@ -107,22 +107,14 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
 
     @Override
     public @NotNull ItemStack getItemInHand() {
-        return null;
+        ItemStack itemStack = getItem(getHeldItemSlot());
+        if (itemStack == null) return new ItemStack(Material.AIR);
+        return itemStack;
     }
 
     @Override
     public void setItemInHand(@Nullable ItemStack stack) {
-
-    }
-
-    @Override
-    public int getHeldItemSlot() {
-        return 0;
-    }
-
-    @Override
-    public void setHeldItemSlot(int slot) {
-
+        setItem(getHeldItemSlot(), stack);
     }
 
     private enum EquipSlot {
