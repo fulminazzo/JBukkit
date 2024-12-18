@@ -111,6 +111,10 @@ allprojects {
     }
 }
 
+/**
+ * Creates a new module from the given MODULE_NUMBER environment variable.
+ * WARNING: this will OVERWRITE any existing .java file.
+ */
 tasks.register('generateModule') {
     def module = System.getenv('MODULE_NUMBER')
     if (module == null)
@@ -118,7 +122,9 @@ tasks.register('generateModule') {
     ModuleUtils.generateModule(Integer.valueOf(module))
 }
 
-// Verifies that in every module are absent repetitions of classes.
+/**
+ * Verifies that in every module are absent repetitions of classes.
+ */
 tasks.register('cleanModules') {
     def parent = new File(System.getProperty("user.dir"));
     def start = 8
