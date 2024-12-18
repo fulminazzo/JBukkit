@@ -311,12 +311,12 @@ public class MockInventory implements Inventory {
 
     @Override
     public void clear(int index) {
-
+        setItem(index, null);
     }
 
     @Override
     public void clear() {
-
+        setContents(new ItemStack[getSize()]);
     }
 
     @Override
