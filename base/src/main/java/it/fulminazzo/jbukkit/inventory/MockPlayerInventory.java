@@ -16,6 +16,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Represents an implementation of {@link PlayerInventory}.
+ * Uses {@link MockInventory}.
+ */
 @Getter
 @Setter
 public class MockPlayerInventory extends MockInventory implements PlayerInventory {
@@ -23,6 +27,11 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
     private int heldItemSlot;
     private final Player holder;
 
+    /**
+     * Instantiates a new Mock player inventory.
+     *
+     * @param holder the player owner
+     */
     public MockPlayerInventory(final @NotNull Player holder) {
         super((Arrays.stream(EquipmentSlot.values()).anyMatch(v -> v.name().equals("OFF_HAND")) ?
                 EquipSlot.OFF_HAND.slot : EquipSlot.HELMET.slot) + 1);
@@ -137,15 +146,37 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         setItem(getHeldItemSlot(), stack);
     }
 
+    /**
+     * Clear int.
+     *
+     * @param id   the id
+     * @param data the data
+     * @return the int
+     */
     public int clear(int id, int data) {
         throw new NotImplementedException();
     }
 
     private enum EquipSlot {
+        /**
+         * Off hand equip slot.
+         */
         OFF_HAND(STORAGE_SIZE + 4, "OFF_HAND"),
+        /**
+         * Boots equip slot.
+         */
         BOOTS(STORAGE_SIZE, "FEET"),
+        /**
+         * Leggings equip slot.
+         */
         LEGGINGS(STORAGE_SIZE + 1, "LEGS"),
+        /**
+         * Chestplate equip slot.
+         */
         CHESTPLATE(STORAGE_SIZE + 2, "CHEST"),
+        /**
+         * Helmet equip slot.
+         */
         HELMET(STORAGE_SIZE + 3, "HEAD"),
         ;
 
@@ -153,17 +184,24 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         // String necessary for compatibility reasons
         private final String toEquipmentSlot;
 
-        EquipSlot(int slot, String toEquipmentSlot) {
+        EquipSlot(final int slot, final @NotNull String toEquipmentSlot) {
             this.slot = slot;
             this.toEquipmentSlot = toEquipmentSlot;
         }
 
-        public static EquipSlot fromEquipmentSlot(EquipmentSlot equipmentSlot) {
+        /**
+         * Converts {@link EquipmentSlot} to {@link EquipSlot}.
+         *
+         * @param equipmentSlot the equipment slot
+         * @return the equip slot
+         */
+        public static @NotNull EquipSlot fromEquipmentSlot(final @NotNull EquipmentSlot equipmentSlot) {
             for (EquipSlot equipSlot : values()) 
                 if (equipSlot.toEquipmentSlot.equals(equipmentSlot.name()))
                     return equipSlot;
             throw new IllegalArgumentException("Unknown equip slot " + equipmentSlot);
         }
+
     }
     
 }
