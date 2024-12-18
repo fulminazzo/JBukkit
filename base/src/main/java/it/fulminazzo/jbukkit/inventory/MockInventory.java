@@ -288,7 +288,7 @@ public class MockInventory implements Inventory {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return Arrays.stream(this.contents).allMatch(Objects::isNull);
     }
 
     @Override
