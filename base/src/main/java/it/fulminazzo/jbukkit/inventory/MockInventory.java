@@ -31,6 +31,13 @@ public class MockInventory implements Inventory {
     }
 
     @Override
+    public void setContents(@NotNull ItemStack[] items) throws IllegalArgumentException {
+        if (items.length != this.contents.length)
+            throw new IllegalArgumentException("Cannot set contents of " + items.length + " items when size is " + getSize());
+        System.arraycopy(items, 0, this.contents, 0, items.length);
+    }
+
+    @Override
     public int getSize() {
         return this.contents.length;
     }
