@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
+import it.fulminazzo.jbukkit.persistence.MockPersistentDataContainer;
 import it.fulminazzo.yagl.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,8 +34,10 @@ public class MockItemMeta implements ItemMeta {
     private final Map<Enchantment, Integer> enchants;
     private final Set<ItemFlag> itemFlags;
     private boolean unbreakable;
+    private Integer customModelData;
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
     private final MockCustomItemTagContainer customTagContainer;
+    private final PersistentDataContainer persistentDataContainer;
     @Getter(AccessLevel.NONE)
     private final Spigot spigot;
 
@@ -46,6 +50,7 @@ public class MockItemMeta implements ItemMeta {
         this.itemFlags = new HashSet<>();
         this.attributeModifiers = HashMultimap.create();
         this.customTagContainer = new MockCustomItemTagContainer();
+        this.persistentDataContainer = new MockPersistentDataContainer();
         this.spigot = new MockSpigot(this);
     }
 
@@ -68,6 +73,16 @@ public class MockItemMeta implements ItemMeta {
     public void setLore(List<String> lore) {
         this.lore.clear();
         this.lore.addAll(lore);
+    }
+
+    @Override
+    public boolean hasCustomModelData() {
+        return this.customModelData != null;
+    }
+
+    @Override
+    public int getCustomModelData() {
+        return hasCustomModelData() ? this.customModelData : 0;
     }
 
     @Override
@@ -173,6 +188,11 @@ public class MockItemMeta implements ItemMeta {
     @Override
     public @NotNull CustomItemTagContainer getCustomTagContainer() {
         return this.customTagContainer;
+    }
+
+    @Override
+    public void setVersion(int version) {
+        throw new NotImplementedException();
     }
 
     @Override
