@@ -1,13 +1,18 @@
 package it.fulminazzo.jbukkit.enchantments;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
+import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Getter
@@ -19,6 +24,11 @@ public class MockEnchantment extends Enchantment {
     private final EnchantmentTarget itemTarget;
     private final Set<Enchantment> conflicts;
     private final Set<ItemStack> canEnchantItems;
+
+    public MockEnchantment(Enchantment enchantment) {
+        this(enchantment.getId(), enchantment.getName(), enchantment.getStartLevel(),
+                enchantment.getMaxLevel(), enchantment.getItemTarget());
+    }
 
     public MockEnchantment(final int id, final @NotNull String name, final int startLevel,
                            final int maxLevel, final @NotNull EnchantmentTarget itemTarget) {
@@ -50,6 +60,24 @@ public class MockEnchantment extends Enchantment {
     @Override
     public boolean canEnchantItem(final @NotNull ItemStack item) {
         return this.canEnchantItems.contains(item);
+    }
+
+    @SneakyThrows
+    public static void setupEnchantments() {
+        Refl<Class<Enchantment>> enchantmentClass = new Refl<>(Enchantment.class);
+        Map<Integer, Enchantment> byId = enchantmentClass.getFieldObject("byId");
+        Map<String, Enchantment> byName = enchantmentClass.getFieldObject("byName");
+        byId.clear();
+        byName.clear();
+        for (Field field : enchantmentClass.getStaticFields())
+            if (field.getType().equals(Enchantment.class)) {
+                Enchantment enchantment = (Enchantment) ReflectionUtils.setAccessibleOrThrow(field)
+                        .get(Enchantment.class);
+                MockEnchantment mock = new MockEnchantment(enchantment);
+                field.set(Enchantment.class, mock);
+                byId.put(mock.getId(), enchantment);
+                byName.put(mock.getName(), enchantment);
+            }
     }
 
 }
