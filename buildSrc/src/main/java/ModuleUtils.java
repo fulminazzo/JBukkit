@@ -52,7 +52,7 @@ public final class ModuleUtils {
     private static void generateBuildGradle(final int module) {
         File buildFile = new File(getParent(), module + File.separator + "build.gradle");
         FileUtils.deleteIfExists(buildFile);
-        FileUtils.createDirIfNotExists(buildFile);
+        FileUtils.createFileIfNotExists(buildFile);
         FileUtils.writeFile(buildFile, formatModule(BUILD_GRADLE_FORMAT, module));
     }
 
