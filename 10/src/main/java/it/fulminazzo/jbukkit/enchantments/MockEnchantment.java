@@ -38,6 +38,7 @@ public class MockEnchantment extends Enchantment {
     public MockEnchantment(final @NotNull Enchantment enchantment) {
         this(enchantment.getId(), enchantment.getName(), enchantment.getStartLevel(),
                 enchantment.getMaxLevel(), enchantment.getItemTarget());
+        setTreasure(enchantment.isTreasure());
     }
 
     /**
