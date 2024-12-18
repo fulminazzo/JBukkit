@@ -12,6 +12,22 @@ import java.util.function.Predicate;
 public final class FileUtils {
 
     /**
+     * Reads the given file and returns its output as a string.
+     *
+     * @param file the file
+     * @return the output
+     */
+    public static @NotNull String readFile(final @NotNull File file) {
+        try (FileInputStream stream = new FileInputStream(file)) {
+            StringBuilder builder = new StringBuilder();
+            while (stream.available() > 0) builder.append(stream.read());
+            return builder.toString();
+        } catch (IOException e) {
+            throw new FileException("read", file, e);
+        }
+    }
+
+    /**
      * Creates the given directory if it not exists already.
      * Throws {@link FileException} in case of failure.
      * If the file already exists and is a file, it will be deleted.
@@ -135,7 +151,7 @@ public final class FileUtils {
          * Instantiates a new File exception.
          *
          * @param message the message
-         * @param cause the underlying cause
+         * @param cause   the underlying cause
          */
         public FileException(final @NotNull String message, final @NotNull Throwable cause) {
             super(message, cause);
@@ -147,7 +163,7 @@ public final class FileUtils {
          *
          * @param action the action
          * @param target the target
-         * @param cause the underlying cause
+         * @param cause  the underlying cause
          */
         public FileException(final @NotNull String action, final @NotNull File target, final @NotNull Throwable cause) {
             this(String.format("Failed to %s %s: %s", action, getFileType(target), target.getPath()), cause);
