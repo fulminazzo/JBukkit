@@ -3,13 +3,42 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * A utility for modules of the project.
  */
 @NoArgsConstructor
 public final class ModuleUtils {
+
+    private static void copySingleModule(final @NotNull File module,
+                                         final @NotNull File targetModule) {
+        if (module.isDirectory()) {
+            File[] files = module.listFiles();
+            if (files == null) return;
+            if (!targetModule.isDirectory() && !targetModule.mkdir())
+                throw new RuntimeException("Failed to create directory " + targetModule.getPath());
+            for (File file : files)
+                copySingleModule(file, new File(targetModule, file.getName()));
+        } else {
+            if (!module.getName().endsWith(".java")) return;
+            if (targetModule.exists()) return;
+            try {
+                if (!targetModule.createNewFile())
+                    throw new RuntimeException("Failed to create file " + targetModule.getPath());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try (FileInputStream input = new FileInputStream(module);
+                 FileOutputStream output = new FileOutputStream(targetModule)) {
+                while (input.available() > 0) output.write(input.read());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     /**
      * Looks for a module named <code>module</code> in the project folder.
@@ -42,7 +71,7 @@ public final class ModuleUtils {
             if (!targetModule.exists()) return;
             if (!targetModule.getName().endsWith(".java")) return;
             if (sameContent(module, targetModule) && !targetModule.delete())
-                throw new IllegalArgumentException("Could not delete " + targetModule.getPath());
+                throw new RuntimeException("Could not delete " + targetModule.getPath());
         }
     }
 
