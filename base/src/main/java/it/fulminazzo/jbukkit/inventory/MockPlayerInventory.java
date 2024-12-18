@@ -126,18 +126,19 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
     }
 
     private enum EquipSlot {
-        HAND(-1),
-        OFF_HAND(STORAGE_SIZE + 4),
-        BOOTS(STORAGE_SIZE),
-        LEGGINGS(STORAGE_SIZE + 1),
-        CHESTPLATE(STORAGE_SIZE + 2),
-        HELMET(STORAGE_SIZE + 3),
+        OFF_HAND(STORAGE_SIZE + 4, EquipmentSlot.OFF_HAND),
+        BOOTS(STORAGE_SIZE, EquipmentSlot.FEET),
+        LEGGINGS(STORAGE_SIZE + 1, EquipmentSlot.LEGS),
+        CHESTPLATE(STORAGE_SIZE + 2, EquipmentSlot.CHEST),
+        HELMET(STORAGE_SIZE + 3, EquipmentSlot.HEAD),
         ;
 
         private final int slot;
+        private final EquipmentSlot toEquipmentSlot;
 
-        EquipSlot(int slot) {
+        EquipSlot(int slot, EquipmentSlot toEquipmentSlot) {
             this.slot = slot;
+            this.toEquipmentSlot = toEquipmentSlot;
         }
     }
     
