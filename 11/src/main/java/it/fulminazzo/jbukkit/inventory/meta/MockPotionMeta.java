@@ -2,6 +2,7 @@ package it.fulminazzo.jbukkit.inventory.meta;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Color;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
@@ -18,9 +19,15 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     private final Set<PotionEffect> customEffects;
     private PotionEffectType mainEffect;
     private PotionData basePotionData;
+    private Color color;
 
     public MockPotionMeta() {
         this.customEffects = new HashSet<>();
+    }
+
+    @Override
+    public boolean hasColor() {
+        return this.color != null;
     }
 
     public boolean setMainEffect(PotionEffectType mainEffect) {
