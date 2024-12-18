@@ -116,7 +116,7 @@ public class MockItemMeta implements ItemMeta {
 
         @Override
         public boolean isUnbreakable() {
-            return unbreakable;
+            return this.unbreakable;
         }
     }
 }
