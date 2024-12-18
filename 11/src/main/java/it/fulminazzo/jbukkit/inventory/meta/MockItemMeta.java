@@ -12,6 +12,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+/**
+ * Represents a mock implementation for {@link ItemMeta}.
+ */
 @Getter
 @Setter
 public class MockItemMeta implements ItemMeta {
@@ -24,6 +27,9 @@ public class MockItemMeta implements ItemMeta {
     @Getter(AccessLevel.NONE)
     private final Spigot spigot;
 
+    /**
+     * Instantiates a new Mock item meta.
+     */
     public MockItemMeta() {
         this.lore = new LinkedList<>();
         this.enchants = new HashMap<>();

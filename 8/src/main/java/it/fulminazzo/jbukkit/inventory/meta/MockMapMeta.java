@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.meta.MapMeta;
 
+/**
+ * Represents a mock implementation for {@link MapMeta}.
+ */
 @Getter
 @Setter
 public class MockMapMeta extends MockItemMeta implements MapMeta {

@@ -8,11 +8,17 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a mock implementation for {@link EnchantmentStorageMeta}.
+ */
 @Getter
 @Setter
 public class MockEnchantmentStorageMeta extends MockItemMeta implements EnchantmentStorageMeta {
     private final Map<Enchantment, Integer> storedEnchants;
 
+    /**
+     * Instantiates a new Mock enchantment storage meta.
+     */
     public MockEnchantmentStorageMeta() {
         this.storedEnchants = new HashMap<>();
     }

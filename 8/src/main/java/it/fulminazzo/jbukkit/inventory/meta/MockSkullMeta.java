@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.meta.SkullMeta;
 
+/**
+ * Represents a mock implementation for {@link SkullMeta}.
+ */
 @Getter
 @Setter
 public class MockSkullMeta extends MockItemMeta implements SkullMeta {

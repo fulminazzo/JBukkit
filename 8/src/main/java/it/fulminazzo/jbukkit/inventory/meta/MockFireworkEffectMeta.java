@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.bukkit.FireworkEffect;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
 
+/**
+ * Represents a mock implementation for {@link FireworkEffectMeta}.
+ */
 @Getter
 @Setter
 public class MockFireworkEffectMeta extends MockItemMeta implements FireworkEffectMeta {

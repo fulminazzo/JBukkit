@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.meta.BlockStateMeta;
 
+/**
+ * Represents a mock implementation for {@link BlockStateMeta}.
+ */
 @Getter
 @Setter
 public class MockBlockStateMeta extends MockItemMeta implements BlockStateMeta {

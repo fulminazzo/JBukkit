@@ -9,12 +9,18 @@ import org.bukkit.inventory.meta.BannerMeta;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Represents a mock implementation for {@link BannerMeta}.
+ */
 @Getter
 @Setter
 public class MockBannerMeta extends MockItemMeta implements BannerMeta {
     private final List<Pattern> patterns;
     private DyeColor baseColor;
 
+    /**
+     * Instantiates a new Mock banner meta.
+     */
     public MockBannerMeta() {
         this.patterns = new LinkedList<>();
     }

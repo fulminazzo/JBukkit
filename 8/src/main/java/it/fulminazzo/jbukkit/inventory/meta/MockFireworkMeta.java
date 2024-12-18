@@ -9,12 +9,18 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Represents a mock implementation for {@link FireworkMeta}.
+ */
 @Getter
 @Setter
 public class MockFireworkMeta extends MockItemMeta implements FireworkMeta {
     private final List<FireworkEffect> effects;
     private int power;
 
+    /**
+     * Instantiates a new Mock firework meta.
+     */
     public MockFireworkMeta() {
         this.effects = new LinkedList<>();
     }

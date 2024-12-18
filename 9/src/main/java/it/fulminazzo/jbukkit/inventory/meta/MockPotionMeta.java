@@ -12,6 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Represents a mock implementation for {@link PotionMeta}.
+ */
 @Getter
 @Setter
 public class MockPotionMeta extends MockItemMeta implements PotionMeta {
@@ -19,6 +22,9 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     private PotionEffectType mainEffect;
     private PotionData basePotionData;
 
+    /**
+     * Instantiates a new Mock potion meta.
+     */
     public MockPotionMeta() {
         this.customEffects = new HashSet<>();
     }

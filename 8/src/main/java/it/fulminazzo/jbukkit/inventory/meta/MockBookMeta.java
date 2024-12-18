@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Represents a mock implementation for {@link BookMeta}.
+ */
 @Getter
 @Setter
 public class MockBookMeta extends MockItemMeta implements BookMeta {
@@ -15,6 +18,9 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
     private String title;
     private String author;
 
+    /**
+     * Instantiates a new Mock book meta.
+     */
     public MockBookMeta() {
         this.pages = new LinkedList<>();
     }
