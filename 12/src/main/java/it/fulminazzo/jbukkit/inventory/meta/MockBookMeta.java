@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.inventory.meta.BookMeta;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,23 +46,27 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
     @Override
     public boolean hasPages() {
-        return !this.pages.isEmpty();
+        return !spigot().getPages().isEmpty();
     }
 
     @Override
     public String getPage(int page) {
-        return this.pages.get(page);
+        return TextComponent.toLegacyText(spigot().getPage(page));
     }
 
     @Override
     public void setPage(int page, String data) {
-        this.pages.set(page, data);
+        spigot().setPage(page, TextComponent.fromLegacyText(data));
+    }
+
+    @Override
+    public List<String> getPages() {
+        return spigot().getPages().stream().map(TextComponent::toLegacyText).collect(Collectors.toList());
     }
 
     @Override
     public void setPages(List<String> pages) {
-        this.pages.clear();
-        this.pages.addAll(pages);
+        spigot().setPages(pages.stream().map(TextComponent::fromLegacyText).collect(Collectors.toList()));
     }
 
     @Override
@@ -71,12 +76,12 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
     @Override
     public void addPage(String... pages) {
-        this.pages.addAll(Arrays.asList(pages));
+        spigot().addPage(Arrays.stream(pages).map(TextComponent::fromLegacyText).toArray(BaseComponent[][]::new));
     }
 
     @Override
     public int getPageCount() {
-        return this.pages.size();
+        return spigot().getPages().size();
     }
 
     @Override
