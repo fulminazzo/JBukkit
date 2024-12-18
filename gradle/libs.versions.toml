@@ -19,3 +19,9 @@ annotations = { module = "org.jetbrains:annotations", version.ref = "annotations
 
 junit-platform = { module = "org.junit:junit-bom", version.ref = "junit" }
 mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+
+spigot_v8 = { module = "org.spigotmc:spigot-api", version = "1.8.8-R0.1-SNAPSHOT" }
+spigot_v9 = { module = "org.spigotmc:spigot-api", version = "1.9.4-R0.1-SNAPSHOT" }
+spigot_v10 = { module = "org.spigotmc:spigot-api", version = "1.10.2-R0.1-SNAPSHOT" }
+spigot_v11 = { module = "org.spigotmc:spigot-api", version = "1.11.2-R0.1-SNAPSHOT" }
+spigot_v12 = { module = "org.spigotmc:spigot-api", version = "1.12.2-R0.1-SNAPSHOT" }

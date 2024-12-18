@@ -1,6 +1,6 @@
 dependencies {
-    compileOnly "org.spigotmc:spigot-api:1.10.2-R0.1-SNAPSHOT"
-    testImplementation "org.spigotmc:spigot-api:1.10.2-R0.1-SNAPSHOT"
+    compileOnly libs.spigot.v10
+    testImplementation libs.spigot.v10
 
     api project(":9")
 }
