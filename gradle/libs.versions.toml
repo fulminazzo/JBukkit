@@ -1,0 +1,21 @@
+[versions]
+delombok = "8.4"
+
+fulmicollection = "1.6.1"
+yagl = "4.0"
+
+lombok = "1.18.32"
+annotations = "24.1.0"
+
+junit = "5.9.1"
+mockito = "4.11.0"
+
+[libraries]
+fulmicollection = { module = "it.fulminazzo:FulmiCollection", version.ref = "fulmicollection" }
+yagl_common = { module = "it.fulminazzo.YAGL:common", version.ref = "yagl" }
+
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+
+junit-platform = { module = "org.junit:junit-bom", version.ref = "junit" }
+mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
