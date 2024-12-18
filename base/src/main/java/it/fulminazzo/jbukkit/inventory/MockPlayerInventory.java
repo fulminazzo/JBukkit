@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.inventory;
 
+import it.fulminazzo.jbukkit.NotImplementedException;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
@@ -37,7 +38,6 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         return Arrays.copyOfRange(getContents(), EquipSlot.BOOTS.slot, EquipSlot.OFF_HAND.slot);
     }
 
-    @Override
     public @NotNull ItemStack[] getExtraContents() {
         return new ItemStack[EquipSlot.OFF_HAND.slot];
     }
@@ -62,12 +62,10 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         return getArmorContents()[EquipSlot.BOOTS.slot];
     }
 
-    @Override
     public void setItem(@NotNull EquipmentSlot slot, @Nullable ItemStack item) {
         setItem(EquipSlot.fromEquipmentSlot(slot).slot, item);
     }
 
-    @Override
     public @Nullable ItemStack getItem(@NotNull EquipmentSlot slot) {
         return getItem(EquipSlot.fromEquipmentSlot(slot).slot);
     }
@@ -77,7 +75,6 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         setContents(items, EquipSlot.BOOTS.slot, EquipSlot.OFF_HAND.slot);
     }
 
-    @Override
     public void setExtraContents(@Nullable ItemStack[] items) {
         setContents(items, EquipSlot.OFF_HAND.slot, EquipSlot.OFF_HAND.slot + 1);
     }
@@ -102,26 +99,22 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         setItem(EquipSlot.BOOTS.slot, boots);
     }
 
-    @Override
     public @NotNull ItemStack getItemInMainHand() {
         ItemStack itemStack = getItem(getHeldItemSlot());
         if (itemStack == null) return new ItemStack(Material.AIR);
         return itemStack;
     }
 
-    @Override
     public void setItemInMainHand(@Nullable ItemStack item) {
         setItem(getHeldItemSlot(), item);
     }
 
-    @Override
     public @NotNull ItemStack getItemInOffHand() {
         ItemStack itemStack = getItem(EquipSlot.OFF_HAND.slot);
         if (itemStack == null) return new ItemStack(Material.AIR);
         return itemStack;
     }
 
-    @Override
     public void setItemInOffHand(@Nullable ItemStack item) {
         setItem(EquipSlot.OFF_HAND.slot, item);
     }
@@ -136,6 +129,11 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
     @Override
     public void setItemInHand(@Nullable ItemStack stack) {
         setItem(getHeldItemSlot(), stack);
+    }
+
+    @Override
+    public int clear(int id, int data) {
+        throw new NotImplementedException();
     }
 
     private enum EquipSlot {
