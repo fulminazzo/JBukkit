@@ -65,10 +65,6 @@ public final class FileUtils {
             throw new FileException("delete", target);
     }
 
-    private static @NotNull String getFileType(final @NotNull File file) {
-        return file.isDirectory() ? "directory" : file.isFile() ? "file" : "none";
-    }
-
     /**
      * Verifies that two files have the same contents.
      *
@@ -88,6 +84,10 @@ public final class FileUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static @NotNull String getFileType(final @NotNull File file) {
+        return file.isDirectory() ? "directory" : file.isFile() ? "file" : "none";
     }
 
     private static class FileException extends RuntimeException {
