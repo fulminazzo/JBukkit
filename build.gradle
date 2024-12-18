@@ -43,11 +43,8 @@ allprojects {
     }
 
     this.ext.getSpigotVersion = {
-        if (project.name != "base") {
-            if (project.name == "obsolete")
-                return 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
-            else return 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
-        } else return 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT'
+        return 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
+//        return 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
     }
 
     repositories {
