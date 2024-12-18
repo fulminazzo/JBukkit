@@ -12,6 +12,15 @@ import java.util.function.Predicate;
 public final class FileUtils {
 
     /**
+     * Verifies that the given file is an actual file.
+     *
+     * @param file the file
+     */
+    public static void checkFile(final @NotNull File file) {
+        if (!file.isFile()) throw new IllegalArgumentException(file.getPath() + " is not a file");
+    }
+
+    /**
      * Reads the given file and returns its output as a string.
      * Throws {@link FileException} in case of failure.
      *
@@ -19,6 +28,7 @@ public final class FileUtils {
      * @return the output
      */
     public static @NotNull String readFile(final @NotNull File file) {
+        checkFile(file);
         try (FileInputStream stream = new FileInputStream(file)) {
             StringBuilder builder = new StringBuilder();
             while (stream.available() > 0) builder.append((char) stream.read());
@@ -36,6 +46,8 @@ public final class FileUtils {
      * @param content the content
      */
     public static void writeFile(final @NotNull File file, final @NotNull String content) {
+        FileUtils.createFileIfNotExists(file);
+        checkFile(file);
         try (FileOutputStream stream = new FileOutputStream(file)) {
             stream.write(content.getBytes());
         } catch (IOException e) {
