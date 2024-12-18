@@ -14,6 +14,7 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
     private final List<String> pages;
     private String title;
     private String author;
+    private Generation generation;
 
     public MockBookMeta() {
         this.pages = new LinkedList<>();

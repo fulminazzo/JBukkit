@@ -3,6 +3,7 @@ package it.fulminazzo.jbukkit.inventory.meta;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     private final Set<PotionEffect> customEffects;
     private PotionEffectType mainEffect;
+    private PotionData basePotionData;
 
     public MockPotionMeta() {
         this.customEffects = new HashSet<>();
