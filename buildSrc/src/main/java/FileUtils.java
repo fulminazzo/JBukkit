@@ -11,7 +11,18 @@ import java.util.function.Predicate;
 public final class FileUtils {
 
     /**
+     * Deletes the target file if it exists.
+     * Throws {@link FileException} in case of failure.
+     *
+     * @param file the file
+     */
+    public static void deleteIfExists(final @NotNull File file) {
+        deleteIf(File::exists, file);
+    }
+
+    /**
      * Deletes the target file if the given predicate is verified.
+     * Throws {@link FileException} in case of failure.
      *
      * @param predicate the predicate
      * @param target    the target
