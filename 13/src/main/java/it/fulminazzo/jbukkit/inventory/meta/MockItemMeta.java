@@ -3,6 +3,7 @@ package it.fulminazzo.jbukkit.inventory.meta;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import it.fulminazzo.jbukkit.NotImplementedException;
+import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
 import it.fulminazzo.yagl.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,6 +33,7 @@ public class MockItemMeta implements ItemMeta {
     private final Set<ItemFlag> itemFlags;
     private boolean unbreakable;
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
+    private final MockCustomItemTagContainer customTagContainer;
     @Getter(AccessLevel.NONE)
     private final Spigot spigot;
 
@@ -42,6 +45,7 @@ public class MockItemMeta implements ItemMeta {
         this.enchants = new HashMap<>();
         this.itemFlags = new HashSet<>();
         this.attributeModifiers = HashMultimap.create();
+        this.customTagContainer = new MockCustomItemTagContainer();
         this.spigot = new MockSpigot(this);
     }
 
@@ -164,6 +168,11 @@ public class MockItemMeta implements ItemMeta {
     @Override
     public boolean removeAttributeModifier(@NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
         return this.attributeModifiers.remove(attribute, modifier);
+    }
+
+    @Override
+    public @NotNull CustomItemTagContainer getCustomTagContainer() {
+        return this.customTagContainer;
     }
 
     @Override
