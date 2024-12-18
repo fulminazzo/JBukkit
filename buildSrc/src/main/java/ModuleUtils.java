@@ -11,6 +11,8 @@ import java.io.IOException;
  */
 @NoArgsConstructor
 public final class ModuleUtils {
+    private static final String SETTINGS_MODULE_FORMAT = "// 1.%current%\n" +
+            "include '%current%'\n";
     private static final String BUILD_GRADLE_FORMAT = "dependencies {\n" +
             "    compileOnly libs.spigot.v%current%\n" +
             "    testImplementation libs.spigot.v%current%\n" +
@@ -34,7 +36,20 @@ public final class ModuleUtils {
             if (moduleDir.isDirectory())
                 copySingleModule(moduleDir, targetModuleDir);
         }
+        generateModuleDeclaration(module);
         generateBuildGradle(module);
+    }
+
+    private static void generateModuleDeclaration(final int module) {
+        File settingsFile = new File(getParent(), "settings.gradle");
+        String output = formatModule(SETTINGS_MODULE_FORMAT, module);
+        if (!FileUtils.contains(settingsFile, output)) {
+            String read = FileUtils.readFile(settingsFile);
+            while (read.substring(read.length() - 1).matches("[\r\n\t ]"))
+                read = read.substring(0, read.length() - 1);
+            read += "\n" + output;
+            FileUtils.writeFile(settingsFile, read);
+        }
     }
 
     private static void generateBuildGradle(final int module) {
