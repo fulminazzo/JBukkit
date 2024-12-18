@@ -76,7 +76,7 @@ public class MockInventory implements Inventory {
 
     // Copied from actual Spigot code
     @Override
-    public HashMap<Integer, ItemStack> addItem(final ItemStack @NotNull ... itemStacks) throws IllegalArgumentException {
+    public @NotNull HashMap<Integer, ItemStack> addItem(final ItemStack @NotNull ... itemStacks) throws IllegalArgumentException {
         HashMap<Integer, ItemStack> leftover = new HashMap<>();
 
         for (int i = 0; i < contents.length; i++) {
@@ -135,14 +135,14 @@ public class MockInventory implements Inventory {
     }
 
     // Copied from actual Spigot code
-    private int first(ItemStack item, boolean withAmount, ItemStack[] inventory) {
+    private int first(ItemStack item, ItemStack[] inventory) {
         if (item == null) {
             return -1;
         }
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] == null) continue;
 
-            if (withAmount ? item.equals(inventory[i]) : item.isSimilar(inventory[i])) {
+            if (item.isSimilar(inventory[i])) {
                 return i;
             }
         }
@@ -151,7 +151,7 @@ public class MockInventory implements Inventory {
 
     // Copied from actual Spigot code
     @Override
-    public HashMap<Integer, ItemStack> removeItem(final ItemStack @NotNull ... itemStacks) throws IllegalArgumentException {
+    public @NotNull HashMap<Integer, ItemStack> removeItem(final ItemStack @NotNull ... itemStacks) throws IllegalArgumentException {
         HashMap<Integer, ItemStack> leftover = new HashMap<Integer, ItemStack>();
 
         for (int i = 0; i < contents.length; i++) {
@@ -161,7 +161,7 @@ public class MockInventory implements Inventory {
             while (true) {
                 // Paper start - Allow searching entire contents
                 ItemStack[] toSearch = getContents();
-                int first = this.first(item, false, toSearch);
+                int first = this.first(item, toSearch);
                 // Paper end
 
                 // Drat! we don't have this type in the inventory
