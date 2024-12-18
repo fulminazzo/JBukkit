@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a mock implementation for {@link BookMeta}.
@@ -110,7 +111,7 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
         @Override
         public void setPage(int page, BaseComponent... data) {
-            super.setPage(page, data);
+            this.meta.setPage(page, BaseComponent.toLegacyText(data));
         }
 
         @Override
@@ -120,17 +121,17 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
         @Override
         public void setPages(List<BaseComponent[]> pages) {
-            super.setPages(pages);
+            this.meta.setPages(pages.stream().map(BaseComponent::toLegacyText).collect(Collectors.toList()));
         }
 
         @Override
         public void setPages(BaseComponent[]... pages) {
-            super.setPages(pages);
+            setPages(Arrays.asList(pages));
         }
 
         @Override
         public void addPage(BaseComponent[]... pages) {
-            super.addPage(pages);
+            this.meta.addPage(Arrays.stream(pages).map(BaseComponent::toLegacyText).toArray(String[]::new));
         }
 
         @Override
