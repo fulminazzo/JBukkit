@@ -42,11 +42,6 @@ allprojects {
         return "${rootProject.group}${groupId}"
     }
 
-    this.ext.getSpigotVersion = {
-        return 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
-//        return 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
-    }
-
     repositories {
         mavenCentral()
         maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
@@ -65,9 +60,6 @@ allprojects {
         implementation 'org.mockito:mockito-core:4.11.0'
 
         if (!project.name.equals('base')) api project(':base')
-        String spigotVersion = getSpigotVersion()
-        compileOnly spigotVersion
-        testImplementation spigotVersion
 
         compileOnly platform('org.junit:junit-bom:5.9.1')
         compileOnly 'org.junit.jupiter:junit-jupiter'
