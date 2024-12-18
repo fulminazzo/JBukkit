@@ -1,5 +1,7 @@
 package it.fulminazzo.jbukkit.inventory;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -9,8 +11,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
+@Getter
+@Setter
 public class MockPlayerInventory extends MockInventory implements PlayerInventory {
     private static final int STORAGE_SIZE = 36;
+    private int heldItemSlot;
 
     @Override
     public @NotNull ItemStack[] getArmorContents() {
