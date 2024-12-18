@@ -6,7 +6,6 @@ import lombok.Setter;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.inventory.meta.BookMeta;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -91,15 +90,13 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
     @Override
     public BookMeta.Spigot spigot() {
-        return new MockSpigot(this);
+        return new MockSpigot();
     }
 
     private static class MockSpigot extends BookMeta.Spigot {
-        private final @NotNull MockBookMeta meta;
         private final List<BaseComponent[]> pages;
 
-        private MockSpigot(final @NotNull MockBookMeta meta) {
-            this.meta = meta;
+        private MockSpigot() {
             this.pages = new LinkedList<>();
         }
 
@@ -132,16 +129,6 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
         @Override
         public void addPage(BaseComponent[]... pages) {
             this.pages.addAll(Arrays.asList(pages));
-        }
-
-        @Override
-        public boolean isUnbreakable() {
-            return this.meta.isUnbreakable();
-        }
-
-        @Override
-        public void setUnbreakable(boolean unbreakable) {
-            this.meta.setUnbreakable(unbreakable);
         }
 
     }
