@@ -11,11 +11,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a mock for {@link CustomItemTagContainer}.
+ */
 @Getter
 public class MockCustomItemTagContainer implements CustomItemTagContainer {
     private final Map<NamespacedKey, TagContainer<?, ?>> customDataTags;
     private final ItemTagAdapterContext adapterContext;
 
+    /**
+     * Instantiates a new Mock custom item tag container.
+     */
     public MockCustomItemTagContainer() {
         this.customDataTags = new HashMap<>();
         this.adapterContext = new MockItemTagAdapterContext();
