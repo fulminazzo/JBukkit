@@ -137,16 +137,7 @@ public final class FileUtils {
      * @return true if it is
      */
     public static boolean contains(final @NotNull File file, final @NotNull String string) {
-        if (!file.isFile()) throw new IllegalArgumentException(file.getPath() + " is not a file");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath())))) {
-            String line;
-            while ((line = reader.readLine()) != null)
-                if (line.contains(string))
-                    return true;
-            return false;
-        } catch (IOException e) {
-            throw new FileException("read", file, e);
-        }
+        return FileUtils.readFile(file).contains(string);
     }
 
     private static @NotNull String getFileType(final @NotNull File file) {
