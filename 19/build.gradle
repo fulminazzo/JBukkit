@@ -1,0 +1,6 @@
+dependencies {
+    compileOnly libs.spigot.v19
+    testImplementation libs.spigot.v19
+
+    api project(':18')
+}

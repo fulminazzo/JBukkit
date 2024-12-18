@@ -31,3 +31,4 @@ spigot_v15 = { module = "org.spigotmc:spigot-api", version = "1.15.2-R0.1-SNAPSH
 spigot_v16 = { module = "org.spigotmc:spigot-api", version = "1.16.5-R0.1-SNAPSHOT" }
 spigot_v17 = { module = "org.spigotmc:spigot-api", version = "1.17.1-R0.1-SNAPSHOT" }
 spigot_v18 = { module = "org.spigotmc:spigot-api", version = "1.18.2-R0.1-SNAPSHOT" }
+spigot_v19 = { module = "org.spigotmc:spigot-api", version = "1.19.4-R0.1-SNAPSHOT" }
