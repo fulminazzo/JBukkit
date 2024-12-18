@@ -20,6 +20,12 @@ public class MockSkullMeta extends MockItemMeta implements SkullMeta {
     }
 
     @Override
+    public boolean setOwningPlayer(OfflinePlayer owningPlayer) {
+        this.owningPlayer = owningPlayer;
+        return true;
+    }
+
+    @Override
     public boolean hasOwner() {
         return this.owner != null;
     }
