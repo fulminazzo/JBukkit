@@ -391,6 +391,11 @@ public class MockItemFactory implements ItemFactory {
         return Color.MAROON;
     }
 
+    @Override
+    public @NotNull Material updateMaterial(@NotNull ItemMeta meta, @NotNull Material material) throws IllegalArgumentException {
+        throw new NotImplementedException();
+    }
+
     public @NotNull ItemStack createItemStack(@NotNull String input) throws IllegalArgumentException {
         throw new NotImplementedException();
     }
