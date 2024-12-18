@@ -17,13 +17,17 @@ import java.util.*;
 @Getter
 @Setter
 public class MockInventory implements Inventory {
-    private ItemStack[] contents;
+    private final ItemStack[] contents;
+    private final InventoryType type;
     private final String name;
     private int maxStackSize;
+    private final List<HumanEntity> viewers;
 
     public MockInventory(final int size) {
         this.contents = new ItemStack[size];
+        this.type = InventoryType.CHEST;
         this.name = "";
+        this.viewers = new LinkedList<>();
     }
 
     @Override
