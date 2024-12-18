@@ -21,7 +21,7 @@ import java.util.*;
 public class MockInventory implements Inventory {
     private final ItemStack[] contents;
     private final InventoryType type;
-    private final String name;
+    private String title;
     private int maxStackSize;
     private final List<HumanEntity> viewers;
     private @Nullable InventoryHolder holder;
@@ -29,7 +29,7 @@ public class MockInventory implements Inventory {
     public MockInventory(final int size) {
         this.contents = new ItemStack[size];
         this.type = InventoryType.CHEST;
-        this.name = "";
+        this.title = "";
         this.viewers = new LinkedList<>();
     }
 
@@ -383,7 +383,7 @@ public class MockInventory implements Inventory {
     }
 
     public String getTitle() {
-        return this.name;
+        return this.title;
     }
 
     @Override
