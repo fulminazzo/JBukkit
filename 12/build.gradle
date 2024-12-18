@@ -2,5 +2,5 @@ dependencies {
     compileOnly libs.spigot.v12
     testImplementation libs.spigot.v12
 
-    api project(":11")
+    api project(':11')
 }
