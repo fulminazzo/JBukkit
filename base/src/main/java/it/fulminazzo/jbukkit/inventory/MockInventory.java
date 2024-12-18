@@ -237,12 +237,24 @@ public class MockInventory implements Inventory {
 
     @Override
     public @NotNull HashMap<Integer, ? extends ItemStack> all(@NotNull Material material) throws IllegalArgumentException {
-        return null;
+        HashMap<Integer, ItemStack> result = new HashMap<>();
+        for (int i = 0; i < getSize(); i++) {
+            ItemStack item = getItem(i);
+            if (item != null && item.getType().equals(material))
+                result.put(i, item);
+        }
+        return result;
     }
 
     @Override
     public @NotNull HashMap<Integer, ? extends ItemStack> all(@Nullable ItemStack item) {
-        return null;
+        HashMap<Integer, ItemStack> result = new HashMap<>();
+        if (item == null) return result;
+        for (int i = 0; i < getSize(); i++) {
+            ItemStack itemStack = getItem(i);
+            if (itemStack != null && itemStack.equals(item)) result.put(i, itemStack);
+        }
+        return result;
     }
 
     @Override
