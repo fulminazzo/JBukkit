@@ -21,7 +21,7 @@ public final class FileUtils {
     public static @NotNull String readFile(final @NotNull File file) {
         try (FileInputStream stream = new FileInputStream(file)) {
             StringBuilder builder = new StringBuilder();
-            while (stream.available() > 0) builder.append(stream.read());
+            while (stream.available() > 0) builder.append((char) stream.read());
             return builder.toString();
         } catch (IOException e) {
             throw new FileException("read", file, e);
