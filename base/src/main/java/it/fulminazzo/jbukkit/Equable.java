@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * The type Equable.
+ * A class used to compare two objects field by field.
  */
 @NoArgsConstructor
 public class Equable extends Printable {
@@ -29,4 +29,5 @@ public class Equable extends Printable {
         if (o1 == null || o2 == null) return false;
         return o1.getClass().equals(o2.getClass()) && ReflectionUtils.equalsFields(o1, o2);
     }
+
 }
