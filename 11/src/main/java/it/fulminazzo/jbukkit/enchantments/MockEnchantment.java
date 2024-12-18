@@ -25,6 +25,7 @@ public class MockEnchantment extends Enchantment {
     private final Set<Enchantment> conflicts;
     private final Set<ItemStack> canEnchantItems;
     private boolean treasure;
+    private boolean cursed;
 
     public MockEnchantment(Enchantment enchantment) {
         this(enchantment.getId(), enchantment.getName(), enchantment.getStartLevel(),
@@ -45,6 +46,11 @@ public class MockEnchantment extends Enchantment {
 
     public @NotNull MockEnchantment setTreasure(boolean treasure) {
         this.treasure = treasure;
+        return this;
+    }
+
+    public @NotNull MockEnchantment setCursed(boolean cursed) {
+        this.cursed = cursed;
         return this;
     }
 
