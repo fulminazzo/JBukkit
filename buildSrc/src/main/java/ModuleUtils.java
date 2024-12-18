@@ -41,19 +41,14 @@ public final class ModuleUtils {
         File buildFile = new File(getParent(), module + File.separator + "build.gradle");
         FileUtils.deleteIfExists(buildFile);
         FileUtils.createDirIfNotExists(buildFile);
-        try (FileOutputStream output = new FileOutputStream(buildFile)) {
-            output.write(formatModule(BUILD_GRADLE_FORMAT, module));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FileUtils.writeFile(buildFile, formatModule(BUILD_GRADLE_FORMAT, module));
     }
 
-    private static byte[] formatModule(final @NotNull String string,
+    private static String formatModule(final @NotNull String string,
                                        final int module) {
         return string
                 .replace("%current%", String.valueOf(module))
-                .replace("%previous%", String.valueOf(module - 1))
-                .getBytes();
+                .replace("%previous%", String.valueOf(module - 1));
     }
 
     private static void copySingleModule(final @NotNull File module,
@@ -68,12 +63,7 @@ public final class ModuleUtils {
             if (!module.getName().endsWith(".java")) return;
             FileUtils.deleteIfExists(targetModule);
             FileUtils.createFileIfNotExists(targetModule);
-            try (FileInputStream input = new FileInputStream(module);
-                 FileOutputStream output = new FileOutputStream(targetModule)) {
-                while (input.available() > 0) output.write(input.read());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            FileUtils.writeFile(targetModule, FileUtils.readFile(module));
         }
     }
 
