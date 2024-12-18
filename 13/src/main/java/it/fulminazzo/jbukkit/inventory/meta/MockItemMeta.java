@@ -1,14 +1,20 @@
 package it.fulminazzo.jbukkit.inventory.meta;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import it.fulminazzo.yagl.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -24,6 +30,7 @@ public class MockItemMeta implements ItemMeta {
     private final Map<Enchantment, Integer> enchants;
     private final Set<ItemFlag> itemFlags;
     private boolean unbreakable;
+    private final Multimap<Attribute, AttributeModifier> attributeModifiers;
     @Getter(AccessLevel.NONE)
     private final Spigot spigot;
 
@@ -34,6 +41,7 @@ public class MockItemMeta implements ItemMeta {
         this.lore = new LinkedList<>();
         this.enchants = new HashMap<>();
         this.itemFlags = new HashSet<>();
+        this.attributeModifiers = HashMultimap.create();
         this.spigot = new MockSpigot(this);
     }
 
@@ -103,6 +111,59 @@ public class MockItemMeta implements ItemMeta {
     @Override
     public boolean hasItemFlag(ItemFlag flag) {
         return this.itemFlags.contains(flag);
+    }
+
+    @Override
+    public boolean hasAttributeModifiers() {
+        return !this.attributeModifiers.isEmpty();
+    }
+
+    @Override
+    public @NotNull Multimap<Attribute, AttributeModifier> getAttributeModifiers(@NotNull EquipmentSlot slot) {
+        Multimap<Attribute, AttributeModifier> result = HashMultimap.create();
+        for (Attribute attribute : this.attributeModifiers.keySet())
+            for (AttributeModifier modifier : this.attributeModifiers.get(attribute))
+                if (modifier.getSlot() == slot)
+                    result.put(attribute, modifier);
+        return result;
+    }
+
+    @Override
+    public @Nullable Collection<AttributeModifier> getAttributeModifiers(@NotNull Attribute attribute) {
+        return this.attributeModifiers.get(attribute);
+    }
+
+    @Override
+    public boolean addAttributeModifier(@NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
+        return this.attributeModifiers.put(attribute, modifier);
+    }
+
+    @Override
+    public void setAttributeModifiers(@Nullable Multimap<Attribute, AttributeModifier> attributeModifiers) {
+        this.attributeModifiers.clear();
+        this.attributeModifiers.putAll(attributeModifiers);
+    }
+
+    @Override
+    public boolean removeAttributeModifier(@NotNull Attribute attribute) {
+        return this.attributeModifiers.removeAll(attribute) != null;
+    }
+
+    @Override
+    public boolean removeAttributeModifier(@NotNull EquipmentSlot slot) {
+        boolean removed = false;
+        for (Attribute attribute : new ArrayList<>(this.attributeModifiers.keySet()))
+            for (AttributeModifier modifier : new ArrayList<>(this.attributeModifiers.get(attribute)))
+                if (modifier.getSlot() == slot) {
+                    removeAttributeModifier(attribute, modifier);
+                    removed = true;
+                }
+        return removed;
+    }
+
+    @Override
+    public boolean removeAttributeModifier(@NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
+        return this.attributeModifiers.remove(attribute, modifier);
     }
 
     @Override
