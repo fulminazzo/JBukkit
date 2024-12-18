@@ -30,7 +30,7 @@ public final class FileUtils {
     public static void deleteIf(final @NotNull Predicate<File> predicate,
                                 final @NotNull File target) {
         if (predicate.test(target) && !target.delete())
-            throw new FileException("Failed to delete " + getFileType(target) + " " + target);
+            throw new FileException("delete", target);
     }
 
     private static @NotNull String getFileType(final @NotNull File file) {
@@ -46,6 +46,17 @@ public final class FileUtils {
          */
         public FileException(final @NotNull String message) {
             super(message);
+        }
+
+        /**
+         * Instantiates a new File exception.
+         * Generates a message of type "Failed to %action% %target_type% %target_path%"
+         *
+         * @param action the action
+         * @param target the target
+         */
+        public FileException(final @NotNull String action, final @NotNull File target) {
+            this(String.format("Failed to %s %s: %s", action, getFileType(target), target.getPath()));
         }
 
     }
