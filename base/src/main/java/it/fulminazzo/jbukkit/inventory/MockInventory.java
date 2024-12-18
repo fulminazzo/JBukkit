@@ -293,12 +293,20 @@ public class MockInventory implements Inventory {
 
     @Override
     public void remove(@NotNull Material material) throws IllegalArgumentException {
-
+        for (int i = 0; i < getSize(); i++) {
+            ItemStack item = getItem(i);
+            if (item != null && item.getType().equals(material))
+                setItem(i, null);
+        }
     }
 
     @Override
     public void remove(@NotNull ItemStack item) {
-
+        for (int i = 0; i < getSize(); i++) {
+            ItemStack itemStack = getItem(i);
+            if (itemStack != null && itemStack.equals(item))
+                setItem(i, null);
+        }
     }
 
     @Override
