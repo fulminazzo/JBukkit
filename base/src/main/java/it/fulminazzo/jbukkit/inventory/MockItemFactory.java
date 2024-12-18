@@ -66,8 +66,10 @@ public class MockItemFactory implements ItemFactory {
                 return null;
             case "WRITTEN_BOOK":
                 return "MockBookMeta";
+            case "BOOK_AND_QUILL":
             case "WRITABLE_BOOK":
                 return "MockWritableBookMeta";
+            case "SKULL":
             case "CREEPER_HEAD":
             case "CREEPER_WALL_HEAD":
             case "DRAGON_HEAD":
@@ -91,6 +93,10 @@ public class MockItemFactory implements ItemFactory {
             case "DIAMOND_CHESTPLATE":
             case "DIAMOND_LEGGINGS":
             case "DIAMOND_BOOTS":
+            case "GOLD_HELMET":
+            case "GOLD_CHESTPLATE":
+            case "GOLD_LEGGINGS":
+            case "GOLD_BOOTS":
             case "GOLDEN_HELMET":
             case "GOLDEN_CHESTPLATE":
             case "GOLDEN_LEGGINGS":
@@ -118,10 +124,13 @@ public class MockItemFactory implements ItemFactory {
             case "TIPPED_ARROW":
                 return "MockPotionMeta";
             case "FILLED_MAP":
+            case "MAP":
                 return "MockMapMeta";
             case "FIREWORK_ROCKET":
+            case "FIREWORK":
                 return "MockFireworkMeta";
             case "FIREWORK_STAR":
+            case "FIREWORK_CHARGE":
                 return "MockFireworkEffectMeta";
             case "ENCHANTED_BOOK":
                 return "MockEnchantmentStorageMeta";
@@ -157,6 +166,9 @@ public class MockItemFactory implements ItemFactory {
             case "WHITE_WALL_BANNER":
             case "YELLOW_BANNER":
             case "YELLOW_WALL_BANNER":
+            case "BANNER":
+            case "STANDING_BANNER":
+            case "WALL_BANNER":
                 return "MockBannerMeta";
             case "ALLAY_SPAWN_EGG":
             case "AXOLOTL_SPAWN_EGG":
@@ -235,10 +247,12 @@ public class MockItemFactory implements ItemFactory {
             case "ZOMBIE_SPAWN_EGG":
             case "ZOMBIE_VILLAGER_SPAWN_EGG":
             case "ZOMBIFIED_PIGLIN_SPAWN_EGG":
+            case "MONSTER_EGG":
                 return "MockSpawnEggMeta";
             case "KNOWLEDGE_BOOK":
                 return "MockKnowledgeBookMeta";
             case "FURNACE":
+            case "BURNING_FURNACE":
             case "CHEST":
             case "TRAPPED_CHEST":
             case "JUKEBOX":
@@ -280,6 +294,8 @@ public class MockItemFactory implements ItemFactory {
             case "OAK_SIGN":
             case "OAK_WALL_HANGING_SIGN":
             case "OAK_WALL_SIGN":
+            case "SIGN":
+            case "WALL_SIGN":
             case "SPRUCE_HANGING_SIGN":
             case "SPRUCE_SIGN":
             case "SPRUCE_WALL_HANGING_SIGN":
@@ -289,8 +305,11 @@ public class MockItemFactory implements ItemFactory {
             case "WARPED_WALL_HANGING_SIGN":
             case "WARPED_WALL_SIGN":
             case "SPAWNER":
+            case "MOB_SPAWNER":
             case "BREWING_STAND":
             case "ENCHANTING_TABLE":
+            case "ENCHANTMENT_TABLE":
+            case "COMMAND":
             case "COMMAND_BLOCK":
             case "REPEATING_COMMAND_BLOCK":
             case "CHAIN_COMMAND_BLOCK":
@@ -298,6 +317,7 @@ public class MockItemFactory implements ItemFactory {
             case "DAYLIGHT_DETECTOR":
             case "HOPPER":
             case "COMPARATOR":
+            case "REDSTONE_COMPARATOR":
             case "SHIELD":
             case "STRUCTURE_BLOCK":
             case "SHULKER_BOX":
