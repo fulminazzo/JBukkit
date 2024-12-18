@@ -15,6 +15,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Represents an implementation of {@link Enchantment}.
+ */
 @Getter
 public class MockEnchantment extends Enchantment {
     private final int id;
@@ -27,11 +30,26 @@ public class MockEnchantment extends Enchantment {
     private boolean treasure;
     private boolean cursed;
 
-    public MockEnchantment(Enchantment enchantment) {
+    /**
+     * Instantiates a new Mock enchantment.
+     * It will copy each value from the given enchantment.
+     *
+     * @param enchantment the enchantment
+     */
+    public MockEnchantment(final @NotNull Enchantment enchantment) {
         this(enchantment.getId(), enchantment.getName(), enchantment.getStartLevel(),
                 enchantment.getMaxLevel(), enchantment.getItemTarget());
     }
 
+    /**
+     * Instantiates a new Mock enchantment.
+     *
+     * @param id         the id
+     * @param name       the name
+     * @param startLevel the start level
+     * @param maxLevel   the max level
+     * @param itemTarget the item target
+     */
     public MockEnchantment(final int id, final @NotNull String name, final int startLevel,
                            final int maxLevel, final @NotNull EnchantmentTarget itemTarget) {
         super(id);
@@ -54,11 +72,23 @@ public class MockEnchantment extends Enchantment {
         return this;
     }
 
+    /**
+     * Explicitly declare the enchantments with which this enchantment will conflict.
+     *
+     * @param conflicts the enchantments
+     * @return this enchantment
+     */
     public @NotNull MockEnchantment conflictsWith(final Enchantment @NotNull ... conflicts) {
         this.conflicts.addAll(Arrays.asList(conflicts));
         return this;
     }
 
+    /**
+     * Explicitly declare the items which this enchantment can be applied to.
+     *
+     * @param canEnchantItems the items
+     * @return this enchantment
+     */
     public @NotNull MockEnchantment canEnchantItems(final @NotNull ItemStack... canEnchantItems) {
         this.canEnchantItems.addAll(Arrays.asList(canEnchantItems));
         return this;
@@ -74,6 +104,9 @@ public class MockEnchantment extends Enchantment {
         return this.canEnchantItems.contains(item);
     }
 
+    /**
+     * Sets up the default vanilla enchantments by checking the {@link Enchantment} static fields.
+     */
     @SneakyThrows
     public static void setupEnchantments() {
         Refl<Class<Enchantment>> enchantmentClass = new Refl<>(Enchantment.class);
