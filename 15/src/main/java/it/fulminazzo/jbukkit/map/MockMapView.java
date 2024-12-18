@@ -26,6 +26,8 @@ public class MockMapView implements MapView {
     private int centerX;
     private int centerZ;
     private boolean unlimitedTracking;
+    private boolean trackingPosition;
+    private boolean locked;
 
     /**
      * Instantiates a new Mock map view.
