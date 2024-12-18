@@ -8,7 +8,6 @@ import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
 import it.fulminazzo.jbukkit.inventory.MockInventory;
 import it.fulminazzo.jbukkit.inventory.MockItemFactory;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;

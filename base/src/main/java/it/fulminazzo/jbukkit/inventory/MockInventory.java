@@ -178,7 +178,7 @@ public class MockInventory implements Inventory {
     // Copied from actual Spigot code
     @Override
     public @NotNull HashMap<Integer, ItemStack> removeItem(final ItemStack @NotNull ... itemStacks) throws IllegalArgumentException {
-        HashMap<Integer, ItemStack> leftover = new HashMap<Integer, ItemStack>();
+        HashMap<Integer, ItemStack> leftover = new HashMap<>();
 
         for (int i = 0; i < contents.length; i++) {
             ItemStack item = contents[i];
