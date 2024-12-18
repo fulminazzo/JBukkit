@@ -6,15 +6,15 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a mock implementation of {@link InventoryView}.
  */
 @Getter
 public class MockInventoryView extends InventoryView {
-    private final Inventory topInventory;
-    private final Player player;
+    private final @NotNull Inventory topInventory;
+    private final @NotNull Player player;
+    private final @NotNull String title;
 
     /**
      * Instantiates a new Mock inventory view.
@@ -22,19 +22,21 @@ public class MockInventoryView extends InventoryView {
      * @param topInventory the inventory displayed
      * @param player       the player viewing it
      */
-    public MockInventoryView(final @Nullable Inventory topInventory, final @NotNull Player player) {
+    public MockInventoryView(final @NotNull Inventory topInventory, final @NotNull Player player,
+                             final @NotNull String title) {
         this.topInventory = topInventory;
         this.player = player;
+        this.title = title;
     }
 
     @Override
-    public Inventory getBottomInventory() {
+    public @NotNull Inventory getBottomInventory() {
         return this.player.getInventory();
     }
 
     @Override
-    public InventoryType getType() {
-        return this.topInventory == null ? null : this.topInventory.getType();
+    public @NotNull InventoryType getType() {
+        return this.topInventory.getType();
     }
 
 }
