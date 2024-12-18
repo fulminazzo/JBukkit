@@ -8,16 +8,16 @@ group = 'it.fulminazzo'
 version = '3.0'
 
 allprojects {
-    if (project.name.equals("JBukkit")) {
-        java {
-            toolchain {
-                languageVersion = JavaLanguageVersion.of(21)
-            }
-        }
-        tasks.withType(JavaCompile) {
-            options.release.set(21)
-        }
-    }
+//    if (project.name.equals("JBukkit")) {
+//        java {
+//            toolchain {
+//                languageVersion = JavaLanguageVersion.of(21)
+//            }
+//        }
+//        tasks.withType(JavaCompile) {
+//            options.release.set(21)
+//        }
+//    }
 
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
