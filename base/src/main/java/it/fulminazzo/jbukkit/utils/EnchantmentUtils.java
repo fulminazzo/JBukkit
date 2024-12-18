@@ -6,6 +6,9 @@ import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Utility class for {@link Enchantment}.
+ */
 @NoArgsConstructor
 public final class EnchantmentUtils {
 

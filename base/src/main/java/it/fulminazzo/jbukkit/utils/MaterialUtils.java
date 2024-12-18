@@ -4,6 +4,9 @@ import it.fulminazzo.fulmicollection.objects.Refl;
 import lombok.NoArgsConstructor;
 import org.bukkit.Material;
 
+/**
+ * Utility class for {@link Material}.
+ */
 @NoArgsConstructor
 public final class MaterialUtils {
 
