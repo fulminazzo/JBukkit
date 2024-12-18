@@ -1,6 +1,6 @@
 package it.fulminazzo.jbukkit.inventory;
 
-import lombok.Getter;
+import org.bukkit.Material;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -14,36 +14,37 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
 
     @Override
     public @NotNull ItemStack[] getArmorContents() {
-        return Arrays.copyOfRange(getContents(), STORAGE_SIZE, STORAGE_SIZE + 4);
+        return Arrays.copyOfRange(getContents(), EquipSlot.BOOTS.slot, EquipSlot.HELMET.slot);
     }
 
     @Override
     public @NotNull ItemStack[] getExtraContents() {
-        return new ItemStack[STORAGE_SIZE + 4];
+        return new ItemStack[EquipSlot.OFF_HAND.slot];
     }
 
     @Override
     public @Nullable ItemStack getHelmet() {
-        return getArmorContents()[3];
+        return getArmorContents()[EquipSlot.HELMET.slot];
     }
 
     @Override
     public @Nullable ItemStack getChestplate() {
-        return getArmorContents()[2];
+        return getArmorContents()[EquipSlot.CHESTPLATE.slot];
     }
 
     @Override
     public @Nullable ItemStack getLeggings() {
-        return getArmorContents()[1];
+        return getArmorContents()[EquipSlot.LEGGINGS.slot];
     }
 
     @Override
     public @Nullable ItemStack getBoots() {
-        return getArmorContents()[0];
+        return getArmorContents()[EquipSlot.BOOTS.slot];
     }
 
     @Override
     public void setItem(@NotNull EquipmentSlot slot, @Nullable ItemStack item) {
+
     }
 
     @Override
@@ -63,22 +64,23 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
 
     @Override
     public void setHelmet(@Nullable ItemStack helmet) {
-
+        setItem(EquipSlot.HELMET.slot, helmet);
     }
 
     @Override
     public void setChestplate(@Nullable ItemStack chestplate) {
+        setItem(EquipSlot.CHESTPLATE.slot, chestplate);
 
     }
 
     @Override
     public void setLeggings(@Nullable ItemStack leggings) {
-
+        setItem(EquipSlot.LEGGINGS.slot, leggings);
     }
 
     @Override
     public void setBoots(@Nullable ItemStack boots) {
-
+        setItem(EquipSlot.BOOTS.slot, boots);
     }
 
     @Override
@@ -93,12 +95,14 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
 
     @Override
     public @NotNull ItemStack getItemInOffHand() {
-        return null;
+        ItemStack itemStack = getItem(EquipSlot.OFF_HAND.slot);
+        if (itemStack == null) return new ItemStack(Material.AIR);
+        return itemStack;
     }
 
     @Override
     public void setItemInOffHand(@Nullable ItemStack item) {
-
+        setItem(EquipSlot.OFF_HAND.slot, item);
     }
 
     @Override
@@ -121,7 +125,6 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
 
     }
 
-    @Getter
     private enum EquipSlot {
         HAND(-1),
         OFF_HAND(STORAGE_SIZE + 4),
@@ -137,4 +140,5 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
             this.slot = slot;
         }
     }
+    
 }
