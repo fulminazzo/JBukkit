@@ -204,6 +204,35 @@ public class MockInventory implements Inventory {
 
     }
 
+    private int getStorageContentsSize() {
+        switch (this.type) {
+            case ANVIL:
+                return 2;
+            case CHEST:
+                return getSize();
+            case BEACON:
+            case FURNACE:
+                return 1;
+            case HOPPER:
+                return 5;
+            case PLAYER:
+            case CREATIVE:
+                return 9 * 4;
+            case BREWING:
+            case ENCHANTING:
+            case MERCHANT:
+                throw new NotImplementedException();
+            case DROPPER:
+            case ENDER_CHEST:
+            case WORKBENCH:
+            case DISPENSER:
+            case CRAFTING:
+                return 9;
+            default:
+                throw new IllegalArgumentException("Could not find storage contents of type: " + this.type);
+        }
+    }
+
     public boolean contains(int index) {
         return index >= 0 && index < getSize();
     }
