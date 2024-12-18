@@ -8,6 +8,7 @@ import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
 import it.fulminazzo.jbukkit.inventory.MockInventory;
 import it.fulminazzo.jbukkit.inventory.MockItemFactory;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -38,16 +39,29 @@ public class BukkitUtils {
     private static final String VERSION_FORMAT = "1\\.(\\d+)(?:\\.(\\d+))?-R\\d+\\.\\d+-SNAPSHOT";
     private static final String DEFAULT_VERSION = "1.20.4-R0.1-SNAPSHOT";
     private static final Map<Class<?>, Object> REGISTRIES = new HashMap<>();
+    /**
+     * The name of the property to identify the current Minecraft version.
+     */
     static final String VERSION_NAME = "MINECRAFT_VERSION";
+    /**
+     * The number of the current Minecraft version.
+     */
     @Getter
     static double numericalVersion;
 
+    /**
+     * Invokes {@link #setupVersion()} to initialize the number version.
+     * Then, verifies if the current test class should be run using {@link #check()}.
+     */
     @BeforeEach
     protected void setUp() {
         setupVersion();
         check();
     }
 
+    /**
+     * Initializes {@link #numericalVersion} using the current property of {@link #VERSION_NAME}.
+     */
     public static void setupVersion() {
         String version = System.getenv(VERSION_NAME);
         if (version == null) {
@@ -63,6 +77,9 @@ public class BukkitUtils {
         LOGGER.info(String.format("Using version '1.%s'", numericalVersion));
     }
 
+    /**
+     * Initializes the {@link Server} object returned by {@link Bukkit#getServer()}.
+     */
     public static void setupServer() {
         setupVersion();
         Server server = mock(Server.class);
@@ -126,6 +143,9 @@ public class BukkitUtils {
         new Refl<>(Bukkit.class).setFieldObject("server", server);
     }
 
+    /**
+     * Initializes the enchantment located at {@link org.bukkit.enchantments.Enchantment}.
+     */
     public static void setupEnchantments() {
         MockEnchantment.setupEnchantments();
     }
@@ -153,14 +173,33 @@ public class BukkitUtils {
             if (method.getName().equals(methodName)) check(method);
     }
 
+    /**
+     * Gets player.
+     *
+     * @param uuid the uuid
+     * @return the player
+     */
     public static @Nullable Player getPlayer(final @NotNull UUID uuid) {
         return PLAYERS.stream().filter(p -> p.getUniqueId().equals(uuid)).findAny().orElse(null);
     }
 
+    /**
+     * Gets player.
+     *
+     * @param name the name
+     * @return the player
+     */
     public static @Nullable Player getPlayer(final @NotNull String name) {
         return PLAYERS.stream().filter(p -> p.getName().equals(name)).findAny().orElse(null);
     }
 
+    /**
+     * Add player to the players list.
+     *
+     * @param uuid the uuid
+     * @param name the name
+     * @return the player
+     */
     public static @NotNull Player addPlayer(final @NotNull UUID uuid, final @NotNull String name) {
         Player player = mock(Player.class);
         when(player.getUniqueId()).thenReturn(uuid);
@@ -169,30 +208,67 @@ public class BukkitUtils {
         return player;
     }
 
+    /**
+     * Remove player from the players list.
+     *
+     * @param player the player
+     * @return the player
+     */
     public static @Nullable Player removePlayer(final @NotNull Player player) {
         return removePlayer(player.getUniqueId());
     }
 
+    /**
+     * Remove player from the players list.
+     *
+     * @param uuid the uuid
+     * @return the player
+     */
     public static @Nullable Player removePlayer(final @NotNull String uuid) {
         Player player = getPlayer(uuid);
         if (player != null) PLAYERS.remove(player);
         return player;
     }
 
+    /**
+     * Remove player from the players list.
+     *
+     * @param uuid the uuid
+     * @return the player
+     */
     public static @Nullable Player removePlayer(final @NotNull UUID uuid) {
         Player player = getPlayer(uuid);
         if (player != null) PLAYERS.remove(player);
         return player;
     }
 
+    /**
+     * Gets offline player from the offline players list.
+     *
+     * @param uuid the uuid
+     * @return the offline player
+     */
     public static @Nullable OfflinePlayer getOfflinePlayer(final @NotNull UUID uuid) {
         return OFFLINE_PLAYERS.stream().filter(p -> p.getUniqueId().equals(uuid)).findAny().orElse(null);
     }
 
+    /**
+     * Gets offline player from the offline players list.
+     *
+     * @param name the name
+     * @return the offline player
+     */
     public static @Nullable OfflinePlayer getOfflinePlayer(final @NotNull String name) {
         return OFFLINE_PLAYERS.stream().filter(p -> p.getName().equals(name)).findAny().orElse(null);
     }
 
+    /**
+     * Add offline player to the offline players list.
+     *
+     * @param uuid the uuid
+     * @param name the name
+     * @return the offline player
+     */
     public static @NotNull OfflinePlayer addOfflinePlayer(final @NotNull UUID uuid, final @NotNull String name) {
         OfflinePlayer offlinePlayer = mock(OfflinePlayer.class);
         when(offlinePlayer.getUniqueId()).thenReturn(uuid);
@@ -201,16 +277,34 @@ public class BukkitUtils {
         return offlinePlayer;
     }
 
+    /**
+     * Remove offline player to the offline players list.
+     *
+     * @param offlinePlayer the offline player
+     * @return the offline player
+     */
     public static @Nullable OfflinePlayer removeOfflinePlayer(final @NotNull OfflinePlayer offlinePlayer) {
         return removeOfflinePlayer(offlinePlayer.getUniqueId());
     }
 
-    public static @Nullable OfflinePlayer removeOfflinePlayer(final @NotNull String uuid) {
-        OfflinePlayer offlinePlayer = getOfflinePlayer(uuid);
+    /**
+     * Remove offline player to the offline players list.
+     *
+     * @param name the name
+     * @return the offline player
+     */
+    public static @Nullable OfflinePlayer removeOfflinePlayer(final @NotNull String name) {
+        OfflinePlayer offlinePlayer = getOfflinePlayer(name);
         if (offlinePlayer != null) OFFLINE_PLAYERS.remove(offlinePlayer);
         return offlinePlayer;
     }
 
+    /**
+     * Remove offline player to the offline players list.
+     *
+     * @param uuid the uuid
+     * @return the offline player
+     */
     public static @Nullable OfflinePlayer removeOfflinePlayer(final @NotNull UUID uuid) {
         OfflinePlayer offlinePlayer = getOfflinePlayer(uuid);
         if (offlinePlayer != null) OFFLINE_PLAYERS.remove(offlinePlayer);
@@ -235,4 +329,5 @@ public class BukkitUtils {
             }
         }
     }
+
 }
