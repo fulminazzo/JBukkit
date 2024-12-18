@@ -6,7 +6,6 @@ import it.fulminazzo.jbukkit.NotImplementedException;
 import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
 import it.fulminazzo.jbukkit.persistence.MockPersistentDataContainer;
 import it.fulminazzo.yagl.utils.ObjectUtils;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.attribute.Attribute;
@@ -38,8 +37,6 @@ public class MockItemMeta implements ItemMeta {
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
     private final MockCustomItemTagContainer customTagContainer;
     private final PersistentDataContainer persistentDataContainer;
-    @Getter(AccessLevel.NONE)
-    private final Spigot spigot;
 
     /**
      * Instantiates a new Mock item meta.
@@ -51,7 +48,6 @@ public class MockItemMeta implements ItemMeta {
         this.attributeModifiers = HashMultimap.create();
         this.customTagContainer = new MockCustomItemTagContainer();
         this.persistentDataContainer = new MockPersistentDataContainer();
-        this.spigot = new MockSpigot(this);
     }
 
     @Override
@@ -201,31 +197,8 @@ public class MockItemMeta implements ItemMeta {
     }
 
     @Override
-    public @NotNull Spigot spigot() {
-        return this.spigot;
-    }
-
-    @Override
     public @NotNull Map<String, Object> serialize() {
         throw new NotImplementedException();
-    }
-
-    private static class MockSpigot extends Spigot {
-        private final @NotNull MockItemMeta meta;
-
-        private MockSpigot(final @NotNull MockItemMeta meta) {
-            this.meta = meta;
-        }
-
-        @Override
-        public void setUnbreakable(boolean unbreakable) {
-            this.meta.unbreakable = unbreakable;
-        }
-
-        @Override
-        public boolean isUnbreakable() {
-            return this.meta.unbreakable;
-        }
     }
 
 }
