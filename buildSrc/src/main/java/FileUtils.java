@@ -131,5 +131,27 @@ public final class FileUtils {
             this(String.format("Failed to %s %s: %s", action, getFileType(target), target.getPath()));
         }
 
+        /**
+         * Instantiates a new File exception.
+         *
+         * @param message the message
+         * @param cause the underlying cause
+         */
+        public FileException(final @NotNull String message, final @NotNull Throwable cause) {
+            super(message, cause);
+        }
+
+        /**
+         * Instantiates a new File exception.
+         * Generates a message of type "Failed to %action% %target_type% %target_path%"
+         *
+         * @param action the action
+         * @param target the target
+         * @param cause the underlying cause
+         */
+        public FileException(final @NotNull String action, final @NotNull File target, final @NotNull Throwable cause) {
+            this(String.format("Failed to %s %s: %s", action, getFileType(target), target.getPath()), cause);
+        }
+
     }
 }
