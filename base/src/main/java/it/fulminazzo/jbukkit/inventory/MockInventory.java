@@ -194,12 +194,10 @@ public class MockInventory implements Inventory {
         return leftover;
     }
 
-    @Override
     public @NotNull ItemStack[] getStorageContents() {
         return new ItemStack[0];
     }
 
-    @Override
     public void setStorageContents(@NotNull ItemStack[] items) throws IllegalArgumentException {
 
     }
@@ -297,7 +295,6 @@ public class MockInventory implements Inventory {
         return -1;
     }
 
-    @Override
     public boolean isEmpty() {
         return Arrays.stream(this.contents).allMatch(Objects::isNull);
     }
@@ -345,7 +342,6 @@ public class MockInventory implements Inventory {
         return null;
     }
 
-    @Override
     public @Nullable Location getLocation() {
         return null;
     }
