@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.inventory;
 
+import lombok.Getter;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -118,5 +119,22 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
     @Override
     public void setHeldItemSlot(int slot) {
 
+    }
+
+    @Getter
+    private enum EquipSlot {
+        HAND(-1),
+        OFF_HAND(STORAGE_SIZE + 4),
+        BOOTS(STORAGE_SIZE),
+        LEGGINGS(STORAGE_SIZE + 1),
+        CHESTPLATE(STORAGE_SIZE + 2),
+        HELMET(STORAGE_SIZE + 3),
+        ;
+
+        private final int slot;
+
+        EquipSlot(int slot) {
+            this.slot = slot;
+        }
     }
 }
