@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 public class MockMapView implements MapView {
+    private static int LATEST_ID = 0;
     private final int id;
     private final boolean virtual;
     private final List<MapRenderer> renderers;
@@ -25,6 +26,13 @@ public class MockMapView implements MapView {
     private int centerX;
     private int centerZ;
     private boolean unlimitedTracking;
+
+    /**
+     * Instantiates a new Mock map view.
+     */
+    public MockMapView() {
+        this(LATEST_ID++, false);
+    }
 
     /**
      * Instantiates a new Mock map view.
