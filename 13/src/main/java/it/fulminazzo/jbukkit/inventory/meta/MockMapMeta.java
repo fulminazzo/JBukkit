@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.bukkit.Color;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a mock implementation for {@link MapMeta}.
@@ -19,7 +20,7 @@ public class MockMapMeta extends MockItemMeta implements MapMeta {
     private MapView mapView;
 
     @Override
-    public MockMapMeta clone() {
+    public @NotNull MockMapMeta clone() {
         return (MockMapMeta) super.clone();
     }
 

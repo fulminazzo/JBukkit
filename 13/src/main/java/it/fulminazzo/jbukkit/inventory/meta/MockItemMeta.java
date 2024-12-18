@@ -76,29 +76,29 @@ public class MockItemMeta implements ItemMeta {
     }
 
     @Override
-    public boolean hasEnchant(Enchantment ench) {
+    public boolean hasEnchant(@NotNull Enchantment ench) {
         return this.enchants.containsKey(ench);
     }
 
     @Override
-    public int getEnchantLevel(Enchantment ench) {
+    public int getEnchantLevel(@NotNull Enchantment ench) {
         return this.enchants.getOrDefault(ench, 0);
     }
 
     @Override
-    public boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction) {
+    public boolean addEnchant(@NotNull Enchantment ench, int level, boolean ignoreLevelRestriction) {
         if (!ignoreLevelRestriction && ench.getMaxLevel() < level) return false;
         this.enchants.put(ench, level);
         return true;
     }
 
     @Override
-    public boolean removeEnchant(Enchantment ench) {
+    public boolean removeEnchant(@NotNull Enchantment ench) {
         return this.enchants.remove(ench) != null;
     }
 
     @Override
-    public boolean hasConflictingEnchant(Enchantment ench) {
+    public boolean hasConflictingEnchant(@NotNull Enchantment ench) {
         return this.enchants.keySet().stream().anyMatch(e -> e.conflictsWith(ench));
     }
 
@@ -113,7 +113,7 @@ public class MockItemMeta implements ItemMeta {
     }
 
     @Override
-    public boolean hasItemFlag(ItemFlag flag) {
+    public boolean hasItemFlag(@NotNull ItemFlag flag) {
         return this.itemFlags.contains(flag);
     }
 
@@ -176,17 +176,17 @@ public class MockItemMeta implements ItemMeta {
     }
 
     @Override
-    public ItemMeta clone() {
+    public @NotNull ItemMeta clone() {
         return ObjectUtils.copy(this, getClass());
     }
 
     @Override
-    public Spigot spigot() {
+    public @NotNull Spigot spigot() {
         return this.spigot;
     }
 
     @Override
-    public Map<String, Object> serialize() {
+    public @NotNull Map<String, Object> serialize() {
         throw new NotImplementedException();
     }
 
