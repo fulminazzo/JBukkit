@@ -37,7 +37,7 @@ public final class FileUtils {
             if (!file.exists() && !file.createNewFile())
                 throw new FileException("create", file);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileException("create", file, e);
         }
     }
 
@@ -81,7 +81,7 @@ public final class FileUtils {
                 if (firstStream.read() != secondStream.read()) return false;
             return true;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileException("read", first, e);
         }
     }
 
@@ -101,7 +101,7 @@ public final class FileUtils {
                     return true;
             return false;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileException("read", file, e);
         }
     }
 
