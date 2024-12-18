@@ -111,6 +111,13 @@ allprojects {
     }
 }
 
+tasks.register('generateModule') {
+    def module = System.getenv('MODULE_NUMBER')
+    if (module == null)
+        throw new RuntimeException('Invalid usage of task. Specify a "MODULE_NUMBER" environment variable before using generateModule')
+    ModuleUtils.generateModule(Integer.valueOf(module))
+}
+
 // Verifies that in every module are absent repetitions of classes.
 tasks.register('cleanModules') {
     def parent = new File(System.getProperty("user.dir"));
