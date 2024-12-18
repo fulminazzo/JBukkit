@@ -1,9 +1,8 @@
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.function.Predicate;
 
 /**
@@ -81,6 +80,26 @@ public final class FileUtils {
             while (firstStream.available() > 0)
                 if (firstStream.read() != secondStream.read()) return false;
             return true;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Verifies that the given string is present in the given file.
+     *
+     * @param file   the file
+     * @param string the string
+     * @return true if it is
+     */
+    public static boolean contains(final @NotNull File file, final @NotNull String string) {
+        if (!file.isFile()) throw new IllegalArgumentException(file.getPath() + " is not a file");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath())))) {
+            String line;
+            while ((line = reader.readLine()) != null)
+                if (line.contains(string))
+                    return true;
+            return false;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
