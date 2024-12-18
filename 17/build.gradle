@@ -1,0 +1,6 @@
+dependencies {
+    compileOnly libs.spigot.v17
+    testImplementation libs.spigot.v17
+
+    api project(':16')
+}
