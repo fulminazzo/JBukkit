@@ -4,6 +4,7 @@ import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +21,6 @@ import java.util.Set;
  */
 @Getter
 public class MockEnchantment extends Enchantment {
-    private final int id;
     private final String name;
     private final int startLevel;
     private final int maxLevel;
@@ -37,7 +37,7 @@ public class MockEnchantment extends Enchantment {
      * @param enchantment the enchantment
      */
     public MockEnchantment(final @NotNull Enchantment enchantment) {
-        this(enchantment.getId(), enchantment.getName(), enchantment.getStartLevel(),
+        this(enchantment.getKey(), enchantment.getName(), enchantment.getStartLevel(),
                 enchantment.getMaxLevel(), enchantment.getItemTarget());
         setTreasure(enchantment.isTreasure()).setCursed(enchantment.isCursed());
     }
@@ -45,16 +45,15 @@ public class MockEnchantment extends Enchantment {
     /**
      * Instantiates a new Mock enchantment.
      *
-     * @param id         the id
+     * @param key        the key
      * @param name       the name
      * @param startLevel the start level
      * @param maxLevel   the max level
      * @param itemTarget the item target
      */
-    public MockEnchantment(final int id, final @NotNull String name, final int startLevel,
+    public MockEnchantment(final @NotNull NamespacedKey key, final @NotNull String name, final int startLevel,
                            final int maxLevel, final @NotNull EnchantmentTarget itemTarget) {
-        super(id);
-        this.id = id;
+        super(key);
         this.name = name;
         this.startLevel = startLevel;
         this.maxLevel = maxLevel;
@@ -111,9 +110,9 @@ public class MockEnchantment extends Enchantment {
     @SneakyThrows
     public static void setupEnchantments() {
         Refl<Class<Enchantment>> enchantmentClass = new Refl<>(Enchantment.class);
-        Map<Integer, Enchantment> byId = enchantmentClass.getFieldObject("byId");
+        Map<NamespacedKey, Enchantment> byKey = enchantmentClass.getFieldObject("byKey");
         Map<String, Enchantment> byName = enchantmentClass.getFieldObject("byName");
-        byId.clear();
+        byKey.clear();
         byName.clear();
         for (Field field : enchantmentClass.getStaticFields())
             if (field.getType().equals(Enchantment.class)) {
@@ -121,7 +120,7 @@ public class MockEnchantment extends Enchantment {
                         .get(Enchantment.class);
                 MockEnchantment mock = new MockEnchantment(enchantment);
                 field.set(Enchantment.class, mock);
-                byId.put(mock.getId(), enchantment);
+                byKey.put(mock.getKey(), enchantment);
                 byName.put(mock.getName(), enchantment);
             }
     }
