@@ -73,8 +73,8 @@ public final class FileUtils {
      * @return true if they match
      */
     public static boolean sameContent(final @NotNull File first, final @NotNull File second) {
-        if (!first.isFile()) throw new IllegalArgumentException(first.getPath() + " is not a file");
-        if (!second.isFile()) throw new IllegalArgumentException(second.getPath() + " is not a file");
+        if (!first.isFile()) throw new FileException(first.getPath() + " is not a file");
+        if (!second.isFile()) throw new FileException(second.getPath() + " is not a file");
         try (FileInputStream firstStream = new FileInputStream(first);
              FileInputStream secondStream = new FileInputStream(second)) {
             if (firstStream.available() != secondStream.available()) return false;
