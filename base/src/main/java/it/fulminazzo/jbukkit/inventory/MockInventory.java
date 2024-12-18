@@ -197,11 +197,14 @@ public class MockInventory implements Inventory {
     }
 
     public @NotNull ItemStack[] getStorageContents() {
-        return new ItemStack[0];
+        return new ItemStack[getStorageContentsSize()];
     }
 
     public void setStorageContents(@NotNull ItemStack[] items) throws IllegalArgumentException {
-
+        int size = getStorageContentsSize();
+        if (items.length != size)
+            throw new IllegalArgumentException("Cannot set contents of " + items.length + " items when storage size is " + size);
+        System.arraycopy(items, 0, this.contents, 0, size);
     }
 
     private int getStorageContentsSize() {
