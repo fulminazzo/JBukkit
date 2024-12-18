@@ -49,22 +49,22 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
 
     @Override
     public void setItem(@NotNull EquipmentSlot slot, @Nullable ItemStack item) {
-
+        setItem(EquipSlot.fromEquipmentSlot(slot).slot, item);
     }
 
     @Override
     public @Nullable ItemStack getItem(@NotNull EquipmentSlot slot) {
-        return null;
+        return getItem(EquipSlot.fromEquipmentSlot(slot).slot);
     }
 
     @Override
     public void setArmorContents(@Nullable ItemStack[] items) {
-
+        setContents(items, EquipSlot.BOOTS.slot, EquipSlot.HELMET.slot);
     }
 
     @Override
     public void setExtraContents(@Nullable ItemStack[] items) {
-
+        setContents(items, EquipSlot.OFF_HAND.slot, EquipSlot.OFF_HAND.slot);
     }
 
     @Override
@@ -75,7 +75,6 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
     @Override
     public void setChestplate(@Nullable ItemStack chestplate) {
         setItem(EquipSlot.CHESTPLATE.slot, chestplate);
-
     }
 
     @Override
@@ -90,12 +89,14 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
 
     @Override
     public @NotNull ItemStack getItemInMainHand() {
-        return null;
+        ItemStack itemStack = getItem(getHeldItemSlot());
+        if (itemStack == null) return new ItemStack(Material.AIR);
+        return itemStack;
     }
 
     @Override
     public void setItemInMainHand(@Nullable ItemStack item) {
-
+        setItem(getHeldItemSlot(), item);
     }
 
     @Override
