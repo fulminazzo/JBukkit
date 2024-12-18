@@ -3,9 +3,7 @@ package it.fulminazzo.jbukkit.inventory.meta;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.chat.BaseComponentSerializer;
 import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -99,9 +97,11 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
     private static class MockSpigot extends BookMeta.Spigot {
         private final @NotNull MockBookMeta meta;
+        private final List<BaseComponent[]> pages;
 
         private MockSpigot(final @NotNull MockBookMeta meta) {
             this.meta = meta;
+            this.pages = new LinkedList<>();
         }
 
         @Override
