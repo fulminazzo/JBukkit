@@ -5,13 +5,31 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * A utility for modules of the project.
  */
 @NoArgsConstructor
 public final class ModuleUtils {
+
+    /**
+     * Generates a new module by using the given number as parent directory
+     * and copying every content from previous modules to the current one.
+     *
+     * @param module the module number
+     */
+    public static void generateModule(final int module) {
+        File parent = new File(System.getProperty("user.dir"));
+        File targetModuleDir = new File(parent, String.valueOf(module));
+        if (!targetModuleDir.isDirectory() && !targetModuleDir.mkdir())
+            throw new RuntimeException("Cannot create directory " + targetModuleDir.getPath());
+
+        for (int i = 0; i < module; i++) {
+            File moduleDir = new File(parent, String.valueOf(i));
+            if (moduleDir.isDirectory())
+                copySingleModule(moduleDir, targetModuleDir);
+        }
+    }
 
     private static void copySingleModule(final @NotNull File module,
                                          final @NotNull File targetModule) {
