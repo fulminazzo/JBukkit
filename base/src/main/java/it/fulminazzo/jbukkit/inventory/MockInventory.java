@@ -259,17 +259,31 @@ public class MockInventory implements Inventory {
 
     @Override
     public int first(@NotNull Material material) throws IllegalArgumentException {
-        return 0;
+        for (int i = 0; i < getSize(); i++) {
+            ItemStack item = getItem(i);
+            if (item != null && item.getType().equals(material))
+                return i;
+        }
+        return -1;
     }
 
     @Override
     public int first(@NotNull ItemStack item) {
-        return 0;
+        for (int i = 0; i < getSize(); i++) {
+            ItemStack itemStack = getItem(i);
+            if (itemStack != null && itemStack.equals(item))
+                return i;
+        }
+        return -1;
     }
 
     @Override
     public int firstEmpty() {
-        return 0;
+        for (int i = 0; i < getSize(); i++) {
+            ItemStack itemStack = getItem(i);
+            if (itemStack == null) return i;
+        }
+        return -1;
     }
 
     @Override
