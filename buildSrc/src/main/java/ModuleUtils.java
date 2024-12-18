@@ -1,16 +1,19 @@
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * A utility for modules of the project.
  */
 @NoArgsConstructor
 public final class ModuleUtils {
+    private static final String BUILD_GRADLE_FORMAT = "dependencies {\n" +
+            "    compileOnly libs.spigot.v%current%\n" +
+            "    testImplementation libs.spigot.v%current%\n" +
+            "\n" +
+            "    api project(':%previous%')\n" +
+            "}";
 
     /**
      * Generates a new module by using the given number as parent directory
@@ -28,6 +31,28 @@ public final class ModuleUtils {
             File moduleDir = new File(parent, String.valueOf(i));
             if (moduleDir.isDirectory())
                 copySingleModule(moduleDir, targetModuleDir);
+        }
+        generateBuildGradle(module);
+    }
+
+    private static void generateBuildGradle(final int module) {
+        File parent = new File(System.getProperty("user.dir"));
+        File buildFile = new File(parent, module + File.separator + "build.gradle");
+        if (buildFile.exists() && !buildFile.delete())
+            throw new RuntimeException("Failed to delete file " + buildFile.getPath());
+        try {
+            buildFile.createNewFile();
+        } catch (IOException e) {
+            //TODO:
+            throw new RuntimeException(e);
+        }
+        try (FileOutputStream output = new FileOutputStream(buildFile)) {
+            output.write(BUILD_GRADLE_FORMAT
+                    .replace("%current%", String.valueOf(module))
+                    .replace("%previous%", String.valueOf(module - 1))
+                    .getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
