@@ -25,8 +25,9 @@ public final class ModuleUtils {
                 checkSingleModuleRepetitions(file, new File(targetModule, file.getName()));
         } else {
             if (!targetModule.exists()) return;
-            if (!targetModule.getName().endsWith("java")) return;
-
+            if (!targetModule.getName().endsWith(".java")) return;
+            if (sameContent(module, targetModule) && !targetModule.delete())
+                throw new IllegalArgumentException("Could not delete " + targetModule.getPath());
         }
     }
 
