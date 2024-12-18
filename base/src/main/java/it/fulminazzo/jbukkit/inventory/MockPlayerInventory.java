@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +27,11 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         super((Arrays.stream(EquipmentSlot.values()).anyMatch(v -> v.name().equals("OFF_HAND")) ?
                 EquipSlot.OFF_HAND.slot : EquipSlot.HELMET.slot) + 1);
         this.holder = Objects.requireNonNull(holder);
+    }
+
+    @Override
+    public void setHolder(@Nullable InventoryHolder holder) {
+        throw new IllegalStateException("Cannot invoke setHolder for PlayerInventory");
     }
 
     @Override
@@ -131,7 +137,6 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         setItem(getHeldItemSlot(), stack);
     }
 
-    @Override
     public int clear(int id, int data) {
         throw new NotImplementedException();
     }

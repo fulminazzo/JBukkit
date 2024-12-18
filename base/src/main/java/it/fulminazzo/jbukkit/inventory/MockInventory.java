@@ -24,6 +24,7 @@ public class MockInventory implements Inventory {
     private final String name;
     private int maxStackSize;
     private final List<HumanEntity> viewers;
+    private @Nullable InventoryHolder holder;
 
     public MockInventory(final int size) {
         this.contents = new ItemStack[size];
@@ -393,11 +394,6 @@ public class MockInventory implements Inventory {
     @Override
     public @NotNull ListIterator<ItemStack> iterator(int index) {
         return Arrays.asList(this.contents).subList(index, getSize()).listIterator();
-    }
-
-    @Override
-    public @Nullable InventoryHolder getHolder() {
-        return null;
     }
 
     public @Nullable Location getLocation() {
