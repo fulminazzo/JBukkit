@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'io.freefair.lombok' version "8.4"
+    id 'io.freefair.lombok' version libs.versions.delombok
 }
 
 group = 'it.fulminazzo'
@@ -51,21 +51,21 @@ allprojects {
     }
 
     dependencies {
-        compileOnly 'org.projectlombok:lombok:1.18.32'
-        annotationProcessor 'org.projectlombok:lombok:1.18.32'
-        compileOnly 'org.jetbrains:annotations:24.1.0'
-        annotationProcessor 'org.jetbrains:annotations:24.1.0'
+        compileOnly libs.lombok
+        annotationProcessor libs.lombok
+        compileOnly libs.annotations
+        annotationProcessor libs.annotations
 
-        api 'it.fulminazzo:FulmiCollection:1.6.1'
-        api 'it.fulminazzo.YAGL:common:4.0'
-        implementation 'org.mockito:mockito-core:4.11.0'
+        api libs.fulmicollection
+        api libs.yagl.common
+        implementation libs.mockito
 
         if (!project.name.equals('base')) api project(':base')
 
-        compileOnly platform('org.junit:junit-bom:5.9.1')
+        compileOnly platform(libs.junit.platform)
         compileOnly 'org.junit.jupiter:junit-jupiter'
 
-        testImplementation platform('org.junit:junit-bom:5.9.1')
+        testImplementation platform(libs.junit.platform)
         testImplementation 'org.junit.jupiter:junit-jupiter'
     }
 
