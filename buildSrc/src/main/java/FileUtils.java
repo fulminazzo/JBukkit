@@ -11,6 +11,19 @@ import java.util.function.Predicate;
 public final class FileUtils {
 
     /**
+     * Creates the given directory if it not exists already.
+     * Throws {@link FileException} in case of failure.
+     * If the file already exists and is a file, it will be deleted.
+     *
+     * @param dir the dir
+     */
+    public static void createDirIfNotExists(final @NotNull File dir) {
+        deleteIf(File::isFile, dir);
+        if (!dir.isDirectory() && !dir.mkdir())
+            throw new FileException("create", dir);
+    }
+
+    /**
      * Deletes the target file if it exists.
      * Throws {@link FileException} in case of failure.
      *
