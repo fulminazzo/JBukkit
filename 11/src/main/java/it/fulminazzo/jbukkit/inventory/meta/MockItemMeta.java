@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -15,9 +16,11 @@ import java.util.*;
 @Setter
 public class MockItemMeta implements ItemMeta {
     private String displayName;
+    private String localizedName;
     private final List<String> lore;
     private final Map<Enchantment, Integer> enchants;
     private final Set<ItemFlag> itemFlags;
+    private boolean unbreakable;
     @Getter(AccessLevel.NONE)
     private final Spigot spigot;
 
@@ -25,12 +28,17 @@ public class MockItemMeta implements ItemMeta {
         this.lore = new LinkedList<>();
         this.enchants = new HashMap<>();
         this.itemFlags = new HashSet<>();
-        this.spigot = new MockSpigot();
+        this.spigot = new MockSpigot(this);
     }
 
     @Override
     public boolean hasDisplayName() {
         return this.displayName != null && !this.displayName.isEmpty();
+    }
+
+    @Override
+    public boolean hasLocalizedName() {
+        return this.localizedName != null && !this.localizedName.isEmpty();
     }
 
     @Override
@@ -107,16 +115,21 @@ public class MockItemMeta implements ItemMeta {
     }
 
     private static class MockSpigot extends Spigot {
-        private boolean unbreakable;
+        private final @NotNull MockItemMeta meta;
+
+        private MockSpigot(final @NotNull MockItemMeta meta) {
+            this.meta = meta;
+        }
 
         @Override
         public void setUnbreakable(boolean unbreakable) {
-            this.unbreakable = unbreakable;
+            this.meta.unbreakable = unbreakable;
         }
 
         @Override
         public boolean isUnbreakable() {
-            return unbreakable;
+            return this.meta.unbreakable;
         }
     }
+
 }
