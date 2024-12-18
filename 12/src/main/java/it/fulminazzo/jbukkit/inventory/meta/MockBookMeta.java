@@ -1,6 +1,7 @@
 package it.fulminazzo.jbukkit.inventory.meta;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.inventory.meta.BookMeta;
@@ -16,18 +17,11 @@ import java.util.stream.Collectors;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 public class MockBookMeta extends MockItemMeta implements BookMeta {
-    private final List<String> pages;
     private String title;
     private String author;
     private Generation generation;
-
-    /**
-     * Instantiates a new Mock book meta.
-     */
-    public MockBookMeta() {
-        this.pages = new LinkedList<>();
-    }
 
     public boolean setTitle(String title) {
         this.title = title;
