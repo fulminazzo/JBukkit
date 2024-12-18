@@ -324,16 +324,6 @@ public class MockInventory implements Inventory {
     }
 
     @Override
-    public @NotNull List<HumanEntity> getViewers() {
-        return List.of();
-    }
-
-    @Override
-    public @NotNull InventoryType getType() {
-        return null;
-    }
-
-    @Override
     public @Nullable InventoryHolder getHolder() {
         return null;
     }
