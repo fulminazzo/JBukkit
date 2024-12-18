@@ -126,24 +126,25 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
     }
 
     private enum EquipSlot {
-        OFF_HAND(STORAGE_SIZE + 4, EquipmentSlot.OFF_HAND),
-        BOOTS(STORAGE_SIZE, EquipmentSlot.FEET),
-        LEGGINGS(STORAGE_SIZE + 1, EquipmentSlot.LEGS),
-        CHESTPLATE(STORAGE_SIZE + 2, EquipmentSlot.CHEST),
-        HELMET(STORAGE_SIZE + 3, EquipmentSlot.HEAD),
+        OFF_HAND(STORAGE_SIZE + 4, "OFF_HAND"),
+        BOOTS(STORAGE_SIZE, "FEET"),
+        LEGGINGS(STORAGE_SIZE + 1, "LEGS"),
+        CHESTPLATE(STORAGE_SIZE + 2, "CHEST"),
+        HELMET(STORAGE_SIZE + 3, "HEAD"),
         ;
 
         private final int slot;
-        private final EquipmentSlot toEquipmentSlot;
+        // String necessary for compatibility reasons
+        private final String toEquipmentSlot;
 
-        EquipSlot(int slot, EquipmentSlot toEquipmentSlot) {
+        EquipSlot(int slot, String toEquipmentSlot) {
             this.slot = slot;
             this.toEquipmentSlot = toEquipmentSlot;
         }
 
         public static EquipSlot fromEquipmentSlot(EquipmentSlot equipmentSlot) {
-            for (EquipSlot equipSlot : values())
-                if (equipSlot.toEquipmentSlot.equals(equipmentSlot))
+            for (EquipSlot equipSlot : values()) 
+                if (equipSlot.toEquipmentSlot.equals(equipmentSlot.name()))
                     return equipSlot;
             throw new IllegalArgumentException("Unknown equip slot " + equipmentSlot);
         }
