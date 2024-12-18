@@ -16,16 +16,25 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+/**
+ * Represents an implementation for {@link Inventory}.
+ */
 @Getter
 @Setter
 public class MockInventory implements Inventory {
     private final ItemStack[] contents;
     private final InventoryType type;
+    @Getter
     private String title;
     private int maxStackSize;
     private final List<HumanEntity> viewers;
     private @Nullable InventoryHolder holder;
 
+    /**
+     * Instantiates a new Mock inventory.
+     *
+     * @param size the size
+     */
     public MockInventory(final int size) {
         this.contents = new ItemStack[size];
         this.type = InventoryType.CHEST;
@@ -38,6 +47,13 @@ public class MockInventory implements Inventory {
         setContents(items, 0, items.length);
     }
 
+    /**
+     * Sets contents from the start index to the end index.
+     *
+     * @param items the items
+     * @param start the start
+     * @param end   the end
+     */
     protected void setContents(@Nullable ItemStack[] items, int start, int end) {
         if (items == null)
             throw new IllegalArgumentException("items cannot be null");
@@ -241,6 +257,12 @@ public class MockInventory implements Inventory {
         }
     }
 
+    /**
+     * Verifies if the given index is within bounds of the contents.
+     *
+     * @param index the index
+     * @return true if it is
+     */
     public boolean contains(int index) {
         return index >= 0 && index < getSize();
     }
@@ -255,6 +277,14 @@ public class MockInventory implements Inventory {
         return itemStack != null && Arrays.stream(getContents()).anyMatch(i -> i.equals(itemStack));
     }
 
+    /**
+     * Legacy method to support id materials.
+     * Uses {@link #contains(Material, int)}.
+     *
+     * @param materialId the material id
+     * @param amount     the amount
+     * @return the value from the method invocation
+     */
     public boolean contains(int materialId, int amount) {
         return contains(MaterialUtils.getMaterial(materialId), amount);
     }
@@ -287,6 +317,13 @@ public class MockInventory implements Inventory {
         return false;
     }
 
+    /**
+     * Legacy method to support id materials.
+     * Uses {@link #all(Material)}.
+     *
+     * @param materialId the material id
+     * @return the value from the method invocation
+     */
     public HashMap<Integer, ? extends ItemStack> all(int materialId) {
         return all(MaterialUtils.getMaterial(materialId));
     }
@@ -313,6 +350,13 @@ public class MockInventory implements Inventory {
         return result;
     }
 
+    /**
+     * Legacy method to support id materials.
+     * Uses {@link #first(Material)}.
+     *
+     * @param materialId the material id
+     * @return the value from the method invocation
+     */
     public int first(int materialId) {
         return first(MaterialUtils.getMaterial(materialId));
     }
@@ -346,6 +390,12 @@ public class MockInventory implements Inventory {
         return -1;
     }
 
+    /**
+     * Legacy method to support id materials.
+     * Uses {@link #remove(Material)}.
+     *
+     * @param materialId the material id
+     */
     public void remove(int materialId) {
         remove(MaterialUtils.getMaterial(materialId));
     }
@@ -380,10 +430,6 @@ public class MockInventory implements Inventory {
     @Override
     public void clear() {
         setContents(new ItemStack[getSize()]);
-    }
-
-    public String getTitle() {
-        return this.title;
     }
 
     @Override
