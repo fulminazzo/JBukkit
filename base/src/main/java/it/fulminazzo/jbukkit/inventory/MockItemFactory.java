@@ -60,6 +60,7 @@ public class MockItemFactory implements ItemFactory {
      * @return the class name
      */
     protected @Nullable String getItemMetaName(final @NotNull Material material) {
+        //TODO: 1.8 materials
         switch (material.name()) {
             case "AIR":
                 return null;
