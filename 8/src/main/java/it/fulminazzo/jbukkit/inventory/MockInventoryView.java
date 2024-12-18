@@ -13,8 +13,8 @@ import org.jetbrains.annotations.Nullable;
  */
 @Getter
 public class MockInventoryView extends InventoryView {
-    private final Inventory topInventory;
-    private final Player player;
+    private final @Nullable Inventory topInventory;
+    private final @NotNull Player player;
 
     /**
      * Instantiates a new Mock inventory view.
@@ -28,12 +28,12 @@ public class MockInventoryView extends InventoryView {
     }
 
     @Override
-    public Inventory getBottomInventory() {
+    public @NotNull Inventory getBottomInventory() {
         return this.player.getInventory();
     }
 
     @Override
-    public InventoryType getType() {
+    public @Nullable InventoryType getType() {
         return this.topInventory == null ? null : this.topInventory.getType();
     }
 
