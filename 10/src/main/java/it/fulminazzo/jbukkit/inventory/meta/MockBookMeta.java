@@ -36,6 +36,11 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
     }
 
     @Override
+    public boolean hasGeneration() {
+        return this.generation != null;
+    }
+
+    @Override
     public boolean hasPages() {
         return !this.pages.isEmpty();
     }
