@@ -62,7 +62,4 @@ public final class ModuleUtils {
         }
     }
 
-    public static void main(String[] args) {
-        checkModuleRepetitions(13);
-    }
 }
