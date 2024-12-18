@@ -140,6 +140,13 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
             this.slot = slot;
             this.toEquipmentSlot = toEquipmentSlot;
         }
+
+        public static EquipSlot fromEquipmentSlot(EquipmentSlot equipmentSlot) {
+            for (EquipSlot equipSlot : values())
+                if (equipSlot.toEquipmentSlot.equals(equipmentSlot))
+                    return equipSlot;
+            throw new IllegalArgumentException("Unknown equip slot " + equipmentSlot);
+        }
     }
     
 }
