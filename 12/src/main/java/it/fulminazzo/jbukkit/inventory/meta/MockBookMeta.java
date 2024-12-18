@@ -106,22 +106,23 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
         @Override
         public BaseComponent[] getPage(int page) {
-            return null;
+            return this.pages.get(page);
         }
 
         @Override
         public void setPage(int page, BaseComponent... data) {
-            this.meta.setPage(page, BaseComponent.toLegacyText(data));
+            this.pages.set(page, data);
         }
 
         @Override
         public List<BaseComponent[]> getPages() {
-            return super.getPages();
+            return this.pages;
         }
 
         @Override
         public void setPages(List<BaseComponent[]> pages) {
-            this.meta.setPages(pages.stream().map(BaseComponent::toLegacyText).collect(Collectors.toList()));
+            this.pages.clear();
+            this.pages.addAll(pages);
         }
 
         @Override
@@ -131,7 +132,7 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
         @Override
         public void addPage(BaseComponent[]... pages) {
-            this.meta.addPage(Arrays.stream(pages).map(BaseComponent::toLegacyText).toArray(String[]::new));
+            this.pages.addAll(Arrays.asList(pages));
         }
 
         @Override
