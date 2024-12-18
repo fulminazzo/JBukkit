@@ -193,8 +193,8 @@ public class MockInventory implements Inventory {
 
     }
 
-    public boolean contains(int i) {
-        return i >= 0 && i < getSize();
+    public boolean contains(int index) {
+        return index >= 0 && index < getSize();
     }
 
     @Override
@@ -205,6 +205,114 @@ public class MockInventory implements Inventory {
     @Override
     public boolean contains(final @Nullable ItemStack itemStack) {
         return itemStack != null && Arrays.stream(getContents()).anyMatch(i -> i.equals(itemStack));
+    }
+
+    @Override
+    public boolean contains(@NotNull Material material, int amount) throws IllegalArgumentException {
+        for (ItemStack itemStack : getContents())
+            if (itemStack.getType().equals(material))
+                amount -= itemStack.getAmount();
+        return amount == 0;
+    }
+
+    @Override
+    public boolean contains(@Nullable ItemStack item, int amount) {
+        if (item == null) return false;
+        for (ItemStack itemStack : getContents())
+            if (itemStack.equals(item))
+                amount -= itemStack.getAmount();
+        return amount == 0;
+    }
+
+    @Override
+    public boolean containsAtLeast(@Nullable ItemStack item, int amount) {
+        if (item == null) return false;
+        for (ItemStack itemStack : getContents())
+            if (itemStack.equals(item)) {
+                amount -= itemStack.getAmount();
+                if (amount <= 0) return true;
+            }
+        return false;
+    }
+
+    @Override
+    public @NotNull HashMap<Integer, ? extends ItemStack> all(@NotNull Material material) throws IllegalArgumentException {
+        return null;
+    }
+
+    @Override
+    public @NotNull HashMap<Integer, ? extends ItemStack> all(@Nullable ItemStack item) {
+        return null;
+    }
+
+    @Override
+    public int first(@NotNull Material material) throws IllegalArgumentException {
+        return 0;
+    }
+
+    @Override
+    public int first(@NotNull ItemStack item) {
+        return 0;
+    }
+
+    @Override
+    public int firstEmpty() {
+        return 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public void remove(@NotNull Material material) throws IllegalArgumentException {
+
+    }
+
+    @Override
+    public void remove(@NotNull ItemStack item) {
+
+    }
+
+    @Override
+    public void clear(int index) {
+
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public @NotNull List<HumanEntity> getViewers() {
+        return List.of();
+    }
+
+    @Override
+    public @NotNull InventoryType getType() {
+        return null;
+    }
+
+    @Override
+    public @Nullable InventoryHolder getHolder() {
+        return null;
+    }
+
+    @Override
+    public @NotNull ListIterator<ItemStack> iterator() {
+        return null;
+    }
+
+    @Override
+    public @NotNull ListIterator<ItemStack> iterator(int index) {
+        return null;
+    }
+
+    @Override
+    public @Nullable Location getLocation() {
+        return null;
     }
 
 }
