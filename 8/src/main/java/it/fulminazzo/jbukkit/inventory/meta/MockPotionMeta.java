@@ -50,7 +50,7 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
 
     @Override
     public boolean removeCustomEffect(PotionEffectType type) {
-        return this.customEffects.remove(type);
+        return this.customEffects.removeIf(p -> p.getType().equals(type));
     }
 
     @Override
