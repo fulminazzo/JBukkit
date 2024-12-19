@@ -22,10 +22,10 @@ class MockPotionEffectTypeTest {
 
     private static PotionEffectType[] getTypes() {
         BukkitUtils.setupServer();
-        Refl<?> potionEffects = new Refl<>(PotionEffectType.class);
-        return potionEffects.getStaticFields().stream()
+        Refl<?> potionEffectType = new Refl<>(PotionEffectType.class);
+        return potionEffectType.getStaticFields().stream()
                 .filter(f -> PotionEffectType.class.isAssignableFrom(f.getType()))
-                .map(potionEffects::getFieldObject)
+                .map(potionEffectType::getFieldObject)
                 .map(o -> (PotionEffectType) o)
                 .toArray(PotionEffectType[]::new);
     }
