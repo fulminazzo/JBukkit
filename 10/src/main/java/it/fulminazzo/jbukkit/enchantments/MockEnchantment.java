@@ -60,6 +60,15 @@ public class MockEnchantment extends Enchantment {
         this.conflicts = new HashSet<>();
     }
 
+    /**
+     * Flags this enchantment as a treasure.
+     * <br>
+     * Treasure enchantments can only be received via looting, trading, or
+     * fishing.
+     *
+     * @param treasure the flag
+     * @return this enchantment
+     */
     public @NotNull MockEnchantment setTreasure(boolean treasure) {
         this.treasure = treasure;
         return this;
