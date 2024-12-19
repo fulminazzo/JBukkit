@@ -94,6 +94,17 @@ public class MockEnchantment extends Enchantment {
         SMITE.conflictsWith(DENSITY, BANE_OF_ARTHROPODS, BREACH);
         BANE_OF_ARTHROPODS.conflictsWith(SMITE, DENSITY, BREACH);
         BREACH.conflictsWith(SMITE, BANE_OF_ARTHROPODS, DENSITY);
+        // Cursed
+        BINDING_CURSE.setCursed(true);
+        VANISHING_CURSE.setCursed(true);
+        // Treasure
+        BINDING_CURSE.setTreasure(true);
+        VANISHING_CURSE.setTreasure(true);
+        MENDING.setTreasure(true);
+        FROST_WALKER.setTreasure(true);
+        SOUL_SPEED.setTreasure(true);
+        SWIFT_SNEAK.setTreasure(true);
+        WIND_BURST.setTreasure(true);
     }
 
     private final NamespacedKey key;
