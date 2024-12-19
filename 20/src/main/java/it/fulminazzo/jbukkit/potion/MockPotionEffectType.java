@@ -12,6 +12,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionEffectTypeCategory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -140,10 +141,15 @@ public class MockPotionEffectType extends PotionEffectType {
      * @return the vanilla potion effect type
      */
     public static @NotNull PotionEffectType getVanillaPotionEffectType(final @NotNull NamespacedKey key) {
-        Refl<?> mock = new Refl<>(MockPotionEffectType.class);
-        Supplier<MockPotionEffectType> supplier = mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        Supplier<MockPotionEffectType> supplier = valueOf(key);
         Objects.requireNonNull(supplier, "Could not find vanilla potion effect type: " + key);
         return supplier.get();
+    }
+
+    private static @Nullable Supplier<MockPotionEffectType> valueOf(@NotNull NamespacedKey key) {
+        if (key.getKey().equals("bad_luck")) key = NamespacedKey.minecraft("unluck");
+        Refl<?> mock = new Refl<>(MockPotionEffectType.class);
+        return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
     }
 
     private static @NotNull Color color(final @NotNull String color) {
