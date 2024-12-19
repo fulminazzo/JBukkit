@@ -12,6 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionEffectTypeCategory;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import static org.bukkit.potion.PotionEffectTypeCategory.*;
@@ -118,6 +119,45 @@ public class MockPotionEffectType extends PotionEffectType {
     @Override
     public @NotNull String getTranslationKey() {
         throw new NotImplementedException();
+    }
+
+    /**
+     * Gets the {@link MockPotionEffectType} from the given key.
+     * Throws {@link IllegalArgumentException} if it fails.
+     *
+     * @param key the key
+     * @return the mock potion effect type
+     */
+    public static @NotNull MockPotionEffectType valueOf(final @NotNull NamespacedKey key) {
+        return valueOf(key.getKey());
+    }
+
+    /**
+     * Gets the {@link MockPotionEffectType} from the given name.
+     * Throws {@link IllegalArgumentException} if it fails.
+     *
+     * @param name the name
+     * @return the mock potion effect type
+     */
+    public static @NotNull MockPotionEffectType valueOf(final @NotNull String name) {
+        return Arrays.stream(values())
+                .filter(e -> e.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unknown potion effect type: " + name));
+    }
+
+    /**
+     * Gets all the vanilla {@link MockPotionEffectType}s.
+     *
+     * @return the mock potion effect types
+     */
+    public static MockPotionEffectType @NotNull [] values() {
+        Refl<?> clazz = new Refl<>(MockPotionEffectType.class);
+        return clazz.getStaticFields().stream()
+                .filter(f -> f.getType().equals(MockPotionEffectType.class))
+                .map(clazz::getFieldObject)
+                .map(o -> (MockPotionEffectType) o)
+                .toArray(MockPotionEffectType[]::new);
     }
 
     private static @NotNull Color color(final @NotNull String color) {
