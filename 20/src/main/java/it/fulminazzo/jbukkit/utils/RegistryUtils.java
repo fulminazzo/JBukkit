@@ -4,6 +4,7 @@ import it.fulminazzo.fulmicollection.interfaces.functions.FunctionException;
 import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
+import it.fulminazzo.jbukkit.potion.MockPotionEffectType;
 import it.fulminazzo.jbukkit.registries.FieldsRegistry;
 import lombok.NoArgsConstructor;
 import org.bukkit.*;
@@ -48,7 +49,7 @@ public final class RegistryUtils {
         FIELDS_CLASSES.put("TrimMaterial", k -> mockKeyed(TrimMaterial.class, k));
         FIELDS_CLASSES.put("StructureType", k -> mockKeyed(StructureType.class, k));
         FIELDS_CLASSES.put("Structure", k -> mockKeyed(Structure.class, k));
-        FIELDS_CLASSES.put("PotionEffectType", null);
+        FIELDS_CLASSES.put("PotionEffectType", MockPotionEffectType::valueOf);
         FIELDS_CLASSES.put("MusicInstrument", k -> mockKeyed(MusicInstrument.class, k));
         FIELDS_CLASSES.put("Enchantment", MockEnchantment::valueOf);
     }
