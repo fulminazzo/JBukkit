@@ -136,6 +136,20 @@ public class MockPotionEffectType extends PotionEffectType {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof PotionEffectType) {
+            PotionEffectType other = (PotionEffectType) obj;
+            return other.getKey().equals(this.key);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.key.hashCode();
+    }
+
+    @Override
     public String toString() {
         return Printable.convertToJson(this);
     }
