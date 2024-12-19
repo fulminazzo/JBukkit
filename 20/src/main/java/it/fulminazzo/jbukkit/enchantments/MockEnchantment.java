@@ -116,7 +116,7 @@ public class MockEnchantment extends Enchantment {
         // Throw exception.
         if (valueOf(this.key) != null && valueOfEnchantment(this.key) != null)
             throw new IllegalArgumentException(String.format("Cannot create enchantment with key \"%s\". ", this.key) +
-                    "Use the vanilla enchantment from Enchantment instead.");
+                    "Use the vanilla enchantment from the Enchantment class instead.");
         this.name = name;
         this.startLevel = startLevel;
         this.maxLevel = maxLevel;
