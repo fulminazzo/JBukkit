@@ -132,17 +132,18 @@ public class MockPotionEffectType extends PotionEffectType {
     }
 
     /**
-     * Gets all the vanilla {@link MockPotionEffectType}s.
+     * Gets the most appropriate {@link PotionEffectType} from the given {@link NamespacedKey}.
+     * Uses the static {@link Supplier}s present in this class.
+     * If none is found, an exception is thrown.
      *
-     * @return the mock potion effect types
+     * @param key the key
+     * @return the vanilla potion effect type
      */
-    public static MockPotionEffectType @NotNull [] values() {
-        Refl<?> clazz = new Refl<>(MockPotionEffectType.class);
-        return clazz.getStaticFields().stream()
-                .filter(f -> f.getType().equals(MockPotionEffectType.class))
-                .map(clazz::getFieldObject)
-                .map(o -> (MockPotionEffectType) o)
-                .toArray(MockPotionEffectType[]::new);
+    public static @NotNull PotionEffectType getVanillaPotionEffectType(final @NotNull NamespacedKey key) {
+        Refl<?> mock = new Refl<>(MockPotionEffectType.class);
+        Supplier<MockPotionEffectType> supplier = mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        Objects.requireNonNull(supplier, "Could not find vanilla potion effect type: " + key);
+        return supplier.get();
     }
 
     private static @NotNull Color color(final @NotNull String color) {
