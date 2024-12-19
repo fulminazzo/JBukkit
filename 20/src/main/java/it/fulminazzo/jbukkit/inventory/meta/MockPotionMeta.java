@@ -7,6 +7,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,6 +23,7 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     private final Set<PotionEffect> customEffects;
     private PotionEffectType mainEffect;
     private PotionData basePotionData;
+    private PotionType basePotionType;
     private Color color;
 
     /**
@@ -39,6 +41,11 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     public boolean setMainEffect(PotionEffectType mainEffect) {
         this.mainEffect = mainEffect;
         return true;
+    }
+
+    @Override
+    public boolean hasBasePotionType() {
+        return this.basePotionType != null;
     }
 
     @Override
