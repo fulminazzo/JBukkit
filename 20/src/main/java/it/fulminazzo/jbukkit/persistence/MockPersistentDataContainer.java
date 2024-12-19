@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.persistence;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
 import lombok.Getter;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataAdapterContext;
@@ -38,6 +39,11 @@ public class MockPersistentDataContainer implements PersistentDataContainer {
         return get(key, type) != null;
     }
 
+    @Override
+    public boolean has(@NotNull NamespacedKey key) {
+        return this.data.containsKey(key);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public @Nullable <T, Z> Z get(@NotNull NamespacedKey key, @NotNull PersistentDataType<T, Z> type) {
@@ -68,6 +74,14 @@ public class MockPersistentDataContainer implements PersistentDataContainer {
     @Override
     public boolean isEmpty() {
         return this.data.isEmpty();
+    }
+
+    @Override
+    public void copyTo(@NotNull PersistentDataContainer other, boolean replace) {
+        this.data.forEach((k, v) -> {
+            if (!other.has(k) || replace)
+                new Refl<>(other).invokeMethod("set", k, v.getType(), v.getValue());
+        });
     }
 
 }
