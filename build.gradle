@@ -55,6 +55,7 @@ allprojects {
         annotationProcessor libs.lombok
         compileOnly libs.annotations
         annotationProcessor libs.annotations
+        testCompileOnly libs.annotations
 
         api libs.fulmicollection
         api libs.yagl.common

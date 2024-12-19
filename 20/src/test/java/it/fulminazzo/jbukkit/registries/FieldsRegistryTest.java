@@ -1,11 +1,11 @@
 package it.fulminazzo.jbukkit.registries;
 
-import com.sun.istack.internal.NotNull;
 import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
