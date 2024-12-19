@@ -14,11 +14,53 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import static org.bukkit.potion.PotionEffectTypeCategory.*;
+
 /**
  * Represents an implementation of {@link PotionEffectType}.
  */
 @Getter
 public class MockPotionEffectType extends PotionEffectType {
+    public static final MockPotionEffectType SPEED = new MockPotionEffectType("Speed", BENEFICIAL, "33EBFF", false);
+    public static final MockPotionEffectType SLOWNESS = new MockPotionEffectType("Slowness", HARMFUL, "5A6C81", false);
+    public static final MockPotionEffectType HASTE = new MockPotionEffectType("Haste", BENEFICIAL, "D9C043", false);
+    public static final MockPotionEffectType MINING_FATIGUE = new MockPotionEffectType("Mining Fatigue", HARMFUL, "4A4217", false);
+    public static final MockPotionEffectType STRENGTH = new MockPotionEffectType("Strength", BENEFICIAL, "FCC500", false);
+    public static final MockPotionEffectType INSTANT_HEALTH = new MockPotionEffectType("Instant Health", BENEFICIAL, "F82423", true);
+    public static final MockPotionEffectType INSTANT_DAMAGE = new MockPotionEffectType("Instant Damage", HARMFUL, "430A09", true);
+    public static final MockPotionEffectType JUMP_BOOST = new MockPotionEffectType("Jump Boost", BENEFICIAL, "23FC4D", false);
+    public static final MockPotionEffectType NAUSEA = new MockPotionEffectType("Nausea", HARMFUL, "551D4A", false);
+    public static final MockPotionEffectType REGENERATION = new MockPotionEffectType("Regeneration", BENEFICIAL, "CD5CAB", false);
+    public static final MockPotionEffectType RESISTANCE = new MockPotionEffectType("Resistance", BENEFICIAL, "8F45ED", false);
+    public static final MockPotionEffectType FIRE_RESISTANCE = new MockPotionEffectType("Fire Resistance", BENEFICIAL, "E49A3A", false);
+    public static final MockPotionEffectType WATER_BREATHING = new MockPotionEffectType("Water Breathing", BENEFICIAL, "96D7BE", false);
+    public static final MockPotionEffectType INVISIBILITY = new MockPotionEffectType("Invisibility", BENEFICIAL, "7F8392", false);
+    public static final MockPotionEffectType BLINDNESS = new MockPotionEffectType("Blindness", HARMFUL, "1F1F23", false);
+    public static final MockPotionEffectType NIGHT_VISION = new MockPotionEffectType("Night Vision", BENEFICIAL, "1F1FA1", false);
+    public static final MockPotionEffectType HUNGER = new MockPotionEffectType("Hunger", HARMFUL, "587653", false);
+    public static final MockPotionEffectType WEAKNESS = new MockPotionEffectType("Weakness", BENEFICIAL, "484D48", false);
+    public static final MockPotionEffectType POISON = new MockPotionEffectType("Poison", HARMFUL, "4E9331", false);
+    public static final MockPotionEffectType WITHER = new MockPotionEffectType("Wither", HARMFUL, "352A27", false);
+    public static final MockPotionEffectType HEALTH_BOOST = new MockPotionEffectType("Health Boost", BENEFICIAL, "F87D23", false);
+    public static final MockPotionEffectType ABSORPTION = new MockPotionEffectType("Absorption", BENEFICIAL, "2552A5", false);
+    public static final MockPotionEffectType SATURATION = new MockPotionEffectType("Saturation", BENEFICIAL, "F82421", false);
+    public static final MockPotionEffectType GLOWING = new MockPotionEffectType("Glowing", NEUTRAL, "94A061", false);
+    public static final MockPotionEffectType LEVITATION = new MockPotionEffectType("Levitation", HARMFUL, "CEFFFF", false);
+    public static final MockPotionEffectType LUCK = new MockPotionEffectType("Luck", BENEFICIAL, "339900", false);
+    public static final MockPotionEffectType UNLUCK = new MockPotionEffectType("Bad Luck", HARMFUL, "C0A44D", false);
+    public static final MockPotionEffectType SLOW_FALLING = new MockPotionEffectType("Slow Falling", BENEFICIAL, "FFEFD1", false);
+    public static final MockPotionEffectType CONDUIT_POWER = new MockPotionEffectType("Conduit Power", BENEFICIAL, "1DC2D1", false);
+    public static final MockPotionEffectType DOLPHINS_GRACE = new MockPotionEffectType("Dolphins Grace", BENEFICIAL, "88A3BE", false);
+    public static final MockPotionEffectType BAD_OMEN = new MockPotionEffectType("Bad Omen", NEUTRAL, "0B6138", false);
+    public static final MockPotionEffectType HERO_OF_THE_VILLAGE = new MockPotionEffectType("Hero of the Village", BENEFICIAL, "44FF44", false);
+    public static final MockPotionEffectType DARKNESS = new MockPotionEffectType("Darkness", HARMFUL, "292721", false);
+    public static final MockPotionEffectType TRIAL_OMEN = new MockPotionEffectType("Trial Omen", HARMFUL, "000000", false);
+    public static final MockPotionEffectType RAID_OMEN = new MockPotionEffectType("Raid Omen", HARMFUL, "000000", false);
+    public static final MockPotionEffectType WIND_CHARGED = new MockPotionEffectType("Wind Charged", HARMFUL, "000000", false);
+    public static final MockPotionEffectType WEAVING = new MockPotionEffectType("Weaving", HARMFUL, "000000", false);
+    public static final MockPotionEffectType OOZING = new MockPotionEffectType("Oozing", HARMFUL, "000000", false);
+    public static final MockPotionEffectType INFESTED = new MockPotionEffectType("Infested", HARMFUL, "000000", false);
+
     private static int LAST_USED_ID = 1;
     private final int id;
     private final @NotNull NamespacedKey key;
