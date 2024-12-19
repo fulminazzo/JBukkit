@@ -24,9 +24,9 @@ import java.util.Set;
 public class MockEnchantment extends Enchantment {
     public static final MockEnchantment PROTECTION = new MockEnchantment("protection", 1, 4, EnchantmentTarget.ARMOR);
     public static final MockEnchantment FIRE_PROTECTION = new MockEnchantment("fire_protection", 1, 4, EnchantmentTarget.ARMOR);
-    public static final MockEnchantment FEATHER_FALLING = new MockEnchantment("feather_falling", 1, 4, EnchantmentTarget.ARMOR_FEET);
     public static final MockEnchantment BLAST_PROTECTION = new MockEnchantment("blast_protection", 1, 4, EnchantmentTarget.ARMOR);
     public static final MockEnchantment PROJECTILE_PROTECTION = new MockEnchantment("projectile_protection", 1, 4, EnchantmentTarget.ARMOR);
+    public static final MockEnchantment FEATHER_FALLING = new MockEnchantment("feather_falling", 1, 4, EnchantmentTarget.ARMOR_FEET);
     public static final MockEnchantment RESPIRATION = new MockEnchantment("respiration", 1, 3, EnchantmentTarget.ARMOR_HEAD);
     public static final MockEnchantment AQUA_AFFINITY = new MockEnchantment("aqua_affinity", 1, 1, EnchantmentTarget.ARMOR_HEAD);
     public static final MockEnchantment THORNS = new MockEnchantment("thorns", 1, 3, EnchantmentTarget.ARMOR);
@@ -63,6 +63,38 @@ public class MockEnchantment extends Enchantment {
     public static final MockEnchantment DENSITY = new MockEnchantment("density", 1, 5, EnchantmentTarget.WEAPON);
     public static final MockEnchantment WIND_BURST = new MockEnchantment("wind_burst", 1, 3, EnchantmentTarget.WEAPON);
     public static final MockEnchantment BREACH = new MockEnchantment("breach", 1, 4, EnchantmentTarget.WEAPON);
+
+    static {
+        // Protection
+        PROTECTION.conflictsWith(FIRE_PROTECTION, BLAST_PROTECTION, PROJECTILE_PROTECTION);
+        FIRE_PROTECTION.conflictsWith(PROTECTION, BLAST_PROTECTION, PROJECTILE_PROTECTION);
+        BLAST_PROTECTION.conflictsWith(FIRE_PROTECTION, PROTECTION, PROJECTILE_PROTECTION);
+        PROJECTILE_PROTECTION.conflictsWith(FIRE_PROTECTION, BLAST_PROTECTION, PROTECTION);
+        // Depth strider
+        DEPTH_STRIDER.conflictsWith(FROST_WALKER);
+        FROST_WALKER.conflictsWith(DEPTH_STRIDER);
+        // Sharpness
+        SHARPNESS.conflictsWith(SMITE, BANE_OF_ARTHROPODS);
+        SMITE.conflictsWith(SHARPNESS, BANE_OF_ARTHROPODS);
+        BANE_OF_ARTHROPODS.conflictsWith(SMITE, SHARPNESS);
+        // Fortune
+        FORTUNE.conflictsWith(SILK_TOUCH);
+        SILK_TOUCH.conflictsWith(FORTUNE);
+        // Mending
+        MENDING.conflictsWith(INFINITY);
+        INFINITY.conflictsWith(MENDING);
+        // Channeling
+        RIPTIDE.conflictsWith(CHANNELING);
+        CHANNELING.conflictsWith(RIPTIDE);
+        // Piercing
+        PIERCING.conflictsWith(MULTISHOT);
+        MULTISHOT.conflictsWith(PIERCING);
+        // Density
+        DENSITY.conflictsWith(SMITE, BANE_OF_ARTHROPODS, BREACH);
+        SMITE.conflictsWith(DENSITY, BANE_OF_ARTHROPODS, BREACH);
+        BANE_OF_ARTHROPODS.conflictsWith(SMITE, DENSITY, BREACH);
+        BREACH.conflictsWith(SMITE, BANE_OF_ARTHROPODS, DENSITY);
+    }
 
     private final NamespacedKey key;
     private final String name;
