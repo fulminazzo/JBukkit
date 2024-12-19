@@ -30,7 +30,7 @@ class FieldsRegistryTest {
     @Test
     void testIterator() {
         Iterator<MockClass> iterator = this.registry.iterator();
-        for (String key : new String[]{"first", "second", "true"}) {
+        for (String key : new String[]{"first", "second", "third"}) {
             assertTrue(iterator.hasNext(), String.format("Iterator should have %s object", key));
             assertEquals(new MockClass(key), iterator.next());
         }
