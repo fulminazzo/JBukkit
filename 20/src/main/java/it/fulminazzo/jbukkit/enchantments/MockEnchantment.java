@@ -47,6 +47,19 @@ public class MockEnchantment extends Enchantment {
     /**
      * Instantiates a new Mock enchantment.
      *
+     * @param name       the name
+     * @param startLevel the start level
+     * @param maxLevel   the max level
+     * @param itemTarget the item target
+     */
+    protected MockEnchantment(final @NotNull String name, final int startLevel,
+                              final int maxLevel, final @NotNull EnchantmentTarget itemTarget) {
+        this(NamespacedKey.minecraft(name), name, startLevel, maxLevel, itemTarget);
+    }
+
+    /**
+     * Instantiates a new Mock enchantment.
+     *
      * @param key        the key
      * @param name       the name
      * @param startLevel the start level
