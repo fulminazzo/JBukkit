@@ -36,10 +36,12 @@ public final class RegistryUtils {
      * @return the registry
      */
     public static <T extends Keyed> Registry<T> getRegistry(final @NotNull Class<T> clazz) {
-        String className = clazz.getSimpleName();
-        className = StringUtils.decapitalize(className);
+        String clazzName = clazz.getSimpleName();
+        Class<?> enclosingClass = clazz.getEnclosingClass();
+        if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
+        clazzName = StringUtils.decapitalize(clazzName);
         // Default case, registry already initialized.
-        return new Refl<>(Registry.class).getFieldObject(className);
+        return new Refl<>(Registry.class).getFieldObject(clazzName);
     }
 
 }
