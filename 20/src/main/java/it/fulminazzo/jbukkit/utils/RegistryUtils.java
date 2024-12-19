@@ -48,7 +48,7 @@ public final class RegistryUtils {
         FIELDS_CLASSES.put("TrimMaterial", k -> mockKeyed(TrimMaterial.class, k));
         FIELDS_CLASSES.put("StructureType", k -> mockKeyed(StructureType.class, k));
         FIELDS_CLASSES.put("Structure", k -> mockKeyed(Structure.class, k));
-        FIELDS_CLASSES.put("PotionEffectType", MockPotionEffectType::valueOf);
+        FIELDS_CLASSES.put("PotionEffectType", MockPotionEffectType::getVanillaPotionEffectType);
         FIELDS_CLASSES.put("MusicInstrument", k -> mockKeyed(MusicInstrument.class, k));
         // Necessary to avoid compilation conflicts.
         FIELDS_CLASSES.put("Enchantment", k -> new Refl<>(MockEnchantment.class).invokeMethod("valueOf", k));
