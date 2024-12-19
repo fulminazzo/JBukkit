@@ -1,111 +1,70 @@
 package it.fulminazzo.jbukkit.enchantments;
 
+import it.fulminazzo.fulmicollection.objects.Printable;
 import it.fulminazzo.fulmicollection.objects.Refl;
-import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
+import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import lombok.Getter;
-import lombok.SneakyThrows;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * Represents an implementation of {@link Enchantment}.
  */
 @Getter
 public class MockEnchantment extends Enchantment {
-    public static final MockEnchantment PROTECTION = new MockEnchantment("protection", 1, 4, EnchantmentTarget.ARMOR);
-    public static final MockEnchantment FIRE_PROTECTION = new MockEnchantment("fire_protection", 1, 4, EnchantmentTarget.ARMOR);
-    public static final MockEnchantment BLAST_PROTECTION = new MockEnchantment("blast_protection", 1, 4, EnchantmentTarget.ARMOR);
-    public static final MockEnchantment PROJECTILE_PROTECTION = new MockEnchantment("projectile_protection", 1, 4, EnchantmentTarget.ARMOR);
-    public static final MockEnchantment FEATHER_FALLING = new MockEnchantment("feather_falling", 1, 4, EnchantmentTarget.ARMOR_FEET);
-    public static final MockEnchantment RESPIRATION = new MockEnchantment("respiration", 1, 3, EnchantmentTarget.ARMOR_HEAD);
-    public static final MockEnchantment AQUA_AFFINITY = new MockEnchantment("aqua_affinity", 1, 1, EnchantmentTarget.ARMOR_HEAD);
-    public static final MockEnchantment THORNS = new MockEnchantment("thorns", 1, 3, EnchantmentTarget.ARMOR);
-    public static final MockEnchantment DEPTH_STRIDER = new MockEnchantment("depth_strider", 1, 3, EnchantmentTarget.ARMOR_FEET);
-    public static final MockEnchantment FROST_WALKER = new MockEnchantment("frost_walker", 1, 2, EnchantmentTarget.ARMOR_FEET);
-    public static final MockEnchantment BINDING_CURSE = new MockEnchantment("binding_curse", 1, 1, EnchantmentTarget.WEARABLE);
-    public static final MockEnchantment SHARPNESS = new MockEnchantment("sharpness", 1, 5, EnchantmentTarget.WEAPON);
-    public static final MockEnchantment SMITE = new MockEnchantment("smite", 1, 5, EnchantmentTarget.WEAPON);
-    public static final MockEnchantment BANE_OF_ARTHROPODS = new MockEnchantment("bane_of_arthropods", 1, 5, EnchantmentTarget.WEAPON);
-    public static final MockEnchantment KNOCKBACK = new MockEnchantment("knockback", 1, 2, EnchantmentTarget.WEAPON);
-    public static final MockEnchantment FIRE_ASPECT = new MockEnchantment("fire_aspect", 1, 2, EnchantmentTarget.WEAPON);
-    public static final MockEnchantment LOOTING = new MockEnchantment("looting", 1, 3, EnchantmentTarget.WEAPON);
-    public static final MockEnchantment SWEEPING_EDGE = new MockEnchantment("sweeping_edge", 1, 3, EnchantmentTarget.WEAPON);
-    public static final MockEnchantment EFFICIENCY = new MockEnchantment("efficiency", 1, 5, EnchantmentTarget.TOOL);
-    public static final MockEnchantment SILK_TOUCH = new MockEnchantment("silk_touch", 1, 1, EnchantmentTarget.TOOL);
-    public static final MockEnchantment UNBREAKING = new MockEnchantment("unbreaking", 1, 3, EnchantmentTarget.BREAKABLE);
-    public static final MockEnchantment FORTUNE = new MockEnchantment("fortune", 1, 3, EnchantmentTarget.TOOL);
-    public static final MockEnchantment POWER = new MockEnchantment("power", 1, 5, EnchantmentTarget.BOW);
-    public static final MockEnchantment FLAME = new MockEnchantment("flame", 1, 1, EnchantmentTarget.BOW);
-    public static final MockEnchantment INFINITY = new MockEnchantment("infinity", 1, 1, EnchantmentTarget.BOW);
-    public static final MockEnchantment LUCK_OF_THE_SEA = new MockEnchantment("luck_of_the_sea", 1, 3, EnchantmentTarget.FISHING_ROD);
-    public static final MockEnchantment LURE = new MockEnchantment("lure", 1, 3, EnchantmentTarget.FISHING_ROD);
-    public static final MockEnchantment LOYALTY = new MockEnchantment("loyalty", 1, 3, EnchantmentTarget.TRIDENT);
-    public static final MockEnchantment IMPALING = new MockEnchantment("impaling", 1, 5, EnchantmentTarget.TRIDENT);
-    public static final MockEnchantment RIPTIDE = new MockEnchantment("riptide", 1, 3, EnchantmentTarget.TRIDENT);
-    public static final MockEnchantment CHANNELING = new MockEnchantment("channeling", 1, 1, EnchantmentTarget.TRIDENT);
-    public static final MockEnchantment MULTISHOT = new MockEnchantment("multishot", 1, 1, EnchantmentTarget.CROSSBOW);
-    public static final MockEnchantment QUICK_CHARGE = new MockEnchantment("quick_charge", 1, 3, EnchantmentTarget.CROSSBOW);
-    public static final MockEnchantment PIERCING = new MockEnchantment("piercing", 1, 4, EnchantmentTarget.CROSSBOW);
-    public static final MockEnchantment MENDING = new MockEnchantment("mending", 1, 1, EnchantmentTarget.BREAKABLE);
-    public static final MockEnchantment VANISHING_CURSE = new MockEnchantment("vanishing_curse", 1, 1, EnchantmentTarget.VANISHABLE);
-    public static final MockEnchantment SOUL_SPEED = new MockEnchantment("soul_speed", 1, 3, EnchantmentTarget.ARMOR_FEET);
-    public static final MockEnchantment SWIFT_SNEAK = new MockEnchantment("swift_sneak", 1, 3, EnchantmentTarget.ARMOR_FEET);
-    public static final MockEnchantment DENSITY = new MockEnchantment("density", 1, 5, EnchantmentTarget.WEAPON);
-    public static final MockEnchantment WIND_BURST = new MockEnchantment("wind_burst", 1, 3, EnchantmentTarget.WEAPON);
-    public static final MockEnchantment BREACH = new MockEnchantment("breach", 1, 4, EnchantmentTarget.WEAPON);
-
-    static {
-        // Protection
-        PROTECTION.conflictsWith(FIRE_PROTECTION, BLAST_PROTECTION, PROJECTILE_PROTECTION);
-        FIRE_PROTECTION.conflictsWith(PROTECTION, BLAST_PROTECTION, PROJECTILE_PROTECTION);
-        BLAST_PROTECTION.conflictsWith(FIRE_PROTECTION, PROTECTION, PROJECTILE_PROTECTION);
-        PROJECTILE_PROTECTION.conflictsWith(FIRE_PROTECTION, BLAST_PROTECTION, PROTECTION);
-        // Depth strider
-        DEPTH_STRIDER.conflictsWith(FROST_WALKER);
-        FROST_WALKER.conflictsWith(DEPTH_STRIDER);
-        // Sharpness
-        SHARPNESS.conflictsWith(SMITE, BANE_OF_ARTHROPODS);
-        SMITE.conflictsWith(SHARPNESS, BANE_OF_ARTHROPODS);
-        BANE_OF_ARTHROPODS.conflictsWith(SMITE, SHARPNESS);
-        // Fortune
-        FORTUNE.conflictsWith(SILK_TOUCH);
-        SILK_TOUCH.conflictsWith(FORTUNE);
-        // Mending
-        MENDING.conflictsWith(INFINITY);
-        INFINITY.conflictsWith(MENDING);
-        // Channeling
-        RIPTIDE.conflictsWith(CHANNELING);
-        CHANNELING.conflictsWith(RIPTIDE);
-        // Piercing
-        PIERCING.conflictsWith(MULTISHOT);
-        MULTISHOT.conflictsWith(PIERCING);
-        // Density
-        DENSITY.conflictsWith(SMITE, BANE_OF_ARTHROPODS, BREACH);
-        SMITE.conflictsWith(DENSITY, BANE_OF_ARTHROPODS, BREACH);
-        BANE_OF_ARTHROPODS.conflictsWith(SMITE, DENSITY, BREACH);
-        BREACH.conflictsWith(SMITE, BANE_OF_ARTHROPODS, DENSITY);
-        // Cursed
-        BINDING_CURSE.setCursed(true);
-        VANISHING_CURSE.setCursed(true);
-        // Treasure
-        BINDING_CURSE.setTreasure(true);
-        VANISHING_CURSE.setTreasure(true);
-        MENDING.setTreasure(true);
-        FROST_WALKER.setTreasure(true);
-        SOUL_SPEED.setTreasure(true);
-        SWIFT_SNEAK.setTreasure(true);
-        WIND_BURST.setTreasure(true);
-    }
+    private static final Supplier<MockEnchantment> PROTECTION = () -> new MockEnchantment("protection", 1, 4, EnchantmentTarget.ARMOR);
+    private static final Supplier<MockEnchantment> FIRE_PROTECTION = () -> new MockEnchantment("fire_protection", 1, 4, EnchantmentTarget.ARMOR);
+    private static final Supplier<MockEnchantment> BLAST_PROTECTION = () -> new MockEnchantment("blast_protection", 1, 4, EnchantmentTarget.ARMOR);
+    private static final Supplier<MockEnchantment> PROJECTILE_PROTECTION = () -> new MockEnchantment("projectile_protection", 1, 4, EnchantmentTarget.ARMOR);
+    private static final Supplier<MockEnchantment> FEATHER_FALLING = () -> new MockEnchantment("feather_falling", 1, 4, EnchantmentTarget.ARMOR_FEET);
+    private static final Supplier<MockEnchantment> RESPIRATION = () -> new MockEnchantment("respiration", 1, 3, EnchantmentTarget.ARMOR_HEAD);
+    private static final Supplier<MockEnchantment> AQUA_AFFINITY = () -> new MockEnchantment("aqua_affinity", 1, 1, EnchantmentTarget.ARMOR_HEAD);
+    private static final Supplier<MockEnchantment> THORNS = () -> new MockEnchantment("thorns", 1, 3, EnchantmentTarget.ARMOR);
+    private static final Supplier<MockEnchantment> DEPTH_STRIDER = () -> new MockEnchantment("depth_strider", 1, 3, EnchantmentTarget.ARMOR_FEET);
+    private static final Supplier<MockEnchantment> FROST_WALKER = () -> new MockEnchantment("frost_walker", 1, 2, EnchantmentTarget.ARMOR_FEET);
+    private static final Supplier<MockEnchantment> BINDING_CURSE = () -> new MockEnchantment("binding_curse", 1, 1, EnchantmentTarget.WEARABLE);
+    private static final Supplier<MockEnchantment> SHARPNESS = () -> new MockEnchantment("sharpness", 1, 5, EnchantmentTarget.WEAPON);
+    private static final Supplier<MockEnchantment> SMITE = () -> new MockEnchantment("smite", 1, 5, EnchantmentTarget.WEAPON);
+    private static final Supplier<MockEnchantment> BANE_OF_ARTHROPODS = () -> new MockEnchantment("bane_of_arthropods", 1, 5, EnchantmentTarget.WEAPON);
+    private static final Supplier<MockEnchantment> KNOCKBACK = () -> new MockEnchantment("knockback", 1, 2, EnchantmentTarget.WEAPON);
+    private static final Supplier<MockEnchantment> FIRE_ASPECT = () -> new MockEnchantment("fire_aspect", 1, 2, EnchantmentTarget.WEAPON);
+    private static final Supplier<MockEnchantment> LOOTING = () -> new MockEnchantment("looting", 1, 3, EnchantmentTarget.WEAPON);
+    private static final Supplier<MockEnchantment> SWEEPING_EDGE = () -> new MockEnchantment("sweeping_edge", 1, 3, EnchantmentTarget.WEAPON);
+    private static final Supplier<MockEnchantment> EFFICIENCY = () -> new MockEnchantment("efficiency", 1, 5, EnchantmentTarget.TOOL);
+    private static final Supplier<MockEnchantment> SILK_TOUCH = () -> new MockEnchantment("silk_touch", 1, 1, EnchantmentTarget.TOOL);
+    private static final Supplier<MockEnchantment> UNBREAKING = () -> new MockEnchantment("unbreaking", 1, 3, EnchantmentTarget.BREAKABLE);
+    private static final Supplier<MockEnchantment> FORTUNE = () -> new MockEnchantment("fortune", 1, 3, EnchantmentTarget.TOOL);
+    private static final Supplier<MockEnchantment> POWER = () -> new MockEnchantment("power", 1, 5, EnchantmentTarget.BOW);
+    private static final Supplier<MockEnchantment> PUNCH = () -> new MockEnchantment("punch", 1, 2, EnchantmentTarget.BOW);
+    private static final Supplier<MockEnchantment> FLAME = () -> new MockEnchantment("flame", 1, 1, EnchantmentTarget.BOW);
+    private static final Supplier<MockEnchantment> INFINITY = () -> new MockEnchantment("infinity", 1, 1, EnchantmentTarget.BOW);
+    private static final Supplier<MockEnchantment> LUCK_OF_THE_SEA = () -> new MockEnchantment("luck_of_the_sea", 1, 3, EnchantmentTarget.FISHING_ROD);
+    private static final Supplier<MockEnchantment> LURE = () -> new MockEnchantment("lure", 1, 3, EnchantmentTarget.FISHING_ROD);
+    private static final Supplier<MockEnchantment> LOYALTY = () -> new MockEnchantment("loyalty", 1, 3, EnchantmentTarget.TRIDENT);
+    private static final Supplier<MockEnchantment> IMPALING = () -> new MockEnchantment("impaling", 1, 5, EnchantmentTarget.TRIDENT);
+    private static final Supplier<MockEnchantment> RIPTIDE = () -> new MockEnchantment("riptide", 1, 3, EnchantmentTarget.TRIDENT);
+    private static final Supplier<MockEnchantment> CHANNELING = () -> new MockEnchantment("channeling", 1, 1, EnchantmentTarget.TRIDENT);
+    private static final Supplier<MockEnchantment> MULTISHOT = () -> new MockEnchantment("multishot", 1, 1, EnchantmentTarget.CROSSBOW);
+    private static final Supplier<MockEnchantment> QUICK_CHARGE = () -> new MockEnchantment("quick_charge", 1, 3, EnchantmentTarget.CROSSBOW);
+    private static final Supplier<MockEnchantment> PIERCING = () -> new MockEnchantment("piercing", 1, 4, EnchantmentTarget.CROSSBOW);
+    private static final Supplier<MockEnchantment> MENDING = () -> new MockEnchantment("mending", 1, 1, EnchantmentTarget.BREAKABLE);
+    private static final Supplier<MockEnchantment> VANISHING_CURSE = () -> new MockEnchantment("vanishing_curse", 1, 1, EnchantmentTarget.VANISHABLE);
+    private static final Supplier<MockEnchantment> SOUL_SPEED = () -> new MockEnchantment("soul_speed", 1, 3, EnchantmentTarget.ARMOR_FEET);
+    private static final Supplier<MockEnchantment> SWIFT_SNEAK = () -> new MockEnchantment("swift_sneak", 1, 3, EnchantmentTarget.ARMOR_FEET);
+    private static final Supplier<MockEnchantment> DENSITY = () -> new MockEnchantment("density", 1, 5, EnchantmentTarget.WEAPON);
+    private static final Supplier<MockEnchantment> WIND_BURST = () -> new MockEnchantment("wind_burst", 1, 3, EnchantmentTarget.WEAPON);
+    private static final Supplier<MockEnchantment> BREACH = () -> new MockEnchantment("breach", 1, 4, EnchantmentTarget.WEAPON);
 
     private final NamespacedKey key;
     private final String name;
@@ -153,6 +112,12 @@ public class MockEnchantment extends Enchantment {
     public MockEnchantment(final @NotNull NamespacedKey key, final @NotNull String name, final int startLevel,
                            final int maxLevel, final @NotNull EnchantmentTarget itemTarget) {
         this.key = key;
+        // If the provided key belongs to a static supplier in this class
+        // And the corresponding Enchantment is already initialized,
+        // Throw exception.
+        if (valueOf(this.key) != null && valueOfEnchantment(this.key) != null)
+            throw new IllegalArgumentException(String.format("Cannot create enchantment with key \"%s\". ", this.key) +
+                    "Use the vanilla enchantment from the Enchantment class instead.");
         this.name = name;
         this.startLevel = startLevel;
         this.maxLevel = maxLevel;
@@ -213,67 +178,102 @@ public class MockEnchantment extends Enchantment {
         throw new NotImplementedException();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Enchantment) {
+            Enchantment other = (Enchantment) obj;
+            return other.getKey().equals(this.key);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.key.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return Printable.convertToJson(this);
+    }
+
+    /**
+     * Gets the most appropriate {@link Enchantment} from the given {@link NamespacedKey}.
+     * Uses the static {@link Supplier}s present in this class.
+     * If none is found, an exception is thrown.
+     *
+     * @param key the key
+     * @return the vanilla enchantment
+     */
+    public static @NotNull Enchantment getVanillaEnchantment(final @NotNull NamespacedKey key) {
+        Supplier<MockEnchantment> supplier = valueOf(key);
+        Objects.requireNonNull(supplier, "Could not find vanilla enchantment: " + key);
+        return supplier.get();
+    }
+
+    private static @Nullable Supplier<MockEnchantment> valueOf(final @NotNull NamespacedKey key) {
+        Refl<?> mock = new Refl<>(MockEnchantment.class);
+        try {
+            return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    private static @Nullable Enchantment valueOfEnchantment(final @NotNull NamespacedKey key) {
+        Refl<?> mock = new Refl<>(Enchantment.class);
+        try {
+            return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
     /**
      * Sets up the default vanilla enchantments by checking the {@link Enchantment} static fields.
      */
-    @SneakyThrows
+    @SuppressWarnings("RedundantCast")
     public static void setupEnchantments() {
-        Refl<Class<Enchantment>> enchantmentClass = new Refl<>(Enchantment.class);
-        Map<NamespacedKey, Enchantment> byKey = enchantmentClass.getFieldObject("byKey");
-        Map<String, Enchantment> byName = enchantmentClass.getFieldObject("byName");
-        byKey.clear();
-        byName.clear();
-        for (Field field : enchantmentClass.getStaticFields())
-            if (field.getType().equals(Enchantment.class)) {
-                Enchantment enchantment = (Enchantment) ReflectionUtils.setAccessibleOrThrow(field)
-                        .get(Enchantment.class);
-                MockEnchantment mock = new MockEnchantment(enchantment);
-                field.set(Enchantment.class, mock);
-                byKey.put(mock.getKey(), enchantment);
-                byName.put(mock.getName(), enchantment);
-            }
-    }
-
-    /**
-     * Gets the {@link MockEnchantment} from the given key.
-     * Throws {@link IllegalArgumentException} if it fails.
-     *
-     * @param key the key
-     * @return the mock enchantment
-     */
-    public static @NotNull MockEnchantment valueOf(final @NotNull NamespacedKey key) {
-        return Arrays.stream(values())
-                .filter(e -> e.getKey().equals(key))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown enchantment: " + key));
-    }
-
-    /**
-     * Gets the {@link MockEnchantment} from the given name.
-     * Throws {@link IllegalArgumentException} if it fails.
-     *
-     * @param name the name
-     * @return the mock enchantment
-     */
-    public static @NotNull MockEnchantment valueOf(final @NotNull String name) {
-        return Arrays.stream(values())
-                .filter(e -> e.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown enchantment: " + name));
-    }
-
-    /**
-     * Gets all the vanilla {@link MockEnchantment}s.
-     *
-     * @return the mock enchantments
-     */
-    public static MockEnchantment @NotNull [] values() {
-        Refl<?> clazz = new Refl<>(MockEnchantment.class);
-        return clazz.getStaticFields().stream()
-                .filter(f -> f.getType().equals(MockEnchantment.class))
-                .map(clazz::getFieldObject)
-                .map(o -> (MockEnchantment) o)
-                .toArray(MockEnchantment[]::new);
+        // Protection
+        ((MockEnchantment) Enchantment.PROTECTION).conflictsWith(Enchantment.FIRE_PROTECTION, Enchantment.BLAST_PROTECTION, Enchantment.PROJECTILE_PROTECTION);
+        ((MockEnchantment) Enchantment.FIRE_PROTECTION).conflictsWith(Enchantment.PROTECTION, Enchantment.BLAST_PROTECTION, Enchantment.PROJECTILE_PROTECTION);
+        ((MockEnchantment) Enchantment.BLAST_PROTECTION).conflictsWith(Enchantment.FIRE_PROTECTION, Enchantment.PROTECTION, Enchantment.PROJECTILE_PROTECTION);
+        ((MockEnchantment) Enchantment.PROJECTILE_PROTECTION).conflictsWith(Enchantment.FIRE_PROTECTION, Enchantment.BLAST_PROTECTION, Enchantment.PROTECTION);
+        // Depth strider
+        ((MockEnchantment) Enchantment.DEPTH_STRIDER).conflictsWith(Enchantment.FROST_WALKER);
+        ((MockEnchantment) Enchantment.FROST_WALKER).conflictsWith(Enchantment.DEPTH_STRIDER);
+        // Sharpness
+        ((MockEnchantment) Enchantment.SHARPNESS).conflictsWith(Enchantment.SMITE, Enchantment.BANE_OF_ARTHROPODS);
+        ((MockEnchantment) Enchantment.SMITE).conflictsWith(Enchantment.SHARPNESS, Enchantment.BANE_OF_ARTHROPODS);
+        ((MockEnchantment) Enchantment.BANE_OF_ARTHROPODS).conflictsWith(Enchantment.SMITE, Enchantment.SHARPNESS);
+        // Fortune
+        ((MockEnchantment) Enchantment.FORTUNE).conflictsWith(Enchantment.SILK_TOUCH);
+        ((MockEnchantment) Enchantment.SILK_TOUCH).conflictsWith(Enchantment.FORTUNE);
+        // Mending
+        ((MockEnchantment) Enchantment.MENDING).conflictsWith(Enchantment.INFINITY);
+        ((MockEnchantment) Enchantment.INFINITY).conflictsWith(Enchantment.MENDING);
+        // Channeling
+        ((MockEnchantment) Enchantment.RIPTIDE).conflictsWith(Enchantment.CHANNELING);
+        ((MockEnchantment) Enchantment.CHANNELING).conflictsWith(Enchantment.RIPTIDE);
+        // Piercing
+        ((MockEnchantment) Enchantment.PIERCING).conflictsWith(Enchantment.MULTISHOT);
+        ((MockEnchantment) Enchantment.MULTISHOT).conflictsWith(Enchantment.PIERCING);
+        // Density
+        ((MockEnchantment) Enchantment.DENSITY).conflictsWith(Enchantment.SMITE, Enchantment.BANE_OF_ARTHROPODS, Enchantment.BREACH);
+        ((MockEnchantment) Enchantment.SMITE).conflictsWith(Enchantment.DENSITY, Enchantment.BANE_OF_ARTHROPODS, Enchantment.BREACH);
+        ((MockEnchantment) Enchantment.BANE_OF_ARTHROPODS).conflictsWith(Enchantment.SMITE, Enchantment.DENSITY, Enchantment.BREACH);
+        ((MockEnchantment) Enchantment.BREACH).conflictsWith(Enchantment.SMITE, Enchantment.BANE_OF_ARTHROPODS, Enchantment.DENSITY);
+        // Cursed
+        ((MockEnchantment) Enchantment.BINDING_CURSE).setCursed(true);
+        ((MockEnchantment) Enchantment.VANISHING_CURSE).setCursed(true);
+        // Treasure
+        ((MockEnchantment) Enchantment.BINDING_CURSE).setTreasure(true);
+        ((MockEnchantment) Enchantment.VANISHING_CURSE).setTreasure(true);
+        ((MockEnchantment) Enchantment.MENDING).setTreasure(true);
+        ((MockEnchantment) Enchantment.FROST_WALKER).setTreasure(true);
+        ((MockEnchantment) Enchantment.SOUL_SPEED).setTreasure(true);
+        ((MockEnchantment) Enchantment.SWIFT_SNEAK).setTreasure(true);
+        ((MockEnchantment) Enchantment.WIND_BURST).setTreasure(true);
     }
 
 }

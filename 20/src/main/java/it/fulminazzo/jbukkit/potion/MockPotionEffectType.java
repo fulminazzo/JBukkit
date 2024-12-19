@@ -110,7 +110,7 @@ public class MockPotionEffectType extends PotionEffectType {
         // Throw exception.
         if (valueOf(this.key) != null && valueOfPotionEffectType(this.key) != null)
             throw new IllegalArgumentException(String.format("Cannot create potion effect type with key \"%s\". ", this.key) +
-                    "Use the vanilla effect from PotionEffectType instead.");
+                    "Use the vanilla effect from the PotionEffectType class instead.");
         this.id = LAST_USED_ID++;
         this.category = category;
         this.color = color;
