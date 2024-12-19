@@ -34,7 +34,7 @@ public final class RegistryUtils {
      */
     public static <T extends Keyed> Registry<T> getRegistry(final @NotNull Class<T> clazz) {
         String clazzName = clazz.getSimpleName().replace("Keyed", "");
-        clazzName = StringUtils.capitalize(clazzName);
+        clazzName = StringUtils.decapitalize(clazzName);
         return new Refl<>(Registry.class).getFieldObject(clazzName);
     }
 
