@@ -13,7 +13,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionEffectTypeCategory;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -79,7 +78,7 @@ public class MockPotionEffectType extends PotionEffectType {
     /**
      * Instantiates a new Mock potion effect type.
      *
-     * @param name      the name
+     * @param name     the name
      * @param category the category
      * @param color    the color
      * @param instant  true if its effects are applied instantly
@@ -93,7 +92,7 @@ public class MockPotionEffectType extends PotionEffectType {
     /**
      * Instantiates a new Mock potion effect type.
      *
-     * @param name      the name
+     * @param name     the name
      * @param category the category
      * @param color    the color
      * @param instant  true if its effects are applied instantly
