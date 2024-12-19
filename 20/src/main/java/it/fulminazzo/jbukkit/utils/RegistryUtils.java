@@ -92,4 +92,20 @@ public final class RegistryUtils {
         }
     }
 
+    /**
+     * Provides a mock for the given class.
+     * When invoking the <code>getKey</code> method, the given key will be returned.
+     *
+     * @param <T>   the type of the mock
+     * @param clazz the class
+     * @param key   the key
+     * @return the mock
+     */
+    public static <T extends Keyed> T mockKeyed(final @NotNull Class<T> clazz,
+                                                final @NotNull NamespacedKey key) {
+        T t = mock(clazz);
+        when(t.getKey()).thenReturn(key);
+        return t;
+    }
+
 }
