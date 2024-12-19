@@ -93,7 +93,7 @@ public final class RegistryUtils {
      * @return the registry
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Keyed> Registry<T> getRegistry(final @NotNull Class<T> clazz) {
+    public static <T extends Keyed> @NotNull Registry<T> getRegistry(final @NotNull Class<T> clazz) {
         String clazzName = clazz.getSimpleName();
         Class<?> enclosingClass = clazz.getEnclosingClass();
         if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
@@ -106,14 +106,9 @@ public final class RegistryUtils {
             return new FieldsRegistry<>(clazz, (FunctionException<NamespacedKey, T>) converterFunction);
         // Default case, registry already initialized.
         clazzName = StringUtils.decapitalize(clazzName);
-        try {
-            Registry<T> registry = new Refl<>(Registry.class).getFieldObject(clazzName);
-            if (registry != null) return registry;
-            else throw new IllegalArgumentException();
-        } catch (IllegalArgumentException e) {
-            //TODO: temporary for testing purposes
-            return mock(Registry.class);
-        }
+        Registry<T> registry = new Refl<>(Registry.class).getFieldObject(clazzName);
+        if (registry != null) return registry;
+        else throw new IllegalArgumentException("Could not create registry for " + clazzName);
     }
 
     /**
