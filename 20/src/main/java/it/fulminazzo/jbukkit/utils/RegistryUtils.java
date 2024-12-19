@@ -90,7 +90,6 @@ public final class RegistryUtils {
             else throw new IllegalArgumentException();
         } catch (IllegalArgumentException e) {
             //TODO: temporary for testing purposes
-            e.printStackTrace();
             return mock(Registry.class);
         }
     }
