@@ -26,7 +26,6 @@ public class MockEnchantment extends Enchantment {
     private final int maxLevel;
     private final EnchantmentTarget itemTarget;
     private final Set<Enchantment> conflicts;
-    private final Set<ItemStack> canEnchantItems;
 
     /**
      * Instantiates a new Mock enchantment.
@@ -57,7 +56,6 @@ public class MockEnchantment extends Enchantment {
         this.maxLevel = maxLevel;
         this.itemTarget = itemTarget;
         this.conflicts = new HashSet<>();
-        this.canEnchantItems = new HashSet<>();
     }
 
     /**
@@ -71,17 +69,6 @@ public class MockEnchantment extends Enchantment {
         return this;
     }
 
-    /**
-     * Explicitly declare the items which this enchantment can be applied to.
-     *
-     * @param canEnchantItems the items
-     * @return this enchantment
-     */
-    public @NotNull MockEnchantment canEnchantItems(final @NotNull ItemStack... canEnchantItems) {
-        this.canEnchantItems.addAll(Arrays.asList(canEnchantItems));
-        return this;
-    }
-
     @Override
     public boolean conflictsWith(final @NotNull Enchantment other) {
         return this.conflicts.contains(other);
@@ -89,7 +76,7 @@ public class MockEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchantItem(final @NotNull ItemStack item) {
-        return this.canEnchantItems.contains(item);
+        return this.itemTarget.includes(item);
     }
 
     /**
