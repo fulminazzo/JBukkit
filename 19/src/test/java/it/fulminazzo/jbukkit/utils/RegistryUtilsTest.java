@@ -54,7 +54,6 @@ class RegistryUtilsTest {
     @MethodSource("getRegistries")
     <T extends Keyed> void testEveryRegistry(Class<T> clazz, Registry<T> expected) {
         RegistryUtils.setupRegistries();
-        System.out.println(clazz);
         Registry<T> actual = Bukkit.getRegistry(clazz);
         assertEquals(expected, actual);
     }
