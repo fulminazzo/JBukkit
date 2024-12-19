@@ -22,7 +22,9 @@ import java.util.stream.Stream;
  * @param <T> the type of the class
  */
 public class FieldsRegistry<T extends Keyed> implements Registry<T> {
-    private final Map<NamespacedKey, T> internalMap;
+    private final @NotNull Map<NamespacedKey, T> internalMap;
+    private final @NotNull Class<T> clazz;
+    private final @NotNull FunctionException<NamespacedKey, T> conversionFunction;
 
     /**
      * Instantiates a new Fields registry.
@@ -32,19 +34,23 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
      */
     public FieldsRegistry(final @NotNull Class<T> clazz,
                           final @NotNull FunctionException<NamespacedKey, T> conversionFunction) {
-        Refl<?> refl = new Refl<>(Objects.requireNonNull(clazz));
+        this.clazz = Objects.requireNonNull(clazz);
+        this.conversionFunction = Objects.requireNonNull(conversionFunction);
         this.internalMap = new LinkedHashMap<>();
-        for (final Field field : refl.getFields(f -> Modifier.isStatic(f.getModifiers()) && f.getType().equals(clazz)))
-            try {
-                NamespacedKey key = NamespacedKey.minecraft(field.getName().toLowerCase());
-                this.internalMap.put(key, conversionFunction.apply(key));
-            } catch (Exception e) {
-                throw new RegistryException("Could not convert field " + field.getName(), e);
-            }
     }
 
     @Override
     public @Nullable T get(final @NotNull NamespacedKey key) {
+        if (this.internalMap.isEmpty()) {
+            Refl<?> refl = new Refl<>(Objects.requireNonNull(this.clazz));
+            for (final Field field : refl.getFields(f -> Modifier.isStatic(f.getModifiers()) && f.getType().equals(this.clazz)))
+                try {
+                    NamespacedKey k = NamespacedKey.minecraft(field.getName().toLowerCase());
+                    this.internalMap.put(k, this.conversionFunction.apply(k));
+                } catch (Exception e) {
+                    throw new RegistryException("Could not convert field " + field.getName(), e);
+                }
+        }
         return this.internalMap.get(key);
     }
 
