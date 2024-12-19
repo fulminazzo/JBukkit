@@ -49,4 +49,11 @@ class MockPotionEffectTypeTest {
         assertEquals("Bad Luck", PotionEffectType.UNLUCK.getName());
     }
 
+    @ParameterizedTest
+    @MethodSource("getTypes")
+    void shouldNotBeAbleToCreateVanillaEffect(PotionEffectType type) {
+        assertThrowsExactly(IllegalArgumentException.class, () -> new MockPotionEffectType(type.getName(),
+                PotionEffectTypeCategory.NEUTRAL, Color.RED, false));
+    }
+
 }
