@@ -1,6 +1,7 @@
 package it.fulminazzo.jbukkit.registries;
 
 import com.sun.istack.internal.NotNull;
+import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
@@ -11,14 +12,18 @@ class FieldsRegistryTest {
 
 
     @Getter
-    static class MockClass implements Keyed {
+    static class MockClass extends Equable implements Keyed {
         public static final MockClass FIRST = new MockClass("first");
         public static final MockClass SECOND = new MockClass("second");
         public static final MockClass THIRD = new MockClass("third");
         private final @NotNull NamespacedKey key;
 
         public MockClass(final @NotNull String name) {
-            this.key = NamespacedKey.minecraft(name);
+            this(NamespacedKey.minecraft(name));
+        }
+
+        public MockClass(final @NotNull NamespacedKey key) {
+            this.key = Objects.requireNonNull(key);
         }
 
     }
