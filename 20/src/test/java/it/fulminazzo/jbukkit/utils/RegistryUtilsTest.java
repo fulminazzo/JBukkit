@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 class RegistryUtilsTest {
 
     private static Object[][] getRegistries() {
-        BukkitUtils.setupServer(false);
+        BukkitUtils.setupServer();
         return new Object[][] {
                 // SimpleRegistry
                 new Object[]{Art.class, Registry.SimpleRegistry.class},
@@ -46,7 +46,6 @@ class RegistryUtilsTest {
     @ParameterizedTest
     @MethodSource("getRegistries")
     <T extends Keyed> void testEveryRegistry(Class<T> clazz, Class<Registry<T>> expected) {
-        RegistryUtils.setupRegistries();
         Registry<T> actual = Bukkit.getRegistry(clazz);
         assertInstanceOf(expected, actual);
     }
