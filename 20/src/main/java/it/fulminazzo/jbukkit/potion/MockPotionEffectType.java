@@ -1,6 +1,7 @@
 package it.fulminazzo.jbukkit.potion;
 
 import com.google.common.collect.BiMap;
+import it.fulminazzo.fulmicollection.objects.Printable;
 import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.NotImplementedException;
@@ -126,32 +127,9 @@ public class MockPotionEffectType extends PotionEffectType {
         throw new NotImplementedException();
     }
 
-    /**
-     * Gets the {@link MockPotionEffectType} from the given key.
-     * Throws {@link IllegalArgumentException} if it fails.
-     *
-     * @param key the key
-     * @return the mock potion effect type
-     */
-    public static @NotNull MockPotionEffectType valueOf(final @NotNull NamespacedKey key) {
-        return Arrays.stream(values())
-                .filter(e -> e.getKey().equals(key))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown potion effect type: " + key));
-    }
-
-    /**
-     * Gets the {@link MockPotionEffectType} from the given name.
-     * Throws {@link IllegalArgumentException} if it fails.
-     *
-     * @param name the name
-     * @return the mock potion effect type
-     */
-    public static @NotNull MockPotionEffectType valueOf(final @NotNull String name) {
-        return Arrays.stream(values())
-                .filter(e -> e.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown potion effect type: " + name));
+    @Override
+    public String toString() {
+        return Printable.convertToJson(this);
     }
 
     /**
