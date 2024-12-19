@@ -13,8 +13,11 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +66,18 @@ public final class RegistryUtils {
             if (clazz == null) return null;
             else return getRegistry(clazz);
         });
+        setupPotionEffectTypes();
+    }
+
+    /**
+     * Tries loading every {@link PotionEffectType} after setting up the registry.
+     */
+    private static void setupPotionEffectTypes() {
+        Refl<?> potionEffectType = new Refl<>(PotionEffectType.class);
+        for (final Field field : potionEffectType.getFields(f -> Modifier.isStatic(f.getModifiers()) &&
+                PotionEffectType.class.isAssignableFrom(f.getType()))) {
+            potionEffectType.getFieldObject(field);
+        }
     }
 
     /**
