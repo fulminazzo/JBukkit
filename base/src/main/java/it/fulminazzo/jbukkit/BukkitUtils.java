@@ -80,6 +80,15 @@ public class BukkitUtils {
      * Initializes the {@link Server} object returned by {@link Bukkit#getServer()}.
      */
     public static void setupServer() {
+        setupServer(true);
+    }
+
+    /**
+     * Initializes the {@link Server} object returned by {@link Bukkit#getServer()}.
+     *
+     * @param setupRegistries if true will also try to set up registries (useful for tests)
+     */
+    public static void setupServer(boolean setupRegistries) {
         setupVersion();
         Server server = mock(Server.class);
         if (Arrays.stream(server.getClass().getDeclaredMethods()).anyMatch(m -> m.getName().equals("getRecipe")))
@@ -130,7 +139,7 @@ public class BukkitUtils {
         when(server.getOfflinePlayer(any(String.class))).thenAnswer(a -> getOfflinePlayer((String) a.getArgument(0)));
         when(server.getOfflinePlayers()).thenAnswer(a -> OFFLINE_PLAYERS.toArray(new OfflinePlayer[0]));
         // Registries
-        RegistryUtils.setupRegistries();
+        if (setupRegistries) RegistryUtils.setupRegistries();
 
         new Refl<>(Bukkit.class).setFieldObject("server", server);
     }
