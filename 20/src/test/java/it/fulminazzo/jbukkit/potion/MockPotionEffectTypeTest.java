@@ -1,19 +1,43 @@
 package it.fulminazzo.jbukkit.potion;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.jbukkit.BukkitUtils;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionEffectTypeCategory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MockPotionEffectTypeTest {
 
+    @BeforeEach
+    void setUp() {
+        BukkitUtils.setupServer();
+    }
+
+    private static PotionEffectType[] getTypes() {
+        BukkitUtils.setupServer();
+        Refl<?> potionEffects = new Refl<>(PotionEffectType.class);
+        return potionEffects.getStaticFields().stream()
+                .filter(f -> PotionEffectType.class.isAssignableFrom(f.getType()))
+                .map(potionEffects::getFieldObject)
+                .map(o -> (PotionEffectType) o)
+                .toArray(PotionEffectType[]::new);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getTypes")
+    void testAllTypes(PotionEffectType type) {
+        assertInstanceOf(MockPotionEffectType.class, type);
+    }
+
     @Test
     void testNameAndKey() {
-        BukkitUtils.setupServer();
         PotionEffectType effectType = new MockPotionEffectType("Mining Fatigue",
                 PotionEffectTypeCategory.NEUTRAL, Color.RED, false);
         assertEquals("Mining Fatigue", effectType.getName());
