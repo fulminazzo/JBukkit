@@ -23,7 +23,12 @@ public final class RegistryUtils {
     private static final Map<String, String> FIELD_BY_CLASS_NAME = new HashMap<>();
 
     static {
-
+        FIELD_BY_CLASS_NAME.put("PatternType", "BannerPattern");
+        FIELD_BY_CLASS_NAME.put("CatType", "CatVariant");
+        FIELD_BY_CLASS_NAME.put("Particle", "ParticleType");
+        FIELD_BY_CLASS_NAME.put("PotionType", "Potion");
+        FIELD_BY_CLASS_NAME.put("Sound", "Sounds");
+        FIELD_BY_CLASS_NAME.put("MapCursorType", "MapDecorationType");
     }
 
     /**
