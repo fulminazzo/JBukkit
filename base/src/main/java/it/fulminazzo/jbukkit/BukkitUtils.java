@@ -91,6 +91,8 @@ public class BukkitUtils {
     public static void setupServer(boolean setupRegistries) {
         setupVersion();
         Server server = mock(Server.class);
+        new Refl<>(Bukkit.class).setFieldObject("server", server);
+
         if (Arrays.stream(server.getClass().getDeclaredMethods()).anyMatch(m -> m.getName().equals("getRecipe")))
             when(server.getRecipe(any())).thenAnswer(r -> {
                 Object key = r.getArgument(0);
@@ -140,8 +142,6 @@ public class BukkitUtils {
         when(server.getOfflinePlayers()).thenAnswer(a -> OFFLINE_PLAYERS.toArray(new OfflinePlayer[0]));
         // Registries
         if (setupRegistries) RegistryUtils.setupRegistries();
-
-        new Refl<>(Bukkit.class).setFieldObject("server", server);
     }
 
     /**
