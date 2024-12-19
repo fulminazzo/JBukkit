@@ -9,6 +9,7 @@ import org.bukkit.Registry;
 import org.jetbrains.annotations.NotNull;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -41,7 +42,14 @@ public final class RegistryUtils {
         if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
         clazzName = StringUtils.decapitalize(clazzName);
         // Default case, registry already initialized.
-        return new Refl<>(Registry.class).getFieldObject(clazzName);
+        try {
+            Registry<T> registry = new Refl<>(Registry.class).getFieldObject(clazzName);
+            if (registry != null) return registry;
+            else throw new IllegalArgumentException();
+        } catch (IllegalArgumentException e) {
+            //TODO: temporary for testing purposes
+            return mock(Registry.class);
+        }
     }
 
 }
