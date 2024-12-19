@@ -2,13 +2,16 @@ package it.fulminazzo.jbukkit.utils;
 
 import it.fulminazzo.jbukkit.BukkitUtils;
 import org.bukkit.*;
+import org.bukkit.advancement.Advancement;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.block.banner.PatternType;
+import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
 import org.bukkit.entity.Villager;
+import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.loot.LootTables;
 import org.bukkit.map.MapCursor;
 import org.bukkit.potion.PotionType;
@@ -22,6 +25,10 @@ class RegistryUtilsTest {
     private static Object[][] getRegistries() {
         BukkitUtils.setupServer();
         return new Object[][] {
+                // Abstract Registry
+                new Object[]{Advancement.class, Registry.class},
+                new Object[]{KeyedBossBar.class, Registry.class},
+                new Object[]{MemoryKey.class, Registry.class},
                 // SimpleRegistry
                 new Object[]{Art.class, Registry.SimpleRegistry.class},
                 new Object[]{Attribute.class, Registry.SimpleRegistry.class},

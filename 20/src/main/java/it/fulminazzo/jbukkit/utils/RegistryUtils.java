@@ -29,6 +29,8 @@ public final class RegistryUtils {
         FIELD_BY_CLASS_NAME.put("PotionType", "Potion");
         FIELD_BY_CLASS_NAME.put("Sound", "Sounds");
         FIELD_BY_CLASS_NAME.put("MapCursorType", "MapDecorationType");
+        FIELD_BY_CLASS_NAME.put("KeyedBossBar", "BossBars");
+        FIELD_BY_CLASS_NAME.put("MemoryKey", "MemoryModuleType");
     }
 
     /**
