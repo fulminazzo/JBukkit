@@ -37,6 +37,20 @@ public class MockPotionEffectType extends PotionEffectType {
      */
     public MockPotionEffectType(final @NotNull String name,
                                 final @NotNull PotionEffectTypeCategory category,
+                                final @NotNull String color, final boolean instant) {
+        this(name, category, color(color), instant);
+    }
+
+    /**
+     * Instantiates a new Mock potion effect type.
+     *
+     * @param name      the name
+     * @param category the category
+     * @param color    the color
+     * @param instant  true if its effects are applied instantly
+     */
+    public MockPotionEffectType(final @NotNull String name,
+                                final @NotNull PotionEffectTypeCategory category,
                                 final @NotNull Color color, final boolean instant) {
         this.id = LAST_USED_ID++;
         this.name = Objects.requireNonNull(name);
