@@ -38,10 +38,10 @@ class MockPotionEffectTypeTest {
 
     @Test
     void testNameAndKey() {
-        PotionEffectType effectType = new MockPotionEffectType("Mining Fatigue",
+        PotionEffectType effectType = new MockPotionEffectType("Minin Fatigue",
                 PotionEffectTypeCategory.NEUTRAL, Color.RED, false);
-        assertEquals("Mining Fatigue", effectType.getName());
-        assertEquals(NamespacedKey.minecraft("mining_fatigue"), effectType.getKey());
+        assertEquals("Minin Fatigue", effectType.getName());
+        assertEquals(NamespacedKey.minecraft("minin_fatigue"), effectType.getKey());
     }
 
 }
