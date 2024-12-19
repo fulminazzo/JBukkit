@@ -133,7 +133,10 @@ public class MockPotionEffectType extends PotionEffectType {
      * @return the mock potion effect type
      */
     public static @NotNull MockPotionEffectType valueOf(final @NotNull NamespacedKey key) {
-        return valueOf(key.getKey());
+        return Arrays.stream(values())
+                .filter(e -> e.getKey().equals(key))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unknown potion effect type: " + key));
     }
 
     /**

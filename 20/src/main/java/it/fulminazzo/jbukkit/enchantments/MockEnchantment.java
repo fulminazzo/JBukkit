@@ -242,7 +242,10 @@ public class MockEnchantment extends Enchantment {
      * @return the mock enchantment
      */
     public static @NotNull MockEnchantment valueOf(final @NotNull NamespacedKey key) {
-        return valueOf(key.getKey());
+        return Arrays.stream(values())
+                .filter(e -> e.getKey().equals(key))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unknown enchantment: " + key));
     }
 
     /**
