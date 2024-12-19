@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.utils;
 
+import it.fulminazzo.jbukkit.BukkitUtils;
 import org.bukkit.Keyed;
 import org.bukkit.Registry;
 import org.bukkit.advancement.Advancement;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class RegistryUtilsTest {
 
     private static Object[][] getRegistries() {
+        BukkitUtils.setupServer(false);
         return new Object[][] {
                 new Object[]{Advancement.class, Registry.ADVANCEMENT}
         };
