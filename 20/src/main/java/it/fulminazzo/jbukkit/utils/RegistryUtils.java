@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.when;
 public final class RegistryUtils {
     private static final Map<String, String> FIELD_BY_CLASS_NAME = new HashMap<>();
     // Represents classes with static fields in them.
-    private static final Map<String, Function<NamespacedKey, Object>> FIELDS_CLASSES = new HashMap<>();
+    private static final Map<String, FunctionException<NamespacedKey, Object>> FIELDS_CLASSES = new HashMap<>();
 
     static {
         FIELD_BY_CLASS_NAME.put("PatternType", "BannerPattern");
@@ -79,7 +78,7 @@ public final class RegistryUtils {
         if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
         clazzName = FIELD_BY_CLASS_NAME.getOrDefault(clazzName, clazzName);
         // Field registries
-        Function<NamespacedKey, Object> converterFunction = FIELDS_CLASSES.get(clazzName);
+        Object converterFunction = FIELDS_CLASSES.get(clazzName);
         if (converterFunction != null)
             return new FieldsRegistry<>(clazz, (FunctionException<NamespacedKey, T>) converterFunction);
         // Default case, registry already initialized.
