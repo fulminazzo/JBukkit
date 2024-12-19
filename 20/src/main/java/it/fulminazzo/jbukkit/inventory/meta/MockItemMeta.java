@@ -13,7 +13,10 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.FoodComponent;
+import org.bukkit.inventory.meta.components.ToolComponent;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -29,11 +32,19 @@ import java.util.*;
 public class MockItemMeta implements ItemMeta {
     private String displayName;
     private String localizedName;
+    private String itemName;
     private final List<String> lore;
     private final Map<Enchantment, Integer> enchants;
     private final Set<ItemFlag> itemFlags;
     private boolean unbreakable;
+    private boolean hideTooltip;
+    private boolean fireResistant;
+    private Boolean enchantmentGlintOverride;
+    private Integer maxStackSize;
     private Integer customModelData;
+    private ItemRarity rarity;
+    private FoodComponent food;
+    private ToolComponent tool;
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
     private final MockCustomItemTagContainer customTagContainer;
     private final PersistentDataContainer persistentDataContainer;
@@ -53,6 +64,11 @@ public class MockItemMeta implements ItemMeta {
     @Override
     public boolean hasDisplayName() {
         return this.displayName != null && !this.displayName.isEmpty();
+    }
+
+    @Override
+    public boolean hasItemName() {
+        return this.itemName != null && !this.itemName.isEmpty();
     }
 
     @Override
@@ -109,6 +125,11 @@ public class MockItemMeta implements ItemMeta {
     }
 
     @Override
+    public void removeEnchantments() {
+        this.enchants.clear();
+    }
+
+    @Override
     public boolean hasConflictingEnchant(@NotNull Enchantment ench) {
         return this.enchants.keySet().stream().anyMatch(e -> e.conflictsWith(ench));
     }
@@ -126,6 +147,35 @@ public class MockItemMeta implements ItemMeta {
     @Override
     public boolean hasItemFlag(@NotNull ItemFlag flag) {
         return this.itemFlags.contains(flag);
+    }
+
+    @Override
+    public boolean hasEnchantmentGlintOverride() {
+        return this.enchantmentGlintOverride != null;
+    }
+
+    @Override
+    public boolean hasMaxStackSize() {
+        return this.maxStackSize != null;
+    }
+
+    public int getMaxStackSize() {
+        return this.maxStackSize == null ? 0 : this.maxStackSize;
+    }
+
+    @Override
+    public boolean hasRarity() {
+        return this.rarity != null;
+    }
+
+    @Override
+    public boolean hasFood() {
+        return this.food != null;
+    }
+
+    @Override
+    public boolean hasTool() {
+        return this.tool != null;
     }
 
     @Override
@@ -183,6 +233,11 @@ public class MockItemMeta implements ItemMeta {
 
     @Override
     public @NotNull String getAsString() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public @NotNull String getAsComponentString() {
         throw new NotImplementedException();
     }
 
