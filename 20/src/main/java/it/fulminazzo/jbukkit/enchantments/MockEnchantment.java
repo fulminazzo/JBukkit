@@ -46,6 +46,7 @@ public class MockEnchantment extends Enchantment {
     private static final Supplier<MockEnchantment> UNBREAKING = () -> new MockEnchantment("unbreaking", 1, 3, EnchantmentTarget.BREAKABLE);
     private static final Supplier<MockEnchantment> FORTUNE = () -> new MockEnchantment("fortune", 1, 3, EnchantmentTarget.TOOL);
     private static final Supplier<MockEnchantment> POWER = () -> new MockEnchantment("power", 1, 5, EnchantmentTarget.BOW);
+    private static final Supplier<MockEnchantment> PUNCH = () -> new MockEnchantment("punch", 1, 2, EnchantmentTarget.BOW);
     private static final Supplier<MockEnchantment> FLAME = () -> new MockEnchantment("flame", 1, 1, EnchantmentTarget.BOW);
     private static final Supplier<MockEnchantment> INFINITY = () -> new MockEnchantment("infinity", 1, 1, EnchantmentTarget.BOW);
     private static final Supplier<MockEnchantment> LUCK_OF_THE_SEA = () -> new MockEnchantment("luck_of_the_sea", 1, 3, EnchantmentTarget.FISHING_ROD);
