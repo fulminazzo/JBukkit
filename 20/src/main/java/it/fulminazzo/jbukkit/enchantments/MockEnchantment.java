@@ -132,4 +132,100 @@ public class MockEnchantment extends Enchantment {
             }
     }
 
+    /**
+     * Converts the given key to a vanilla {@link Enchantment}.
+     * Throws {@link IllegalArgumentException} if it could not be converted.
+     *
+     * @param key the key
+     * @return the enchantment
+     */
+    public static Enchantment getVanillaEnchantment(final @NotNull NamespacedKey key) {
+        switch (key.getKey()) {
+            case "protection":
+                return new MockEnchantment(key, key.getKey(), 1, 4, EnchantmentTarget.ARMOR);
+            case "fire_protection":
+                return new MockEnchantment(key, key.getKey(), 1, 4, EnchantmentTarget.ARMOR);
+            case "feather_falling":
+                return new MockEnchantment(key, key.getKey(), 1, 4, EnchantmentTarget.ARMOR_FEET);
+            case "blast_protection":
+                return new MockEnchantment(key, key.getKey(), 1, 4, EnchantmentTarget.ARMOR);
+            case "projectile_protection":
+                return new MockEnchantment(key, key.getKey(), 1, 4, EnchantmentTarget.ARMOR);
+            case "respiration":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.ARMOR_HEAD);
+            case "aqua_affinity":
+                return new MockEnchantment(key, key.getKey(), 1, 1, EnchantmentTarget.ARMOR_HEAD);
+            case "thorns":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.ARMOR);
+            case "depth_strider":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.ARMOR_FEET);
+            case "frost_walker":
+                return new MockEnchantment(key, key.getKey(), 1, 2, EnchantmentTarget.ARMOR_FEET);
+            case "binding_curse":
+                return new MockEnchantment(key, key.getKey(), 1, 1, EnchantmentTarget.WEARABLE);
+            case "sharpness":
+                return new MockEnchantment(key, key.getKey(), 1, 5, EnchantmentTarget.WEAPON);
+            case "smite":
+                return new MockEnchantment(key, key.getKey(), 1, 5, EnchantmentTarget.WEAPON);
+            case "bane_of_arthropods":
+                return new MockEnchantment(key, key.getKey(), 1, 5, EnchantmentTarget.WEAPON);
+            case "knockback":
+                return new MockEnchantment(key, key.getKey(), 1, 2, EnchantmentTarget.WEAPON);
+            case "fire_aspect":
+                return new MockEnchantment(key, key.getKey(), 1, 2, EnchantmentTarget.WEAPON);
+            case "looting":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.WEAPON);
+            case "sweeping_edge":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.WEAPON);
+            case "efficiency":
+                return new MockEnchantment(key, key.getKey(), 1, 5, EnchantmentTarget.TOOL);
+            case "silk_touch":
+                return new MockEnchantment(key, key.getKey(), 1, 1, EnchantmentTarget.TOOL);
+            case "unbreaking":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.BREAKABLE);
+            case "fortune":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.TOOL);
+            case "power":
+                return new MockEnchantment(key, key.getKey(), 1, 5, EnchantmentTarget.BOW);
+            case "flame":
+                return new MockEnchantment(key, key.getKey(), 1, 1, EnchantmentTarget.BOW);
+            case "infinity":
+                return new MockEnchantment(key, key.getKey(), 1, 1, EnchantmentTarget.BOW);
+            case "luck_of_the_sea":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.FISHING_ROD);
+            case "lure":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.FISHING_ROD);
+            case "loyalty":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.TRIDENT);
+            case "impaling":
+                return new MockEnchantment(key, key.getKey(), 1, 5, EnchantmentTarget.TRIDENT);
+            case "riptide":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.TRIDENT);
+            case "channeling":
+                return new MockEnchantment(key, key.getKey(), 1, 1, EnchantmentTarget.TRIDENT);
+            case "multishot":
+                return new MockEnchantment(key, key.getKey(), 1, 1, EnchantmentTarget.CROSSBOW);
+            case "quick_charge":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.CROSSBOW);
+            case "piercing":
+                return new MockEnchantment(key, key.getKey(), 1, 4, EnchantmentTarget.CROSSBOW);
+            case "mending":
+                return new MockEnchantment(key, key.getKey(), 1, 1, EnchantmentTarget.BREAKABLE);
+            case "vanishing_curse":
+                return new MockEnchantment(key, key.getKey(), 1, 1, EnchantmentTarget.VANISHABLE);
+            case "soul_speed":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.ARMOR_FEET);
+            case "swift_sneak":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.ARMOR_FEET);
+            case "density":
+                return new MockEnchantment(key, key.getKey(), 1, 5, EnchantmentTarget.WEAPON);
+            case "wind_burst":
+                return new MockEnchantment(key, key.getKey(), 1, 3, EnchantmentTarget.WEAPON);
+            case "breach":
+                return new MockEnchantment(key, key.getKey(), 1, 4, EnchantmentTarget.WEAPON);
+            default:
+                throw new IllegalArgumentException("Could not create enchantment from key " + key.getKey());
+        }
+    }
+
 }
