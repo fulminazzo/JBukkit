@@ -155,13 +155,21 @@ public class MockPotionEffectType extends PotionEffectType {
     private static @Nullable Supplier<MockPotionEffectType> valueOf(@NotNull NamespacedKey key) {
         if (key.getKey().equals("bad_luck")) key = NamespacedKey.minecraft("unluck");
         Refl<?> mock = new Refl<>(MockPotionEffectType.class);
-        return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        try {
+            return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     private static @Nullable PotionEffectType valueOfPotionEffectType(@NotNull NamespacedKey key) {
         if (key.getKey().equals("bad_luck")) key = NamespacedKey.minecraft("unluck");
         Refl<?> mock = new Refl<>(PotionEffectType.class);
-        return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        try {
+            return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     private static @NotNull Color color(final @NotNull String color) {
