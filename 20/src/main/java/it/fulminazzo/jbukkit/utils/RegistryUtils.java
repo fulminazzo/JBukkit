@@ -1,5 +1,7 @@
 package it.fulminazzo.jbukkit.utils;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
+import it.fulminazzo.fulmicollection.utils.StringUtils;
 import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
@@ -34,7 +36,10 @@ public final class RegistryUtils {
      * @return the registry
      */
     public static <T extends Keyed> Registry<T> getRegistry(final @NotNull Class<T> clazz) {
-
+        String className = clazz.getSimpleName();
+        className = StringUtils.decapitalize(className);
+        // Default case, registry already initialized.
+        return new Refl<>(Registry.class).getFieldObject(className);
     }
 
 }
