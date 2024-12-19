@@ -1,7 +1,7 @@
 [versions]
 delombok = "8.4"
 
-fulmicollection = "1.6.1"
+fulmicollection = "1.6.2"
 yagl = "4.0"
 
 lombok = "1.18.32"
