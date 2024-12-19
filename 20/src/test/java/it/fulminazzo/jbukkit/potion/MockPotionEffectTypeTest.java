@@ -44,4 +44,9 @@ class MockPotionEffectTypeTest {
         assertEquals(NamespacedKey.minecraft("minin_fatigue"), effectType.getKey());
     }
 
+    @Test
+    void testUnluckName() {
+        assertEquals("Bad Luck", PotionEffectType.UNLUCK.getName());
+    }
+
 }
