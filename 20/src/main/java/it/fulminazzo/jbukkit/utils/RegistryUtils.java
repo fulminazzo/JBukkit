@@ -1,15 +1,19 @@
 package it.fulminazzo.jbukkit.utils;
 
+import it.fulminazzo.fulmicollection.interfaces.functions.FunctionException;
 import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.StringUtils;
+import it.fulminazzo.jbukkit.registries.FieldsRegistry;
 import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -21,6 +25,8 @@ import static org.mockito.Mockito.when;
 @NoArgsConstructor
 public final class RegistryUtils {
     private static final Map<String, String> FIELD_BY_CLASS_NAME = new HashMap<>();
+    // Represents classes with static fields in them.
+    private static final Map<String, Function<NamespacedKey, Object>> FIELDS_CLASSES = new HashMap<>();
 
     static {
         FIELD_BY_CLASS_NAME.put("PatternType", "BannerPattern");
@@ -31,6 +37,17 @@ public final class RegistryUtils {
         FIELD_BY_CLASS_NAME.put("MapCursorType", "MapDecorationType");
         FIELD_BY_CLASS_NAME.put("KeyedBossBar", "BossBars");
         FIELD_BY_CLASS_NAME.put("MemoryKey", "MemoryModuleType");
+
+        FIELDS_CLASSES.put("GameEvent", null);
+        FIELDS_CLASSES.put("WolfVariant", null);
+        FIELDS_CLASSES.put("DamageType", null);
+        FIELDS_CLASSES.put("TrimPattern", null);
+        FIELDS_CLASSES.put("TrimMaterial", null);
+        FIELDS_CLASSES.put("StructureType", null);
+        FIELDS_CLASSES.put("Structure", null);
+        FIELDS_CLASSES.put("PotionEffectType", null);
+        FIELDS_CLASSES.put("MusicInstrument", null);
+        FIELDS_CLASSES.put("Enchantment", null);
     }
 
     /**
