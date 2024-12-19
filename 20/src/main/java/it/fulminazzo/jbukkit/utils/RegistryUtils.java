@@ -8,6 +8,9 @@ import org.bukkit.Keyed;
 import org.bukkit.Registry;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,6 +20,11 @@ import static org.mockito.Mockito.when;
  */
 @NoArgsConstructor
 public final class RegistryUtils {
+    private static final Map<String, String> FIELD_BY_CLASS_NAME = new HashMap<>();
+
+    static {
+
+    }
 
     /**
      * Sets up the registries.
@@ -40,6 +48,7 @@ public final class RegistryUtils {
         String clazzName = clazz.getSimpleName();
         Class<?> enclosingClass = clazz.getEnclosingClass();
         if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
+        clazzName = FIELD_BY_CLASS_NAME.getOrDefault(clazzName, clazzName);
         clazzName = StringUtils.decapitalize(clazzName);
         // Default case, registry already initialized.
         try {
