@@ -6,11 +6,14 @@ import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
 import it.fulminazzo.jbukkit.potion.MockPotionEffectType;
 import it.fulminazzo.jbukkit.registries.FieldsRegistry;
+import it.fulminazzo.jbukkit.registries.TypeRegistry;
 import lombok.NoArgsConstructor;
 import org.bukkit.*;
+import org.bukkit.block.BlockType;
 import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Wolf;
 import org.bukkit.generator.structure.Structure;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.potion.PotionEffectType;
@@ -28,6 +31,7 @@ import static org.mockito.Mockito.when;
 /**
  * Utility class for {@link Registry}.
  */
+@SuppressWarnings("UnstableApiUsage")
 @NoArgsConstructor
 public final class RegistryUtils {
     private static final Map<String, String> FIELD_BY_CLASS_NAME = new HashMap<>();
@@ -94,6 +98,8 @@ public final class RegistryUtils {
         Class<?> enclosingClass = clazz.getEnclosingClass();
         if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
         clazzName = FIELD_BY_CLASS_NAME.getOrDefault(clazzName, clazzName);
+        if (clazz.equals(BlockType.class)) return new TypeRegistry<>();
+        else if (clazz.equals(ItemType.class)) return new TypeRegistry<>();
         // Field registries
         Object converterFunction = FIELDS_CLASSES.get(clazzName);
         if (converterFunction != null)
