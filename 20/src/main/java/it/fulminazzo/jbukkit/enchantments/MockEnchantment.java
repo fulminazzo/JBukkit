@@ -233,46 +233,4 @@ public class MockEnchantment extends Enchantment {
         ((MockEnchantment) Enchantment.WIND_BURST).setTreasure(true);
     }
 
-    /**
-     * Gets the {@link MockEnchantment} from the given key.
-     * Throws {@link IllegalArgumentException} if it fails.
-     *
-     * @param key the key
-     * @return the mock enchantment
-     */
-    public static @NotNull MockEnchantment valueOf(final @NotNull NamespacedKey key) {
-        return Arrays.stream(values())
-                .filter(e -> e.getKey().equals(key))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown enchantment: " + key));
-    }
-
-    /**
-     * Gets the {@link MockEnchantment} from the given name.
-     * Throws {@link IllegalArgumentException} if it fails.
-     *
-     * @param name the name
-     * @return the mock enchantment
-     */
-    public static @NotNull MockEnchantment valueOf(final @NotNull String name) {
-        return Arrays.stream(values())
-                .filter(e -> e.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown enchantment: " + name));
-    }
-
-    /**
-     * Gets all the vanilla {@link MockEnchantment}s.
-     *
-     * @return the mock enchantments
-     */
-    public static MockEnchantment @NotNull [] values() {
-        Refl<?> clazz = new Refl<>(MockEnchantment.class);
-        return clazz.getStaticFields().stream()
-                .filter(f -> f.getType().equals(MockEnchantment.class))
-                .map(clazz::getFieldObject)
-                .map(o -> (MockEnchantment) o)
-                .toArray(MockEnchantment[]::new);
-    }
-
 }
