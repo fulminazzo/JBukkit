@@ -78,12 +78,12 @@ public final class RegistryUtils {
         Class<?> enclosingClass = clazz.getEnclosingClass();
         if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
         clazzName = FIELD_BY_CLASS_NAME.getOrDefault(clazzName, clazzName);
-        clazzName = StringUtils.decapitalize(clazzName);
         // Field registries
         Function<NamespacedKey, Object> converterFunction = FIELDS_CLASSES.get(clazzName);
         if (converterFunction != null)
             return new FieldsRegistry<>(clazz, (FunctionException<NamespacedKey, T>) converterFunction);
         // Default case, registry already initialized.
+        clazzName = StringUtils.decapitalize(clazzName);
         try {
             Registry<T> registry = new Refl<>(Registry.class).getFieldObject(clazzName);
             if (registry != null) return registry;
