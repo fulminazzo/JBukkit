@@ -33,9 +33,20 @@ public final class RegistryUtils {
      * @return the registry
      */
     public static <T extends Keyed> Registry<T> getRegistry(final @NotNull Class<T> clazz) {
-        String clazzName = clazz.getSimpleName().replace("Keyed", "");
+        String clazzName = clazz.getSimpleName();
         Class<?> enclosingClass = clazz.getEnclosingClass();
         if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
+        switch (clazzName) {
+            case "KeyedBossBar":
+                clazzName = "BossBars";
+                break;
+            case "Sound":
+                clazzName = "Sounds";
+                break;
+            case "MemoryKey":
+                clazzName = "MemoryModuleType";
+                break;
+        }
         clazzName = StringUtils.decapitalize(clazzName);
         return new Refl<>(Registry.class).getFieldObject(clazzName);
     }
