@@ -7,6 +7,7 @@ import it.fulminazzo.jbukkit.annotations.Before1_;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
 import it.fulminazzo.jbukkit.inventory.MockInventory;
 import it.fulminazzo.jbukkit.inventory.MockItemFactory;
+import it.fulminazzo.jbukkit.utils.RegistryUtils;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -37,7 +38,6 @@ public class BukkitUtils {
     private static final List<Recipe> RECIPES = new LinkedList<>();
     private static final String VERSION_FORMAT = "1\\.(\\d+)(?:\\.(\\d+))?-R\\d+\\.\\d+-SNAPSHOT";
     private static final String DEFAULT_VERSION = "1.20.4-R0.1-SNAPSHOT";
-    private static final Map<Class<?>, Object> REGISTRIES = new HashMap<>();
     /**
      * The name of the property to identify the current Minecraft version.
      */
@@ -130,15 +130,8 @@ public class BukkitUtils {
         when(server.getOfflinePlayer(any(String.class))).thenAnswer(a -> getOfflinePlayer((String) a.getArgument(0)));
         when(server.getOfflinePlayers()).thenAnswer(a -> OFFLINE_PLAYERS.toArray(new OfflinePlayer[0]));
         // Registries
-        try {
-            when(new Refl<>(server).invokeMethod("getRegistry", any(Class.class))).thenAnswer(a -> {
-                Class<?> clazz = a.getArgument(0);
-                return REGISTRIES.computeIfAbsent(clazz, c ->
-                        mock(ReflectionUtils.getClass("org.bukkit.Registry")));
-            });
-        } catch (IllegalArgumentException ignored) {
-            // Older versions
-        }
+        RegistryUtils.setupRegistries();
+
         new Refl<>(Bukkit.class).setFieldObject("server", server);
     }
 
