@@ -21,8 +21,11 @@ public final class RegistryUtils {
      * Sets up the registries.
      */
     public static void setupRegistries() {
-        when(Bukkit.getServer().getRegistry(any())).thenAnswer(a ->
-                getRegistry(a.getArgument(0)));
+        when(Bukkit.getServer().getRegistry(any())).thenAnswer(a -> {
+            Class<Keyed> clazz = a.getArgument(0);
+            if (clazz == null) return null;
+            else return getRegistry(clazz);
+        });
     }
 
     /**
