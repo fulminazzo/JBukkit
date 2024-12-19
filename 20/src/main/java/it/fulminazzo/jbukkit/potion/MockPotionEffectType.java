@@ -152,6 +152,12 @@ public class MockPotionEffectType extends PotionEffectType {
         return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
     }
 
+    private static @Nullable PotionEffectType valueOfPotionEffectType(@NotNull NamespacedKey key) {
+        if (key.getKey().equals("bad_luck")) key = NamespacedKey.minecraft("unluck");
+        Refl<?> mock = new Refl<>(PotionEffectType.class);
+        return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+    }
+
     private static @NotNull Color color(final @NotNull String color) {
         if (color.length() != 6) throw new IllegalArgumentException("color must have 6 characters");
         String red = color.substring(0, 2);
