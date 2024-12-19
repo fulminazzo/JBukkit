@@ -24,6 +24,9 @@ import static org.bukkit.potion.PotionEffectTypeCategory.*;
  */
 @Getter
 public class MockPotionEffectType extends PotionEffectType {
+    private static final String BAD_LUCK_NAME = "unluck";
+    private static int LAST_USED_ID = 1;
+
     private static final Supplier<MockPotionEffectType> SPEED = () -> new MockPotionEffectType("Speed", BENEFICIAL, "33EBFF", false);
     private static final Supplier<MockPotionEffectType> SLOWNESS = () -> new MockPotionEffectType("Slowness", HARMFUL, "5A6C81", false);
     private static final Supplier<MockPotionEffectType> HASTE = () -> new MockPotionEffectType("Haste", BENEFICIAL, "D9C043", false);
@@ -52,7 +55,7 @@ public class MockPotionEffectType extends PotionEffectType {
     private static final Supplier<MockPotionEffectType> LUCK = () -> new MockPotionEffectType("Luck", BENEFICIAL, "339900", false);
     private static final Supplier<MockPotionEffectType> UNLUCK = () -> {
         MockPotionEffectType unluck = new MockPotionEffectType("Bad Luck", HARMFUL, "C0A44D", false);
-        new Refl<>(unluck).setFieldObject("key", NamespacedKey.minecraft("unluck"));
+        new Refl<>(unluck).setFieldObject("key", NamespacedKey.minecraft(BAD_LUCK_NAME));
         return unluck;
     };
     private static final Supplier<MockPotionEffectType> SLOW_FALLING = () -> new MockPotionEffectType("Slow Falling", BENEFICIAL, "FFEFD1", false);
@@ -68,7 +71,6 @@ public class MockPotionEffectType extends PotionEffectType {
     private static final Supplier<MockPotionEffectType> OOZING = () -> new MockPotionEffectType("Oozing", HARMFUL, "000000", false);
     private static final Supplier<MockPotionEffectType> INFESTED = () -> new MockPotionEffectType("Infested", HARMFUL, "000000", false);
 
-    private static int LAST_USED_ID = 1;
     private final int id;
     private final @NotNull NamespacedKey key;
     private final @NotNull String name;
@@ -153,7 +155,7 @@ public class MockPotionEffectType extends PotionEffectType {
     }
 
     private static @Nullable Supplier<MockPotionEffectType> valueOf(@NotNull NamespacedKey key) {
-        if (key.getKey().equals("bad_luck")) key = NamespacedKey.minecraft("unluck");
+        if (key.getKey().equals("bad_luck")) key = NamespacedKey.minecraft(BAD_LUCK_NAME);
         Refl<?> mock = new Refl<>(MockPotionEffectType.class);
         try {
             return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
@@ -163,7 +165,7 @@ public class MockPotionEffectType extends PotionEffectType {
     }
 
     private static @Nullable PotionEffectType valueOfPotionEffectType(@NotNull NamespacedKey key) {
-        if (key.getKey().equals("bad_luck")) key = NamespacedKey.minecraft("unluck");
+        if (key.getKey().equals("bad_luck")) key = NamespacedKey.minecraft(BAD_LUCK_NAME);
         Refl<?> mock = new Refl<>(PotionEffectType.class);
         try {
             return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
