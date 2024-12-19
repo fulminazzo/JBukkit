@@ -101,9 +101,15 @@ public class MockPotionEffectType extends PotionEffectType {
     public MockPotionEffectType(final @NotNull String name,
                                 final @NotNull PotionEffectTypeCategory category,
                                 final @NotNull Color color, final boolean instant) {
-        this.id = LAST_USED_ID++;
         this.name = Objects.requireNonNull(name);
         this.key = NamespacedKey.minecraft(StringUtils.decapitalize(name).toLowerCase());
+        // If the provided key belongs to a static supplier in this class
+        // And the corresponding PotionEffectType is already initialized,
+        // Throw exception.
+        if (valueOf(this.key) != null && valueOfPotionEffectType(this.key) != null)
+            throw new IllegalArgumentException(String.format("Cannot create potion effect type with key \"%s\". ", this.key) +
+                    "Use the vanilla effect from PotionEffectType instead.");
+        this.id = LAST_USED_ID++;
         this.category = category;
         this.color = color;
         this.instant = instant;
