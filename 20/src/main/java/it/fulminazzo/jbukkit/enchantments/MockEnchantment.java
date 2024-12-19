@@ -1,20 +1,16 @@
 package it.fulminazzo.jbukkit.enchantments;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
-import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import lombok.Getter;
-import lombok.SneakyThrows;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -63,49 +59,6 @@ public class MockEnchantment extends Enchantment {
     public static final MockEnchantment DENSITY = new MockEnchantment("density", 1, 5, EnchantmentTarget.WEAPON);
     public static final MockEnchantment WIND_BURST = new MockEnchantment("wind_burst", 1, 3, EnchantmentTarget.WEAPON);
     public static final MockEnchantment BREACH = new MockEnchantment("breach", 1, 4, EnchantmentTarget.WEAPON);
-
-    static {
-        // Protection
-        PROTECTION.conflictsWith(FIRE_PROTECTION, BLAST_PROTECTION, PROJECTILE_PROTECTION);
-        FIRE_PROTECTION.conflictsWith(PROTECTION, BLAST_PROTECTION, PROJECTILE_PROTECTION);
-        BLAST_PROTECTION.conflictsWith(FIRE_PROTECTION, PROTECTION, PROJECTILE_PROTECTION);
-        PROJECTILE_PROTECTION.conflictsWith(FIRE_PROTECTION, BLAST_PROTECTION, PROTECTION);
-        // Depth strider
-        DEPTH_STRIDER.conflictsWith(FROST_WALKER);
-        FROST_WALKER.conflictsWith(DEPTH_STRIDER);
-        // Sharpness
-        SHARPNESS.conflictsWith(SMITE, BANE_OF_ARTHROPODS);
-        SMITE.conflictsWith(SHARPNESS, BANE_OF_ARTHROPODS);
-        BANE_OF_ARTHROPODS.conflictsWith(SMITE, SHARPNESS);
-        // Fortune
-        FORTUNE.conflictsWith(SILK_TOUCH);
-        SILK_TOUCH.conflictsWith(FORTUNE);
-        // Mending
-        MENDING.conflictsWith(INFINITY);
-        INFINITY.conflictsWith(MENDING);
-        // Channeling
-        RIPTIDE.conflictsWith(CHANNELING);
-        CHANNELING.conflictsWith(RIPTIDE);
-        // Piercing
-        PIERCING.conflictsWith(MULTISHOT);
-        MULTISHOT.conflictsWith(PIERCING);
-        // Density
-        DENSITY.conflictsWith(SMITE, BANE_OF_ARTHROPODS, BREACH);
-        SMITE.conflictsWith(DENSITY, BANE_OF_ARTHROPODS, BREACH);
-        BANE_OF_ARTHROPODS.conflictsWith(SMITE, DENSITY, BREACH);
-        BREACH.conflictsWith(SMITE, BANE_OF_ARTHROPODS, DENSITY);
-        // Cursed
-        BINDING_CURSE.setCursed(true);
-        VANISHING_CURSE.setCursed(true);
-        // Treasure
-        BINDING_CURSE.setTreasure(true);
-        VANISHING_CURSE.setTreasure(true);
-        MENDING.setTreasure(true);
-        FROST_WALKER.setTreasure(true);
-        SOUL_SPEED.setTreasure(true);
-        SWIFT_SNEAK.setTreasure(true);
-        WIND_BURST.setTreasure(true);
-    }
 
     private final NamespacedKey key;
     private final String name;
@@ -216,22 +169,48 @@ public class MockEnchantment extends Enchantment {
     /**
      * Sets up the default vanilla enchantments by checking the {@link Enchantment} static fields.
      */
-    @SneakyThrows
+    @SuppressWarnings("RedundantCast")
     public static void setupEnchantments() {
-        Refl<Class<Enchantment>> enchantmentClass = new Refl<>(Enchantment.class);
-        Map<NamespacedKey, Enchantment> byKey = enchantmentClass.getFieldObject("byKey");
-        Map<String, Enchantment> byName = enchantmentClass.getFieldObject("byName");
-        byKey.clear();
-        byName.clear();
-        for (Field field : enchantmentClass.getStaticFields())
-            if (field.getType().equals(Enchantment.class)) {
-                Enchantment enchantment = (Enchantment) ReflectionUtils.setAccessibleOrThrow(field)
-                        .get(Enchantment.class);
-                MockEnchantment mock = new MockEnchantment(enchantment);
-                field.set(Enchantment.class, mock);
-                byKey.put(mock.getKey(), enchantment);
-                byName.put(mock.getName(), enchantment);
-            }
+        // Protection
+        ((MockEnchantment) Enchantment.PROTECTION).conflictsWith(Enchantment.FIRE_PROTECTION, Enchantment.BLAST_PROTECTION, Enchantment.PROJECTILE_PROTECTION);
+        ((MockEnchantment) Enchantment.FIRE_PROTECTION).conflictsWith(Enchantment.PROTECTION, Enchantment.BLAST_PROTECTION, Enchantment.PROJECTILE_PROTECTION);
+        ((MockEnchantment) Enchantment.BLAST_PROTECTION).conflictsWith(Enchantment.FIRE_PROTECTION, Enchantment.PROTECTION, Enchantment.PROJECTILE_PROTECTION);
+        ((MockEnchantment) Enchantment.PROJECTILE_PROTECTION).conflictsWith(Enchantment.FIRE_PROTECTION, Enchantment.BLAST_PROTECTION, Enchantment.PROTECTION);
+        // Depth strider
+        ((MockEnchantment) Enchantment.DEPTH_STRIDER).conflictsWith(Enchantment.FROST_WALKER);
+        ((MockEnchantment) Enchantment.FROST_WALKER).conflictsWith(Enchantment.DEPTH_STRIDER);
+        // Sharpness
+        ((MockEnchantment) Enchantment.SHARPNESS).conflictsWith(Enchantment.SMITE, Enchantment.BANE_OF_ARTHROPODS);
+        ((MockEnchantment) Enchantment.SMITE).conflictsWith(Enchantment.SHARPNESS, Enchantment.BANE_OF_ARTHROPODS);
+        ((MockEnchantment) Enchantment.BANE_OF_ARTHROPODS).conflictsWith(Enchantment.SMITE, Enchantment.SHARPNESS);
+        // Fortune
+        ((MockEnchantment) Enchantment.FORTUNE).conflictsWith(Enchantment.SILK_TOUCH);
+        ((MockEnchantment) Enchantment.SILK_TOUCH).conflictsWith(Enchantment.FORTUNE);
+        // Mending
+        ((MockEnchantment) Enchantment.MENDING).conflictsWith(Enchantment.INFINITY);
+        ((MockEnchantment) Enchantment.INFINITY).conflictsWith(Enchantment.MENDING);
+        // Channeling
+        ((MockEnchantment) Enchantment.RIPTIDE).conflictsWith(Enchantment.CHANNELING);
+        ((MockEnchantment) Enchantment.CHANNELING).conflictsWith(Enchantment.RIPTIDE);
+        // Piercing
+        ((MockEnchantment) Enchantment.PIERCING).conflictsWith(Enchantment.MULTISHOT);
+        ((MockEnchantment) Enchantment.MULTISHOT).conflictsWith(Enchantment.PIERCING);
+        // Density
+        ((MockEnchantment) Enchantment.DENSITY).conflictsWith(Enchantment.SMITE, Enchantment.BANE_OF_ARTHROPODS, Enchantment.BREACH);
+        ((MockEnchantment) Enchantment.SMITE).conflictsWith(Enchantment.DENSITY, Enchantment.BANE_OF_ARTHROPODS, Enchantment.BREACH);
+        ((MockEnchantment) Enchantment.BANE_OF_ARTHROPODS).conflictsWith(Enchantment.SMITE, Enchantment.DENSITY, Enchantment.BREACH);
+        ((MockEnchantment) Enchantment.BREACH).conflictsWith(Enchantment.SMITE, Enchantment.BANE_OF_ARTHROPODS, Enchantment.DENSITY);
+        // Cursed
+        ((MockEnchantment) Enchantment.BINDING_CURSE).setCursed(true);
+        ((MockEnchantment) Enchantment.VANISHING_CURSE).setCursed(true);
+        // Treasure
+        ((MockEnchantment) Enchantment.BINDING_CURSE).setTreasure(true);
+        ((MockEnchantment) Enchantment.VANISHING_CURSE).setTreasure(true);
+        ((MockEnchantment) Enchantment.MENDING).setTreasure(true);
+        ((MockEnchantment) Enchantment.FROST_WALKER).setTreasure(true);
+        ((MockEnchantment) Enchantment.SOUL_SPEED).setTreasure(true);
+        ((MockEnchantment) Enchantment.SWIFT_SNEAK).setTreasure(true);
+        ((MockEnchantment) Enchantment.WIND_BURST).setTreasure(true);
     }
 
     /**
