@@ -68,12 +68,17 @@ public final class RegistryUtils {
      * @param clazz the class
      * @return the registry
      */
+    @SuppressWarnings("unchecked")
     public static <T extends Keyed> Registry<T> getRegistry(final @NotNull Class<T> clazz) {
         String clazzName = clazz.getSimpleName();
         Class<?> enclosingClass = clazz.getEnclosingClass();
         if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
         clazzName = FIELD_BY_CLASS_NAME.getOrDefault(clazzName, clazzName);
         clazzName = StringUtils.decapitalize(clazzName);
+        // Field registries
+        Function<NamespacedKey, Object> converterFunction = FIELDS_CLASSES.get(clazzName);
+        if (converterFunction != null)
+            return new FieldsRegistry<>(clazz, (FunctionException<NamespacedKey, T>) converterFunction);
         // Default case, registry already initialized.
         try {
             Registry<T> registry = new Refl<>(Registry.class).getFieldObject(clazzName);
