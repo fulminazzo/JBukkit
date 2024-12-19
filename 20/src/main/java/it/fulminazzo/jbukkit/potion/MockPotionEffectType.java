@@ -30,20 +30,20 @@ public class MockPotionEffectType extends PotionEffectType {
     /**
      * Instantiates a new Mock potion effect type.
      *
-     * @param key      the key
+     * @param name      the name
      * @param category the category
      * @param color    the color
      * @param instant  true if its effects are applied instantly
      */
-    public MockPotionEffectType(final @NotNull NamespacedKey key,
+    public MockPotionEffectType(final @NotNull String name,
                                 final @NotNull PotionEffectTypeCategory category,
                                 final @NotNull Color color, final boolean instant) {
         this.id = LAST_USED_ID++;
-        this.key = Objects.requireNonNull(key);
+        this.name = Objects.requireNonNull(name);
+        this.key = NamespacedKey.minecraft(StringUtils.decapitalize(name).toLowerCase());
         this.category = category;
         this.color = color;
         this.instant = instant;
-        this.name = StringUtils.capitalize(this.key.getKey());
         // Set to internal map
         BiMap<Integer, PotionEffectType> idMap = new Refl<>(PotionEffectType.class).getFieldObject("ID_MAP");
         Objects.requireNonNull(idMap).put(this.id, this);
