@@ -1,5 +1,7 @@
 package it.fulminazzo.jbukkit.potion;
 
+import com.google.common.collect.BiMap;
+import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import lombok.Getter;
@@ -42,6 +44,9 @@ public class MockPotionEffectType extends PotionEffectType {
         this.color = color;
         this.instant = instant;
         this.name = StringUtils.capitalize(this.key.getKey());
+        // Set to internal map
+        BiMap<Integer, PotionEffectType> idMap = new Refl<>(PotionEffectType.class).getFieldObject("ID_MAP");
+        Objects.requireNonNull(idMap).put(this.id, this);
     }
 
     @Override
