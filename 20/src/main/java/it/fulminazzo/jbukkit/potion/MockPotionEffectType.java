@@ -17,6 +17,7 @@ import java.util.Objects;
  */
 @Getter
 public class MockPotionEffectType extends PotionEffectType {
+    private static int LAST_USED_ID = 1;
     private final int id;
     private final @NotNull NamespacedKey key;
     private final @NotNull String name;
@@ -27,16 +28,15 @@ public class MockPotionEffectType extends PotionEffectType {
     /**
      * Instantiates a new Mock potion effect type.
      *
-     * @param id       the id
      * @param key      the key
      * @param category the category
      * @param color    the color
      * @param instant  true if its effects are applied instantly
      */
-    public MockPotionEffectType(final int id, final @NotNull NamespacedKey key,
+    public MockPotionEffectType(final @NotNull NamespacedKey key,
                                 final @NotNull PotionEffectTypeCategory category,
                                 final @NotNull Color color, final boolean instant) {
-        this.id = id;
+        this.id = LAST_USED_ID++;
         this.key = Objects.requireNonNull(key);
         this.category = category;
         this.color = color;
