@@ -2,6 +2,7 @@ package it.fulminazzo.jbukkit.enchantments;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
+import it.fulminazzo.jbukkit.NotImplementedException;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.NamespacedKey;
@@ -21,6 +22,7 @@ import java.util.Set;
  */
 @Getter
 public class MockEnchantment extends Enchantment {
+    private final NamespacedKey key;
     private final String name;
     private final int startLevel;
     private final int maxLevel;
@@ -53,7 +55,7 @@ public class MockEnchantment extends Enchantment {
      */
     public MockEnchantment(final @NotNull NamespacedKey key, final @NotNull String name, final int startLevel,
                            final int maxLevel, final @NotNull EnchantmentTarget itemTarget) {
-        super(key);
+        this.key = key;
         this.name = name;
         this.startLevel = startLevel;
         this.maxLevel = maxLevel;
@@ -102,6 +104,11 @@ public class MockEnchantment extends Enchantment {
     @Override
     public boolean canEnchantItem(final @NotNull ItemStack item) {
         return this.canEnchantItems.contains(item);
+    }
+
+    @Override
+    public @NotNull String getTranslationKey() {
+        throw new NotImplementedException();
     }
 
     /**
