@@ -62,6 +62,10 @@ public class MockPotionEffectType extends PotionEffectType {
     public static final MockPotionEffectType OOZING = new MockPotionEffectType("Oozing", HARMFUL, "000000", false);
     public static final MockPotionEffectType INFESTED = new MockPotionEffectType("Infested", HARMFUL, "000000", false);
 
+    static {
+        new Refl<>(UNLUCK).setFieldObject("key", NamespacedKey.minecraft("unluck"));
+    }
+
     private static int LAST_USED_ID = 1;
     private final int id;
     private final @NotNull NamespacedKey key;
