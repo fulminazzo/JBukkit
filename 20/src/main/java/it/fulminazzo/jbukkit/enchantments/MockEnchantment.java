@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.enchantments;
 
+import it.fulminazzo.fulmicollection.objects.Printable;
 import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import lombok.Getter;
@@ -164,6 +165,25 @@ public class MockEnchantment extends Enchantment {
     @Override
     public @NotNull String getTranslationKey() {
         throw new NotImplementedException();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Enchantment) {
+            Enchantment other = (Enchantment) obj;
+            return other.getKey().equals(this.key);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.key.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return Printable.convertToJson(this);
     }
 
     /**
