@@ -7,7 +7,9 @@ import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +20,16 @@ class FieldsRegistryTest {
     @BeforeEach
     void setUp() {
         this.registry = new FieldsRegistry<>(MockClass.class, MockClass::new);
+    }
+
+    @Test
+    void testIterator() {
+        Iterator<MockClass> iterator = this.registry.iterator();
+        for (String key : new String[]{"first", "second", "true"}) {
+            assertTrue(iterator.hasNext(), String.format("Iterator should have %s object", key));
+            assertEquals(new MockClass(key), iterator.next());
+        }
+        assertFalse(iterator.hasNext(), "Iterator should have no more objects");
     }
 
     @Getter
