@@ -2,6 +2,7 @@ package it.fulminazzo.jbukkit.enchantments;
 
 import it.fulminazzo.fulmicollection.objects.Printable;
 import it.fulminazzo.fulmicollection.objects.Refl;
+import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import lombok.Getter;
 import org.bukkit.NamespacedKey;
@@ -9,10 +10,13 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * Represents an implementation of {@link Enchantment}.
@@ -184,6 +188,38 @@ public class MockEnchantment extends Enchantment {
     @Override
     public String toString() {
         return Printable.convertToJson(this);
+    }
+
+    /**
+     * Gets the most appropriate {@link Enchantment} from the given {@link NamespacedKey}.
+     * Uses the static {@link Supplier}s present in this class.
+     * If none is found, an exception is thrown.
+     *
+     * @param key the key
+     * @return the vanilla enchantment
+     */
+    public static @NotNull Enchantment getVanillaEnchantment(final @NotNull NamespacedKey key) {
+        Supplier<MockEnchantment> supplier = valueOf(key);
+        Objects.requireNonNull(supplier, "Could not find vanilla enchantment: " + key);
+        return supplier.get();
+    }
+
+    private static @Nullable Supplier<MockEnchantment> valueOf(final @NotNull NamespacedKey key) {
+        Refl<?> mock = new Refl<>(MockEnchantment.class);
+        try {
+            return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    private static @Nullable Enchantment valueOfEnchantment(final @NotNull NamespacedKey key) {
+        Refl<?> mock = new Refl<>(Enchantment.class);
+        try {
+            return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     /**
