@@ -1,5 +1,7 @@
 package it.fulminazzo.jbukkit.utils;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
+import it.fulminazzo.fulmicollection.utils.StringUtils;
 import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
@@ -21,6 +23,19 @@ public final class RegistryUtils {
     public static void setupRegistries() {
         when(Bukkit.getServer().getRegistry(any())).thenAnswer(a ->
                 getRegistry(a.getArgument(0)));
+    }
+
+    /**
+     * Gets the most appropriate registry from the given class.
+     *
+     * @param <T>   the type of the class
+     * @param clazz the class
+     * @return the registry
+     */
+    public static <T extends Keyed> Registry<T> getRegistry(final @NotNull Class<T> clazz) {
+        String clazzName = clazz.getSimpleName().replace("Keyed", "");
+        clazzName = StringUtils.capitalize(clazzName);
+        return new Refl<>(Registry.class).getFieldObject(clazzName);
     }
 
 }
