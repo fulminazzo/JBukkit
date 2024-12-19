@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.utils;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.jbukkit.BukkitUtils;
 import org.bukkit.*;
 import org.bukkit.advancement.Advancement;
@@ -18,7 +19,7 @@ import org.bukkit.potion.PotionType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RegistryUtilsTest {
 
@@ -55,6 +56,23 @@ class RegistryUtilsTest {
     <T extends Keyed> void testEveryRegistry(Class<T> clazz, Class<Registry<T>> expected) {
         Registry<T> actual = Bukkit.getRegistry(clazz);
         assertInstanceOf(expected, actual);
+    }
+
+    private static Object[] getAllRegistries() {
+        BukkitUtils.setupServer();
+        Refl<Class<?>> registry = new Refl<>(Registry.class);
+        return registry.getStaticFields().stream()
+                .filter(f -> Registry.class.isAssignableFrom(f.getType()))
+                .map(f -> new Object[]{f.getName(), registry.getFieldObject(f)})
+                .toArray(Object[]::new);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getAllRegistries")
+    <T extends Keyed> void testEveryRegistryNotNull(String registryName, Registry<T> registry) {
+        assertNotNull(registry, "Registry " + registryName + " was not initialized");
+        assertFalse(registry.getClass().getName().contains("MockitoMock"),
+                "Expected registry " + registryName + " to not be mock");
     }
 
 }
