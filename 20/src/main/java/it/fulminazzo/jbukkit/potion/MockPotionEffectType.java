@@ -64,4 +64,12 @@ public class MockPotionEffectType extends PotionEffectType {
         throw new NotImplementedException();
     }
 
+    private static @NotNull Color color(final @NotNull String color) {
+        if (color.length() != 6) throw new IllegalArgumentException("color must have 6 characters");
+        String red = color.substring(0, 2);
+        String green = color.substring(2, 4);
+        String blue = color.substring(4, 6);
+        return Color.fromRGB(Integer.parseInt(red, 16), Integer.parseInt(green, 16), Integer.parseInt(blue, 16));
+    }
+
 }
