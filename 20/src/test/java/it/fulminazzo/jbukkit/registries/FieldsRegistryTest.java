@@ -5,11 +5,20 @@ import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
+import org.junit.jupiter.api.BeforeEach;
+
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FieldsRegistryTest {
+    private Registry<MockClass> registry;
 
+    @BeforeEach
+    void setUp() {
+        this.registry = new FieldsRegistry<>(MockClass.class, MockClass::new);
+    }
 
     @Getter
     static class MockClass extends Equable implements Keyed {
