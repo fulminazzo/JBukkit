@@ -64,4 +64,24 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
         return stream().iterator();
     }
 
+    @Override
+    public int hashCode() {
+        return this.clazz.hashCode() + this.internalMap.hashCode();
+    }
+
+    @Override
+    public boolean equals(final @Nullable Object object) {
+        if (object instanceof FieldsRegistry) {
+            FieldsRegistry<?> other = (FieldsRegistry<?>) object;
+            return this.clazz.equals(other.clazz) && this.internalMap.equals(other.internalMap);
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s(keys = %s; type = %s)", getClass().getSimpleName(),
+                this.internalMap.size(), this.clazz.getCanonicalName());
+    }
+
 }
