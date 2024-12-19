@@ -1,10 +1,9 @@
 package it.fulminazzo.jbukkit.registries;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
-import org.bukkit.Keyed;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
+import org.bukkit.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +12,18 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class FieldsRegistryTest {
     private Registry<MockClass> registry;
 
     @BeforeEach
     void setUp() {
+        Server server = mock(Server.class);
+        new Refl<>(Bukkit.class).setFieldObject("server", server);
+        when(server.getRegistry(any())).thenAnswer(a -> mock(Registry.class));
         this.registry = new FieldsRegistry<>(MockClass.class, MockClass::new);
     }
 
