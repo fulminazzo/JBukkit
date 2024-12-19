@@ -6,10 +6,12 @@ import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
 import it.fulminazzo.jbukkit.registries.FieldsRegistry;
 import lombok.NoArgsConstructor;
-import org.bukkit.Bukkit;
-import org.bukkit.Keyed;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
+import org.bukkit.*;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.Wolf;
+import org.bukkit.generator.structure.Structure;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
+import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -39,15 +41,15 @@ public final class RegistryUtils {
         FIELD_BY_CLASS_NAME.put("KeyedBossBar", "BossBars");
         FIELD_BY_CLASS_NAME.put("MemoryKey", "MemoryModuleType");
 
-        FIELDS_CLASSES.put("GameEvent", null);
-        FIELDS_CLASSES.put("WolfVariant", null);
-        FIELDS_CLASSES.put("DamageType", null);
-        FIELDS_CLASSES.put("TrimPattern", null);
-        FIELDS_CLASSES.put("TrimMaterial", null);
-        FIELDS_CLASSES.put("StructureType", null);
-        FIELDS_CLASSES.put("Structure", null);
+        FIELDS_CLASSES.put("GameEvent", k -> mockKeyed(GameEvent.class, k));
+        FIELDS_CLASSES.put("WolfVariant", k -> mockKeyed(Wolf.Variant.class, k));
+        FIELDS_CLASSES.put("DamageType", k -> mockKeyed(DamageType.class, k));
+        FIELDS_CLASSES.put("TrimPattern", k -> mockKeyed(TrimPattern.class, k));
+        FIELDS_CLASSES.put("TrimMaterial", k -> mockKeyed(TrimMaterial.class, k));
+        FIELDS_CLASSES.put("StructureType", k -> mockKeyed(StructureType.class, k));
+        FIELDS_CLASSES.put("Structure", k -> mockKeyed(Structure.class, k));
         FIELDS_CLASSES.put("PotionEffectType", null);
-        FIELDS_CLASSES.put("MusicInstrument", null);
+        FIELDS_CLASSES.put("MusicInstrument", k -> mockKeyed(MusicInstrument.class, k));
         FIELDS_CLASSES.put("Enchantment", MockEnchantment::valueOf);
     }
 
