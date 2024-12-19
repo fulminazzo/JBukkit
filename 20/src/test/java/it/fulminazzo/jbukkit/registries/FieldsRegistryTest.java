@@ -7,6 +7,8 @@ import org.bukkit.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -25,6 +27,22 @@ class FieldsRegistryTest {
         new Refl<>(Bukkit.class).setFieldObject("server", server);
         when(server.getRegistry(any())).thenAnswer(a -> mock(Registry.class));
         this.registry = new FieldsRegistry<>(MockClass.class, MockClass::new);
+    }
+
+    private static Object[][] getParameters() {
+        return new Object[][]{
+                new Object[]{MockClass.FIRST, "first"},
+                new Object[]{MockClass.SECOND, "second"},
+                new Object[]{MockClass.THIRD, "third"},
+                new Object[]{null, "fourth"},
+        };
+    }
+
+    @ParameterizedTest
+    @MethodSource("getParameters")
+    void testGetMethod(MockClass expected, String name) {
+        MockClass actual = this.registry.get(NamespacedKey.minecraft(name));
+        assertEquals(expected, actual);
     }
 
     @Test
