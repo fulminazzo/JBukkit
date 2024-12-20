@@ -1,7 +1,7 @@
 package it.fulminazzo.jbukkit.enchantments;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
-import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
+import it.fulminazzo.fulmicollection.utils.StringUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.NamespacedKey;
@@ -10,7 +10,6 @@ import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
@@ -39,6 +38,19 @@ public class MockEnchantment extends Enchantment {
         this(enchantment.getKey(), enchantment.getName(), enchantment.getStartLevel(),
                 enchantment.getMaxLevel(), enchantment.getItemTarget());
         setTreasure(enchantment.isTreasure()).setCursed(enchantment.isCursed());
+    }
+
+    /**
+     * Instantiates a new Mock enchantment.
+     *
+     * @param name       the name
+     * @param startLevel the start level
+     * @param maxLevel   the max level
+     * @param itemTarget the item target
+     */
+    public MockEnchantment(final @NotNull String name, final int startLevel,
+                           final int maxLevel, final @NotNull EnchantmentTarget itemTarget) {
+        this(NamespacedKey.minecraft(StringUtils.decapitalize(name).toLowerCase()), name, startLevel, maxLevel, itemTarget);
     }
 
     /**
