@@ -157,14 +157,21 @@ public class MockEnchantment extends Enchantment {
         return this.itemTarget.includes(item);
     }
 
+    private static @NotNull Map<String, Enchantment> getByNameMap() {
+        return Objects.requireNonNull(new Refl<>(Enchantment.class).getFieldObject("byName"), "Could not get byName map");
+    }
+
+    private static @NotNull Map<NamespacedKey, Enchantment> getByKeyMap() {
+        return Objects.requireNonNull(new Refl<>(Enchantment.class).getFieldObject("byKey"), "Could not get byKey map");
+    }
+
     /**
      * Sets up the default vanilla enchantments by checking the {@link Enchantment} static fields.
      */
     @SneakyThrows
     public static void setupEnchantments() {
-        Refl<Class<Enchantment>> enchantmentClass = new Refl<>(Enchantment.class);
-        Map<NamespacedKey, Enchantment> byKey = enchantmentClass.getFieldObject("byKey");
-        Map<String, Enchantment> byName = enchantmentClass.getFieldObject("byName");
+        Map<NamespacedKey, Enchantment> byKey = getByKeyMap();
+        Map<String, Enchantment> byName = getByNameMap();
         byKey.clear();
         byName.clear();
         for (Field field : enchantmentClass.getStaticFields())
