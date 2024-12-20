@@ -47,6 +47,7 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
 
     @Override
     public @NotNull Stream<T> stream() {
+        checkInternalMap();
         return this.internalMap.values().stream();
     }
 
@@ -70,11 +71,13 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
 
     @Override
     public int hashCode() {
+        checkInternalMap();
         return this.clazz.hashCode() + this.internalMap.hashCode();
     }
 
     @Override
     public boolean equals(final @Nullable Object object) {
+        checkInternalMap();
         if (object instanceof FieldsRegistry) {
             FieldsRegistry<?> other = (FieldsRegistry<?>) object;
             return this.clazz.equals(other.clazz) && this.internalMap.equals(other.internalMap);
@@ -84,6 +87,7 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
 
     @Override
     public String toString() {
+        checkInternalMap();
         return String.format("%s(keys = %s; type = %s)", getClass().getSimpleName(),
                 this.internalMap.size(), this.clazz.getCanonicalName());
     }
