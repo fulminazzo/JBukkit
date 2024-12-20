@@ -30,7 +30,7 @@ allprojects {
             def module = project.name as Integer
             if (module >= 20) return 17
         }
-        return 8
+        return project.name == 'jbukkit' ? 17 : 8
     }
 
     apply plugin: 'java-library'
@@ -141,4 +141,8 @@ tasks.register('cleanModules') {
             start++
         } while (new File(parent, String.valueOf(start)).isDirectory())
     }
+}
+
+dependencies {
+    subprojects.forEach { api project(it.path) }
 }
