@@ -418,7 +418,7 @@ public class MockItemFactory implements ItemFactory {
 
     @Override
     public @NotNull Material updateMaterial(@NotNull ItemMeta meta, @NotNull Material material) throws IllegalArgumentException {
-        throw new NotImplementedException();
+        return material;
     }
 
     /**
