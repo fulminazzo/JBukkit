@@ -8,23 +8,6 @@ group = 'it.fulminazzo'
 version = '3.0'
 
 allprojects {
-//    if (project.name.equals("JBukkit")) {
-//        java {
-//            toolchain {
-//                languageVersion = JavaLanguageVersion.of(21)
-//            }
-//        }
-//        tasks.withType(JavaCompile) {
-//            options.release.set(21)
-//        }
-//    }
-
-    apply plugin: 'java-library'
-    apply plugin: 'maven-publish'
-    apply plugin: 'io.freefair.lombok'
-
-    group = "${rootProject.group}"
-    version = "${rootProject.version}"
 
     this.ext.getParentFromProject = { project ->
         return new HashMap<>(project.getProperties()).get("parent")
@@ -41,6 +24,20 @@ allprojects {
             groupId = "." + groupId.substring(0, groupId.length() - 1)
         return "${rootProject.group}${groupId}"
     }
+
+    this.ext.getAppropriateJavaVersion = {
+        if (project.name.isNumber()) {
+
+        }
+        return 8
+    }
+
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'io.freefair.lombok'
+
+    group = "${rootProject.group}"
+    version = "${rootProject.version}"
 
     repositories {
         mavenCentral()
