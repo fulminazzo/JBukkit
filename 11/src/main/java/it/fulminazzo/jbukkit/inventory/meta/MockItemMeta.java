@@ -5,6 +5,7 @@ import it.fulminazzo.jbukkit.NotImplementedException;
 import it.fulminazzo.yagl.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -35,7 +36,7 @@ public class MockItemMeta extends Equable implements ItemMeta {
         this.lore = new LinkedList<>();
         this.enchants = new HashMap<>();
         this.itemFlags = new HashSet<>();
-        this.spigot = new MockSpigot(this);
+        this.spigot = new MockSpigot();
     }
 
     @Override
@@ -127,21 +128,17 @@ public class MockItemMeta extends Equable implements ItemMeta {
         return super.equalsNull(object);
     }
 
-    private static class MockSpigot extends Spigot {
-        private final @NotNull MockItemMeta meta;
-
-        private MockSpigot(final @NotNull MockItemMeta meta) {
-            this.meta = meta;
-        }
+    @NoArgsConstructor
+    private class MockSpigot extends Spigot {
 
         @Override
         public void setUnbreakable(boolean unbreakable) {
-            this.meta.unbreakable = unbreakable;
+            MockItemMeta.this.unbreakable = unbreakable;
         }
 
         @Override
         public boolean isUnbreakable() {
-            return this.meta.unbreakable;
+            return MockItemMeta.this.unbreakable;
         }
 
         @Override

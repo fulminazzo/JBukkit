@@ -8,6 +8,7 @@ import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
 import it.fulminazzo.yagl.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -49,7 +50,7 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
         this.itemFlags = new HashSet<>();
         this.attributeModifiers = HashMultimap.create();
         this.customTagContainer = new MockCustomItemTagContainer();
-        this.spigot = new MockSpigot(this);
+        this.spigot = new MockSpigot();
     }
 
     @Override
@@ -216,21 +217,17 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
         return super.equalsNull(object);
     }
 
-    private static class MockSpigot extends Spigot {
-        private final @NotNull MockItemMeta meta;
-
-        private MockSpigot(final @NotNull MockItemMeta meta) {
-            this.meta = meta;
-        }
+    @NoArgsConstructor
+    private class MockSpigot extends Spigot {
 
         @Override
         public void setUnbreakable(boolean unbreakable) {
-            this.meta.unbreakable = unbreakable;
+            MockItemMeta.this.unbreakable = unbreakable;
         }
 
         @Override
         public boolean isUnbreakable() {
-            return this.meta.unbreakable;
+            return MockItemMeta.this.unbreakable;
         }
 
         @Override

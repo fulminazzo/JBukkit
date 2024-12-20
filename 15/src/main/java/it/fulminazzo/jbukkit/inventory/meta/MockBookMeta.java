@@ -96,7 +96,7 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
         return new MockSpigot();
     }
 
-    private static class MockSpigot extends BookMeta.Spigot {
+    private class MockSpigot extends BookMeta.Spigot {
         private final List<BaseComponent[]> pages;
 
         private MockSpigot() {

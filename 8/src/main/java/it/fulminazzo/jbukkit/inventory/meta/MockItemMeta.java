@@ -119,7 +119,7 @@ public class MockItemMeta extends Equable implements ItemMeta {
         return super.equalsNull(object);
     }
 
-    private static class MockSpigot extends Spigot {
+    private class MockSpigot extends Spigot {
         private boolean unbreakable;
 
         @Override

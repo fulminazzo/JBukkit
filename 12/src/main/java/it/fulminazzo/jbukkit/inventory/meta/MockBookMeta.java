@@ -95,12 +95,10 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
         return new MockSpigot(this);
     }
 
-    private static class MockSpigot extends BookMeta.Spigot {
-        private final @NotNull MockBookMeta meta;
+    private class MockSpigot extends BookMeta.Spigot {
         private final List<BaseComponent[]> pages;
 
-        private MockSpigot(final @NotNull MockBookMeta meta) {
-            this.meta = meta;
+        private MockSpigot() {
             this.pages = new LinkedList<>();
         }
 
@@ -138,12 +136,12 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
         @Override
         public boolean isUnbreakable() {
-            return this.meta.isUnbreakable();
+            return MockBookMeta.this.isUnbreakable();
         }
 
         @Override
         public void setUnbreakable(boolean unbreakable) {
-            this.meta.setUnbreakable(unbreakable);
+            MockBookMeta.this.setUnbreakable(unbreakable);
         }
 
         @Override
