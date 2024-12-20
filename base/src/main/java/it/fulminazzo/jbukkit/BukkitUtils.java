@@ -2,7 +2,6 @@ package it.fulminazzo.jbukkit;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
-import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.annotations.After1_;
 import it.fulminazzo.jbukkit.annotations.Before1_;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
@@ -172,11 +171,11 @@ public class BukkitUtils {
         List<PotionEffectType> potions = new LinkedList<>();
         for (int i = 0; i < potionFields.size(); i++)
             try {
-                potions.add(new MockPotionEffectType(i + 1, StringUtils.capitalize(potionFields.get(i).getName())));
+                potions.add(new MockPotionEffectType(i + 1, potionFields.get(i).getName()));
             } catch (NoSuchMethodError e) {
                 return;
             }
-        setPotionEffectTypesInMap(potions, "byName", PotionEffectType::getName);
+        setPotionEffectTypesInMap(potions, "byName", p -> p.getName().toLowerCase());
         setPotionEffectTypesInMap(potions, "byKey", p -> new Refl<>(p).invokeMethod("getKey"));
         try {
             PotionEffectType[] byId = potionEffectType.getFieldObject("byId");
