@@ -108,6 +108,9 @@ public class BukkitUtils {
                 }
                 return null;
             });
+        when(server.getRecipesFor(any())).thenAnswer(a -> RECIPES.stream()
+                .filter(r -> r.getResult().isSimilar(a.getArgument(0)))
+                .collect(Collectors.toList()));
         when(server.getLogger()).thenReturn(LOGGER);
         when(server.getBukkitVersion()).thenReturn(String.format("1.%s-R0.1-SNAPSHOT", numericalVersion));
         when(server.addRecipe(any())).thenAnswer(r -> RECIPES.add(r.getArgument(0)));
