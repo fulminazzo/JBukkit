@@ -41,16 +41,7 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
 
     @Override
     public @Nullable T get(final @NotNull NamespacedKey key) {
-        if (this.internalMap.isEmpty()) {
-            Refl<?> refl = new Refl<>(Objects.requireNonNull(this.clazz));
-            for (final Field field : refl.getFields(f -> Modifier.isStatic(f.getModifiers()) && f.getType().equals(this.clazz)))
-                try {
-                    NamespacedKey k = NamespacedKey.minecraft(field.getName().toLowerCase());
-                    this.internalMap.put(k, this.conversionFunction.apply(k));
-                } catch (Exception e) {
-                    throw new RegistryException("Could not convert field " + field.getName(), e);
-                }
-        }
+        checkInternalMap();
         return this.internalMap.get(key);
     }
 
@@ -62,6 +53,19 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
     @Override
     public @NotNull Iterator<T> iterator() {
         return stream().iterator();
+    }
+
+    private void checkInternalMap() {
+        if (this.internalMap.isEmpty()) {
+            Refl<?> refl = new Refl<>(Objects.requireNonNull(this.clazz));
+            for (final Field field : refl.getFields(f -> Modifier.isStatic(f.getModifiers()) && f.getType().equals(this.clazz)))
+                try {
+                    NamespacedKey k = NamespacedKey.minecraft(field.getName().toLowerCase());
+                    this.internalMap.put(k, this.conversionFunction.apply(k));
+                } catch (Exception e) {
+                    throw new RegistryException("Could not convert field " + field.getName(), e);
+                }
+        }
     }
 
     @Override
