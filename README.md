@@ -16,6 +16,12 @@
 
 It does so by providing many **implementations of Bukkit classes** with the help of [JUnit5](https://junit.org/junit5/) and [Mockito](https://site.mockito.org/).
 
+| Table of contents                               |
+|-------------------------------------------------|
+| [How to import](#how-to-import)                 |
+| [How to choose module version](#version-choice) |
+| [How to use](#how-to-use)                       |
+
 ## How to import
 **JBukkit** can be imported using one of the three most common methods:
 - **Gradle** (preferred):
