@@ -41,11 +41,10 @@ public class Equable extends Printable {
             if (obj instanceof Equable && ((Equable) obj).compareNull()) continue;
             Refl<?> objRefl = new Refl<>(obj);
             try {
-                if (!((boolean) Objects.requireNonNull(objRefl.invokeMethod(boolean.class, "isEmpty"))))
-                    return false;
-            } catch (IllegalArgumentException e) {
-                return false;
-            }
+                if (((boolean) Objects.requireNonNull(objRefl.invokeMethod(boolean.class, "isEmpty"))))
+                    continue;
+            } catch (IllegalArgumentException ignored) {}
+            return compareNull(obj);
         }
         return true;
     }
