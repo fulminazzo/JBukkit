@@ -22,6 +22,41 @@ import java.util.Set;
  */
 @Getter
 public class MockEnchantment extends Enchantment {
+    private static final MockEnchantment PROTECTION_ENVIRONMENTAL = new MockEnchantment("protection", 1, 4, EnchantmentTarget.ARMOR);
+    private static final MockEnchantment PROTECTION_FIRE = new MockEnchantment("fire_protection", 1, 4, EnchantmentTarget.ARMOR);
+    private static final MockEnchantment PROTECTION_EXPLOSIONS = new MockEnchantment("blast_protection", 1, 4, EnchantmentTarget.ARMOR);
+    private static final MockEnchantment PROTECTION_PROJECTILE = new MockEnchantment("projectile_protection", 1, 4, EnchantmentTarget.ARMOR);
+    private static final MockEnchantment PROTECTION_FALL = new MockEnchantment("feather_falling", 1, 4, EnchantmentTarget.ARMOR_FEET);
+    private static final MockEnchantment OXYGEN = new MockEnchantment("respiration", 1, 3, EnchantmentTarget.ARMOR_HEAD);
+    private static final MockEnchantment WATER_WORKER = new MockEnchantment("aqua_affinity", 1, 1, EnchantmentTarget.ARMOR_HEAD);
+    private static final MockEnchantment THORNS = new MockEnchantment("thorns", 1, 3, EnchantmentTarget.ARMOR);
+    private static final MockEnchantment DEPTH_STRIDER = new MockEnchantment("depth_strider", 1, 3, EnchantmentTarget.ARMOR_FEET);
+    private static final MockEnchantment FROST_WALKER = new MockEnchantment("frost_walker", 1, 2, EnchantmentTarget.ARMOR_FEET);
+    private static final MockEnchantment BINDING_CURSE = new MockEnchantment("binding_curse", 1, 1, EnchantmentTarget.WEARABLE);
+    private static final MockEnchantment DAMAGE_ALL = new MockEnchantment("sharpness", 1, 5, EnchantmentTarget.WEAPON);
+    private static final MockEnchantment DAMAGE_UNDEAD = new MockEnchantment("smite", 1, 5, EnchantmentTarget.WEAPON);
+    private static final MockEnchantment DAMAGE_ARTHROPODS = new MockEnchantment("bane_of_arthropods", 1, 5, EnchantmentTarget.WEAPON);
+    private static final MockEnchantment KNOCKBACK = new MockEnchantment("knockback", 1, 2, EnchantmentTarget.WEAPON);
+    private static final MockEnchantment FIRE_ASPECT = new MockEnchantment("fire_aspect", 1, 2, EnchantmentTarget.WEAPON);
+    private static final MockEnchantment LOOT_BONUS_MOBS = new MockEnchantment("looting", 1, 3, EnchantmentTarget.WEAPON);
+    private static final MockEnchantment SWEEPING_EDGE = new MockEnchantment("sweeping", 1, 3, EnchantmentTarget.WEAPON);
+    private static final MockEnchantment DIG_SPEED = new MockEnchantment("efficiency", 1, 5, EnchantmentTarget.TOOL);
+    private static final MockEnchantment SILK_TOUCH = new MockEnchantment("silk_touch", 1, 1, EnchantmentTarget.TOOL);
+    private static final MockEnchantment DURABILITY = new MockEnchantment("unbreaking", 1, 3, EnchantmentTarget.BREAKABLE);
+    private static final MockEnchantment LOOT_BONUS_BLOCKS = new MockEnchantment("fortune", 1, 3, EnchantmentTarget.TOOL);
+    private static final MockEnchantment ARROW_DAMAGE = new MockEnchantment("power", 1, 5, EnchantmentTarget.BOW);
+    private static final MockEnchantment ARROW_KNOCKBACK = new MockEnchantment("punch", 1, 2, EnchantmentTarget.BOW);
+    private static final MockEnchantment ARROW_FIRE = new MockEnchantment("flame", 1, 1, EnchantmentTarget.BOW);
+    private static final MockEnchantment ARROW_INFINITE = new MockEnchantment("infinity", 1, 1, EnchantmentTarget.BOW);
+    private static final MockEnchantment LUCK = new MockEnchantment("luck_of_the_sea", 1, 3, EnchantmentTarget.FISHING_ROD);
+    private static final MockEnchantment LURE = new MockEnchantment("lure", 1, 3, EnchantmentTarget.FISHING_ROD);
+    private static final MockEnchantment LOYALTY = new MockEnchantment("loyalty", 1, 3, EnchantmentTarget.TRIDENT);
+    private static final MockEnchantment IMPALING = new MockEnchantment("impaling", 1, 5, EnchantmentTarget.TRIDENT);
+    private static final MockEnchantment RIPTIDE = new MockEnchantment("riptide", 1, 3, EnchantmentTarget.TRIDENT);
+    private static final MockEnchantment CHANNELING = new MockEnchantment("channeling", 1, 1, EnchantmentTarget.TRIDENT);
+    private static final MockEnchantment MENDING = new MockEnchantment("mending", 1, 1, EnchantmentTarget.BREAKABLE);
+    private static final MockEnchantment VANISHING_CURSE = new MockEnchantment("vanishing_curse", 1, 1, EnchantmentTarget.ALL);
+
     private final String name;
     private final int startLevel;
     private final int maxLevel;
