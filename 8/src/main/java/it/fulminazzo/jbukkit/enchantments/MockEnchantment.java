@@ -84,6 +84,12 @@ public class MockEnchantment extends Enchantment {
     public MockEnchantment(final int id, final @NotNull String name, final int startLevel,
                            final int maxLevel, final @NotNull EnchantmentTarget itemTarget) {
         super(id);
+        // If the provided key belongs to a static supplier in this class
+        // And the corresponding Enchantment is already initialized,
+        // Throw exception.
+        if (getByIdMap().containsKey(id) || getByNameMap().containsKey(name))
+            throw new IllegalArgumentException(String.format("Cannot create enchantment with name \"%s\". ", name) +
+                    "Use the vanilla enchantment from the Enchantment class instead.");
         this.id = id;
         this.name = name;
         this.startLevel = startLevel;
