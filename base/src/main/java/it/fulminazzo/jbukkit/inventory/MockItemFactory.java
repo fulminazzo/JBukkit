@@ -24,7 +24,8 @@ import java.util.Objects;
 public class MockItemFactory implements ItemFactory {
 
     @Override
-    public @NotNull ItemMeta getItemMeta(@NotNull Material material) {
+    public @Nullable ItemMeta getItemMeta(@NotNull Material material) {
+        if (material == Material.AIR) return null;
         @Nullable String className = getItemMetaName(material);
         if (className == null) throw new IllegalArgumentException("Unknown item meta type: " + material);
         Class<?> clazz;
@@ -394,24 +395,25 @@ public class MockItemFactory implements ItemFactory {
         String metaName = getItemMetaName(material);
         if (metaName == null) return null;
         ItemMeta actualMeta = getItemMeta(material);
-        ReflectionUtils.getFields(actualMeta).stream()
-                .map(ReflectionUtils::setAccessible)
-                .map(f -> f.orElseGet(null))
-                .filter(Objects::nonNull)
-                .map(f -> {
-                    try {
-                        return new Tuple<>(f, f.get(itemMeta));
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .forEach(t -> {
-                    try {
-                        t.getKey().set(actualMeta, t.getValue());
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+        if (actualMeta != null)
+            ReflectionUtils.getFields(actualMeta).stream()
+                    .map(ReflectionUtils::setAccessible)
+                    .map(f -> f.orElseGet(null))
+                    .filter(Objects::nonNull)
+                    .map(f -> {
+                        try {
+                            return new Tuple<>(f, f.get(itemMeta));
+                        } catch (IllegalAccessException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .forEach(t -> {
+                        try {
+                            t.getKey().set(actualMeta, t.getValue());
+                        } catch (IllegalAccessException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
         return actualMeta;
     }
 
