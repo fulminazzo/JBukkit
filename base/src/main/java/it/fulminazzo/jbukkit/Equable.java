@@ -19,13 +19,7 @@ public class Equable extends Printable {
     /**
      * Simulates the comparison of the current object with <code>null</code>.
      *
-     * @return true only if every field is "empty".
-     * More specifically, a field is empty only if:
-     * <ul>
-     *     <li>is a primitive type and {@link #checkPrimitive(Class, Object)} returns <code>true</code>;</li>
-     *     <li>is null;</li>
-     *     <li>is not null, has the method <code>boolean isEmpty</code> and when invoked it returns <code>true</code>.</li>
-     * </ul>
+     * @return true only if every field is "empty". More specifically, a field is empty only if: <ul>     <li>is a primitive type and {@link #checkPrimitive(Class, Object)} returns <code>true</code>;</li>     <li>is null;</li>     <li>is not null, has the method <code>boolean isEmpty</code> and when invoked it returns <code>true</code>.</li> </ul>
      */
     protected boolean compareNull() {
         Refl<?> refl = new Refl<>(this);
@@ -64,6 +58,18 @@ public class Equable extends Printable {
         else if (type.equals(float.class)) return ((float) object) == 0.0f;
         else if (type.equals(double.class)) return ((double) object) == 0.0d;
         return false;
+    }
+
+    /**
+     * Checks if an object is equal to the current one.
+     * If it is null, {@link #compareNull()} is used.
+     *
+     * @param object the object
+     * @return true if they are equal
+     */
+    public boolean equalsNull(Object object) {
+        if (object == null) return compareNull();
+        return Equable.this.equals(object);
     }
 
     @Override
