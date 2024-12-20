@@ -124,6 +124,8 @@ public final class ModuleUtils {
         } else {
             if (!targetModule.exists()) return;
             if (!targetModule.getName().endsWith(".java")) return;
+            // Do not delete tests
+            if (targetModule.getAbsolutePath().contains("test")) return;
             FileUtils.deleteIf(f -> FileUtils.sameContent(module, f), targetModule);
         }
     }
