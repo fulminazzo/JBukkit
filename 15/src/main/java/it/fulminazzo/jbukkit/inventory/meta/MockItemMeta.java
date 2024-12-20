@@ -193,7 +193,7 @@ public class MockItemMeta extends Equable implements ItemMeta {
     }
 
     @Override
-    public @NotNull ItemMeta clone() {
+    public @NotNull MockItemMeta clone() {
         return ObjectUtils.copy(this, getClass());
     }
 

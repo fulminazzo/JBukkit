@@ -33,6 +33,7 @@ public class MockItemMeta extends Equable implements ItemMeta {
     private final Map<Enchantment, Integer> enchants;
     private final Set<ItemFlag> itemFlags;
     private boolean unbreakable;
+    private int damage;
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
     private final MockCustomItemTagContainer customTagContainer;
     @Getter(AccessLevel.NONE)
@@ -177,7 +178,7 @@ public class MockItemMeta extends Equable implements ItemMeta {
     }
 
     @Override
-    public @NotNull ItemMeta clone() {
+    public @NotNull MockItemMeta clone() {
         return ObjectUtils.copy(this, getClass());
     }
 
