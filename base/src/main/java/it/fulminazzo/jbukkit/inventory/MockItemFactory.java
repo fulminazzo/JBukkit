@@ -35,7 +35,7 @@ public class MockItemFactory implements ItemFactory {
         }
         Refl<?> object;
         try {
-            object = new Refl<>(clazz);
+            object = new Refl<>(clazz, new Object[0]);
         } catch (IllegalArgumentException e) {
             object = new Refl<>(clazz, material);
         }
