@@ -27,7 +27,8 @@ allprojects {
 
     this.ext.getAppropriateJavaVersion = {
         if (project.name.isNumber()) {
-
+            def module = project.name as Integer
+            if (module >= 20) return 17
         }
         return 8
     }
