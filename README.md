@@ -31,7 +31,8 @@ It does so by providing many **implementations of Bukkit classes** with the help
   }
 
   dependencies {
-  	implementation 'it.fulminazzo:JBukkit:latest'
+    // Imports the latest module
+  	implementation 'it.fulminazzo:jbukkit:latest'
   }
   ```
 - **Maven** (alternative):
@@ -42,9 +43,10 @@ It does so by providing many **implementations of Bukkit classes** with the help
   </repository>
   ```
   ```xml
+  <!-- Imports the latest module -->
   <dependency>
   	<groupId>it.fulminazzo</groupId>
-  	<artifact>JBukkit</artifact>
+  	<artifact>jbukkit</artifact>
   	<version>LATEST</version>
   </dependency>
   ```
@@ -58,13 +60,13 @@ So, for example, when importing for **Minecraft 1.13**:
 - **Gradle** (preferred):
   ```groovy
   dependencies {
-  	implementation 'it.fulminazzo.JBukkit:13:latest'
+  	implementation 'it.fulminazzo.jbukkit:13:latest'
   }
   ```
 - **Maven** (alternative):
   ```xml
   <dependency>
-  	<groupId>it.fulminazzo.JBukkit</groupId>
+  	<groupId>it.fulminazzo.jbukkit</groupId>
   	<artifact>13</artifact>
   	<version>LATEST</version>
   </dependency>
