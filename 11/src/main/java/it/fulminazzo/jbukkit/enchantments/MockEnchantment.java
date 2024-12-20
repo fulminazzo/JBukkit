@@ -28,7 +28,8 @@ public class MockEnchantment extends Enchantment {
     private static final MockEnchantment WATER_WORKER = new MockEnchantment("aqua_affinity", 1, 1, EnchantmentTarget.ARMOR_HEAD);
     private static final MockEnchantment THORNS = new MockEnchantment("thorns", 1, 3, EnchantmentTarget.ARMOR);
     private static final MockEnchantment DEPTH_STRIDER = new MockEnchantment("depth_strider", 1, 3, EnchantmentTarget.ARMOR_FEET);
-    private static final MockEnchantment FROST_WALKER = new MockEnchantment(lastUsedId(16), "frost_walker", 1, 2, EnchantmentTarget.ARMOR_FEET);
+    private static final MockEnchantment FROST_WALKER = new MockEnchantment("frost_walker", 1, 2, EnchantmentTarget.ARMOR_FEET);
+    private static final MockEnchantment BINDING_CURSE = new MockEnchantment(lastUsedId(16), "binding_curse", 1, 1, EnchantmentTarget.ALL);
     private static final MockEnchantment DAMAGE_ALL = new MockEnchantment("sharpness", 1, 5, EnchantmentTarget.WEAPON);
     private static final MockEnchantment DAMAGE_UNDEAD = new MockEnchantment("smite", 1, 5, EnchantmentTarget.WEAPON);
     private static final MockEnchantment DAMAGE_ARTHROPODS = new MockEnchantment("bane_of_arthropods", 1, 5, EnchantmentTarget.WEAPON);
@@ -47,6 +48,7 @@ public class MockEnchantment extends Enchantment {
     private static final MockEnchantment LUCK = new MockEnchantment("luck_of_the_sea", 1, 3, EnchantmentTarget.FISHING_ROD);
     private static final MockEnchantment LURE = new MockEnchantment(lastUsedId(70), "lure", 1, 3, EnchantmentTarget.FISHING_ROD);
     private static final MockEnchantment MENDING = new MockEnchantment("mending", 1, 1, EnchantmentTarget.ALL);
+    private static final MockEnchantment VANISHING_CURSE = new MockEnchantment("vanishing_curse", 1, 1, EnchantmentTarget.ALL);
 
     private static int lastUsedId(final int id) {
         int prev = LAST_USED_ID;
@@ -192,7 +194,12 @@ public class MockEnchantment extends Enchantment {
         // Mending
         MockEnchantment.MENDING.conflictsWith(MockEnchantment.ARROW_INFINITE);
         MockEnchantment.ARROW_INFINITE.conflictsWith(MockEnchantment.MENDING);
+        // Cursed
+        MockEnchantment.BINDING_CURSE.setCursed(true);
+        MockEnchantment.VANISHING_CURSE.setCursed(true);
         // Treasure
+        MockEnchantment.BINDING_CURSE.setTreasure(true);
+        MockEnchantment.VANISHING_CURSE.setTreasure(true);
         MockEnchantment.MENDING.setTreasure(true);
         MockEnchantment.FROST_WALKER.setTreasure(true);
     }
