@@ -1,4 +1,4 @@
-rootProject.name = 'JBukkit'
+rootProject.name = 'jbukkit'
 include 'base'
 // 1.8
 include '8'
