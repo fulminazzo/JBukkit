@@ -37,7 +37,7 @@ public class BukkitUtils {
     private static final List<OfflinePlayer> OFFLINE_PLAYERS = new LinkedList<>();
     private static final List<Recipe> RECIPES = new LinkedList<>();
     private static final String VERSION_FORMAT = "1\\.(\\d+)(?:\\.(\\d+))?-R\\d+\\.\\d+-SNAPSHOT";
-    private static final String DEFAULT_VERSION = "1.20.4-R0.1-SNAPSHOT";
+    private static final String DEFAULT_VERSION = "1.19.2-R0.1-SNAPSHOT";
     /**
      * The name of the property to identify the current Minecraft version.
      */
