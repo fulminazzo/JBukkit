@@ -110,3 +110,13 @@ class PluginTest extends BukkitUtils {
     
 }
 ```
+
+**JBukkit** offers the possibility to create **many Bukkit API classes and interfaces**,
+using **mock versions of them**, in order to **replicate** the expected behaviour in a real server environment.
+
+To check if such a class exists for the target type, simply add "_Mock_" in front of the type name.
+For example, for [Inventory](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/Inventory.html)
+the [MockInventory](../../tree/master/base/src/main/java/it/fulminazzo/jbukkit/inventory/MockInventory.java) 
+class is found.
+
+**NOTE:** many of the mocks are **version dependent**, therefore they **might change** for each module.
