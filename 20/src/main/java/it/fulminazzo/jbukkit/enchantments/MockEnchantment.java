@@ -85,7 +85,7 @@ public class MockEnchantment extends Enchantment {
      */
     protected MockEnchantment(final @NotNull String name, final int startLevel,
                               final int maxLevel, final @NotNull EnchantmentTarget itemTarget) {
-        this(NamespacedKey.minecraft(StringUtils.decapitalize(name).toLowerCase()), name, startLevel, maxLevel, itemTarget);
+        this(NamespacedKey.minecraft(name.toLowerCase().replace(" ", "_")), name, startLevel, maxLevel, itemTarget);
     }
 
     /**
