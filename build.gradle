@@ -71,6 +71,12 @@ allprojects {
         useJUnitPlatform()
     }
 
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(getAppropriateJavaVersion())
+        }
+    }
+
     tasks.register('sourcesJar', Jar) {
         from sourceSets.main.allSource
         archiveClassifier = 'sources'
