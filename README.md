@@ -28,27 +28,27 @@ It does so by providing many **implementations of Bukkit classes** with the help
 - **Gradle** (preferred):
   ```groovy
   repositories {
-  	maven { url = 'https://repo.fulminazzo.it/releases' }
+      maven { url = 'https://repo.fulminazzo.it/releases' }
   }
 
   dependencies {
-    // Imports the latest module
-  	implementation 'it.fulminazzo:jbukkit:latest'
+      // Imports the latest module
+      implementation 'it.fulminazzo:jbukkit:latest'
   }
   ```
 - **Maven** (alternative):
   ```xml
   <repository>
-  	<id>fulminazzo</id>
-  	<url>https://repo.fulminazzo.it/releases</url>
+      <id>fulminazzo</id>
+      <url>https://repo.fulminazzo.it/releases</url>
   </repository>
   ```
   ```xml
   <!-- Imports the latest module -->
   <dependency>
-  	<groupId>it.fulminazzo</groupId>
-  	<artifact>jbukkit</artifact>
-  	<version>LATEST</version>
+      <groupId>it.fulminazzo</groupId>
+      <artifact>jbukkit</artifact>
+      <version>LATEST</version>
   </dependency>
   ```
 - **Manual** (discouraged): download the JAR file from the [latest release](../../releases/latest) and import it using your IDE.
@@ -63,15 +63,15 @@ So, for example, when importing for **Minecraft 1.13**:
 - **Gradle** (preferred):
   ```groovy
   dependencies {
-  	implementation 'it.fulminazzo.jbukkit:13:latest'
+      implementation 'it.fulminazzo.jbukkit:13:latest'
   }
   ```
 - **Maven** (alternative):
   ```xml
   <dependency>
-  	<groupId>it.fulminazzo.jbukkit</groupId>
-  	<artifact>13</artifact>
-  	<version>LATEST</version>
+      <groupId>it.fulminazzo.jbukkit</groupId>
+      <artifact>13</artifact>
+      <version>LATEST</version>
   </dependency>
   ```
   
