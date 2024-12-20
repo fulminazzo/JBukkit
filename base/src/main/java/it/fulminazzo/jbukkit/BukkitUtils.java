@@ -180,7 +180,7 @@ public class BukkitUtils {
         try {
             PotionEffectType[] byId = potionEffectType.getFieldObject("byId");
             if (byId != null)
-                for (int i = 0; i < potions.size(); i++) byId[i] = potions.get(i);
+                for (int i = 0; i < potions.size(); i++) byId[i + 1] = potions.get(i);
         } catch (IllegalArgumentException ignored) {}
     }
 
