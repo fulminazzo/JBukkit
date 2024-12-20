@@ -8,6 +8,8 @@ import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import static org.mockito.Mockito.when;
+
 /**
  * Represents a mock implementation of {@link InventoryView}.
  */
@@ -27,6 +29,8 @@ public class MockInventoryView extends InventoryView {
                              final @NotNull String title) {
         this.topInventory = topInventory;
         this.player = player;
+        if (player.getClass().getCanonicalName().contains("MockitoMock"))
+            when(player.getOpenInventory()).thenReturn(this);
     }
 
     @Override
