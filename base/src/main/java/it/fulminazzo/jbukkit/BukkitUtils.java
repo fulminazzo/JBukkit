@@ -148,6 +148,10 @@ public class BukkitUtils {
         when(server.getOfflinePlayers()).thenAnswer(a -> OFFLINE_PLAYERS.toArray(new OfflinePlayer[0]));
         // Registries
         if (setupRegistries) RegistryUtils.setupRegistries();
+        // Potions
+        setupPotionEffectTypes();
+        // Enchantments
+        setupEnchantments();
     }
 
     /**
