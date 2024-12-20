@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
@@ -200,8 +201,8 @@ public class MockEnchantment extends Enchantment {
     }
 
     private static @Nullable Supplier<MockEnchantment> valueOf(final @NotNull NamespacedKey key) {
-        Refl<?> mock = new Refl<>(MockEnchantment.class);
         try {
+            Refl<?> mock = new Refl<>(MockEnchantment.class);
             return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
         } catch (IllegalArgumentException e) {
             return null;
@@ -209,9 +210,9 @@ public class MockEnchantment extends Enchantment {
     }
 
     private static @Nullable Enchantment valueOfEnchantment(final @NotNull NamespacedKey key) {
-        Refl<?> mock = new Refl<>(Enchantment.class);
         try {
-            return mock.getFieldObject(StringUtils.capitalize(key.getKey()));
+            Refl<?> mock = new Refl<>(Enchantment.class);
+            return mock.getFieldObject(StringUtils.capitalize(key.getKey()).toUpperCase());
         } catch (IllegalArgumentException e) {
             return null;
         }
