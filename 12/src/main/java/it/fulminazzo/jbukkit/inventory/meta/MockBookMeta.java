@@ -7,7 +7,6 @@ import lombok.Setter;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.inventory.meta.BookMeta;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -19,11 +18,15 @@ import java.util.stream.Collectors;
  */
 @Getter
 @Setter
-@NoArgsConstructor
 public class MockBookMeta extends MockItemMeta implements BookMeta {
     private String title;
     private String author;
     private Generation generation;
+    private final MockSpigot spigot;
+
+    public MockBookMeta() {
+        this.spigot = new MockSpigot();
+    }
 
     public boolean setTitle(String title) {
         this.title = title;
@@ -92,7 +95,7 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
 
     @Override
     public BookMeta.Spigot spigot() {
-        return new MockSpigot(this);
+        return this.spigot;
     }
 
     private class MockSpigot extends BookMeta.Spigot {

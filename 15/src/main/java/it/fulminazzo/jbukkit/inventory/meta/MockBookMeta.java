@@ -20,11 +20,15 @@ import java.util.stream.Collectors;
  */
 @Getter
 @Setter
-@NoArgsConstructor
 public class MockBookMeta extends MockItemMeta implements BookMeta {
     private String title;
     private String author;
     private Generation generation;
+    private final MockSpigot spigot;
+
+    public MockBookMeta() {
+        this.spigot = new MockSpigot();
+    }
 
     public boolean setTitle(String title) {
         this.title = title;
@@ -92,8 +96,8 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
     }
 
     @Override
-    public BookMeta.@NotNull Spigot spigot() {
-        return new MockSpigot();
+    public BookMeta.Spigot spigot() {
+        return this.spigot;
     }
 
     private class MockSpigot extends BookMeta.Spigot {
