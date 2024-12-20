@@ -125,5 +125,11 @@ public class MockItemMeta extends Equable implements ItemMeta {
         public boolean isUnbreakable() {
             return this.unbreakable;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            return Equable.equals(this, o);
+        }
+
     }
 }

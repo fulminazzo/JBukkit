@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.inventory.meta;
 
+import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -142,6 +143,11 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
         @Override
         public void setUnbreakable(boolean unbreakable) {
             this.meta.setUnbreakable(unbreakable);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return Equable.equals(this, o);
         }
 
     }
