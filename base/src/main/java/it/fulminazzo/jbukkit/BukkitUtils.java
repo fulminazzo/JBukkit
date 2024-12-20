@@ -179,8 +179,10 @@ public class BukkitUtils {
         setPotionEffectTypesInMap(potions, "byKey", p -> new Refl<>(p).invokeMethod("getKey"));
         try {
             PotionEffectType[] byId = potionEffectType.getFieldObject("byId");
-            if (byId != null)
+            if (byId != null) {
+                Arrays.fill(byId, null);
                 for (int i = 0; i < potions.size(); i++) byId[i + 1] = potions.get(i);
+            }
         } catch (IllegalArgumentException ignored) {}
     }
 
@@ -190,7 +192,10 @@ public class BukkitUtils {
         try {
             Refl<?> potionEffectType = new Refl<>(PotionEffectType.class);
             Map<T, PotionEffectType> map = potionEffectType.getFieldObject(mapName);
-            if (map != null) potions.forEach(p -> map.put(conversionFunction.apply(p), p));
+            if (map != null) {
+                map.clear();
+                potions.forEach(p -> map.put(conversionFunction.apply(p), p));
+            }
         } catch (IllegalArgumentException ignored) {}
     }
 
