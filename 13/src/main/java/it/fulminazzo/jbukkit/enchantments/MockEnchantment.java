@@ -1,7 +1,6 @@
 package it.fulminazzo.jbukkit.enchantments;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
-import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import it.fulminazzo.fulmicollection.utils.StringUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -12,10 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.lang.reflect.Modifier;
+import java.util.*;
 
 /**
  * Represents an implementation of {@link Enchantment}.
@@ -174,15 +171,42 @@ public class MockEnchantment extends Enchantment {
         Map<String, Enchantment> byName = getByNameMap();
         byKey.clear();
         byName.clear();
-        for (Field field : enchantmentClass.getStaticFields())
-            if (field.getType().equals(Enchantment.class)) {
-                Enchantment enchantment = (Enchantment) ReflectionUtils.setAccessibleOrThrow(field)
-                        .get(Enchantment.class);
-                MockEnchantment mock = new MockEnchantment(enchantment);
-                field.set(Enchantment.class, mock);
-                byKey.put(mock.getKey(), enchantment);
-                byName.put(mock.getName(), enchantment);
-            }
+        Refl<Class<MockEnchantment>> mockEnchantmentClass = new Refl<>(MockEnchantment.class);
+        for (Field field : mockEnchantmentClass.getFields(f -> Modifier.isStatic(f.getModifiers()) &&
+                f.getType().equals(MockEnchantment.class))) {
+            MockEnchantment enchantment = mockEnchantmentClass.getFieldObject(field);
+            byKey.put(enchantment.getKey(), enchantment);
+            byName.put(enchantment.getName(), enchantment);
+        }
+        // Protection
+        MockEnchantment.PROTECTION_ENVIRONMENTAL.conflictsWith(MockEnchantment.PROTECTION_FIRE, MockEnchantment.PROTECTION_EXPLOSIONS, MockEnchantment.PROTECTION_PROJECTILE);
+        MockEnchantment.PROTECTION_FIRE.conflictsWith(MockEnchantment.PROTECTION_ENVIRONMENTAL, MockEnchantment.PROTECTION_EXPLOSIONS, MockEnchantment.PROTECTION_PROJECTILE);
+        MockEnchantment.PROTECTION_EXPLOSIONS.conflictsWith(MockEnchantment.PROTECTION_FIRE, MockEnchantment.PROTECTION_ENVIRONMENTAL, MockEnchantment.PROTECTION_PROJECTILE);
+        MockEnchantment.PROTECTION_PROJECTILE.conflictsWith(MockEnchantment.PROTECTION_FIRE, MockEnchantment.PROTECTION_EXPLOSIONS, MockEnchantment.PROTECTION_ENVIRONMENTAL);
+        // Depth strider
+        MockEnchantment.DEPTH_STRIDER.conflictsWith(MockEnchantment.FROST_WALKER);
+        MockEnchantment.FROST_WALKER.conflictsWith(MockEnchantment.DEPTH_STRIDER);
+        // Sharpness
+        MockEnchantment.DAMAGE_ALL.conflictsWith(MockEnchantment.DAMAGE_UNDEAD, MockEnchantment.DAMAGE_ARTHROPODS);
+        MockEnchantment.DAMAGE_UNDEAD.conflictsWith(MockEnchantment.DAMAGE_ALL, MockEnchantment.DAMAGE_ARTHROPODS);
+        MockEnchantment.DAMAGE_ARTHROPODS.conflictsWith(MockEnchantment.DAMAGE_UNDEAD, MockEnchantment.DAMAGE_ALL);
+        // Fortune
+        MockEnchantment.LOOT_BONUS_BLOCKS.conflictsWith(MockEnchantment.SILK_TOUCH);
+        MockEnchantment.SILK_TOUCH.conflictsWith(MockEnchantment.LOOT_BONUS_BLOCKS);
+        // Mending
+        MockEnchantment.MENDING.conflictsWith(MockEnchantment.ARROW_INFINITE);
+        MockEnchantment.ARROW_INFINITE.conflictsWith(MockEnchantment.MENDING);
+        // Channeling
+        MockEnchantment.RIPTIDE.conflictsWith(MockEnchantment.CHANNELING);
+        MockEnchantment.CHANNELING.conflictsWith(MockEnchantment.RIPTIDE);
+        // Cursed
+        MockEnchantment.BINDING_CURSE.setCursed(true);
+        MockEnchantment.VANISHING_CURSE.setCursed(true);
+        // Treasure
+        MockEnchantment.BINDING_CURSE.setTreasure(true);
+        MockEnchantment.VANISHING_CURSE.setTreasure(true);
+        MockEnchantment.MENDING.setTreasure(true);
+        MockEnchantment.FROST_WALKER.setTreasure(true);
     }
 
 }
