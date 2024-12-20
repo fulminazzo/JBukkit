@@ -2,7 +2,6 @@ package it.fulminazzo.jbukkit.inventory.meta;
 
 import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
