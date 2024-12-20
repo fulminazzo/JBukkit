@@ -1,7 +1,6 @@
 package it.fulminazzo.jbukkit.enchantments;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
-import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.enchantments.Enchantment;
@@ -10,10 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.lang.reflect.Modifier;
+import java.util.*;
 
 /**
  * Represents an implementation of {@link Enchantment}.
@@ -79,6 +76,14 @@ public class MockEnchantment extends Enchantment {
     @Override
     public boolean canEnchantItem(final @NotNull ItemStack item) {
         return this.itemTarget.includes(item);
+    }
+
+    private static @NotNull Map<String, Enchantment> getByNameMap() {
+        return Objects.requireNonNull(new Refl<>(Enchantment.class).getFieldObject("byName"), "Could not get byName map");
+    }
+
+    private static @NotNull Map<Integer, Enchantment> getByIdMap() {
+        return Objects.requireNonNull(new Refl<>(Enchantment.class).getFieldObject("byId"), "Could not get byId map");
     }
 
     /**
