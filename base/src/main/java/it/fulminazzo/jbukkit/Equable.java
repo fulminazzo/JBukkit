@@ -34,6 +34,8 @@ public class Equable extends Printable {
     public static boolean compareNull(final @NotNull Object object) {
         Refl<?> refl = new Refl<>(object);
         for (final Field field : refl.getNonStaticFields()) {
+            // Do not compare fields in inner classes
+            if (field.getName().matches("this\\$[0-9]+")) continue;
             final Class<?> type = field.getType();
             final Object obj = refl.getFieldObject(field);
             if (obj == null) continue;
