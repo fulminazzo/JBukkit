@@ -377,7 +377,11 @@ public class MockItemFactory implements ItemFactory {
 
     @Override
     public boolean equals(@Nullable ItemMeta meta1, @Nullable ItemMeta meta2) throws IllegalArgumentException {
-        return Equable.equals(meta1, meta2);
+        if (meta1 instanceof Equable) return meta1.equals(meta2);
+        else if (meta2 instanceof Equable) return meta2.equals(meta1);
+        else if (meta1 == null && meta2 == null) return true;
+        else if (meta1 == null || meta2 == null) return false;
+        else return Equable.equals(meta1, meta2);
     }
 
     @Override
