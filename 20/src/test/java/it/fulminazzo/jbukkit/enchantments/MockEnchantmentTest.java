@@ -30,14 +30,14 @@ class MockEnchantmentTest {
 
     @ParameterizedTest
     @MethodSource("getTypes")
-    void testAllTypes(Enchantment type) {
-        assertInstanceOf(MockEnchantment.class, type);
+    void testAllTypes(Enchantment enchantment) {
+        assertInstanceOf(MockEnchantment.class, enchantment);
     }
 
     @ParameterizedTest
     @MethodSource("getTypes")
-    void shouldNotBeAbleToCreateVanillaEffect(Enchantment type) {
-        assertThrowsExactly(IllegalArgumentException.class, () -> new MockEnchantment(type.getName(),
+    void shouldNotBeAbleToCreateVanillaEffect(Enchantment enchantment) {
+        assertThrowsExactly(IllegalArgumentException.class, () -> new MockEnchantment(enchantment.getName(),
                 0, 1, EnchantmentTarget.ARMOR));
     }
 
