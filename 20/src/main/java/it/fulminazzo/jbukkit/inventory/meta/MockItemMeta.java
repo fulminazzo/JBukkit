@@ -14,6 +14,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.FoodComponent;
@@ -30,7 +31,7 @@ import java.util.*;
  */
 @Getter
 @Setter
-public class MockItemMeta extends Equable implements ItemMeta {
+public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     private String displayName;
     private String localizedName;
     private String itemName;
@@ -38,6 +39,8 @@ public class MockItemMeta extends Equable implements ItemMeta {
     private final Map<Enchantment, Integer> enchants;
     private final Set<ItemFlag> itemFlags;
     private boolean unbreakable;
+    private int damage;
+    private Integer maxDamage;
     private boolean hideTooltip;
     private boolean fireResistant;
     private Boolean enchantmentGlintOverride;
@@ -60,6 +63,20 @@ public class MockItemMeta extends Equable implements ItemMeta {
         this.attributeModifiers = HashMultimap.create();
         this.customTagContainer = new MockCustomItemTagContainer();
         this.persistentDataContainer = new MockPersistentDataContainer();
+    }
+
+    @Override
+    public boolean hasDamage() {
+        return this.damage > 0;
+    }
+
+    @Override
+    public boolean hasMaxDamage() {
+        return this.maxDamage != null && this.maxDamage > 0;
+    }
+
+    public int getMaxDamage() {
+        return this.maxDamage == null ? 0 : this.maxDamage;
     }
 
     @Override

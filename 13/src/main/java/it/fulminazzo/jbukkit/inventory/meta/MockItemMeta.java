@@ -14,6 +14,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +27,7 @@ import java.util.*;
  */
 @Getter
 @Setter
-public class MockItemMeta extends Equable implements ItemMeta {
+public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     private String displayName;
     private String localizedName;
     private final List<String> lore;
@@ -49,6 +50,11 @@ public class MockItemMeta extends Equable implements ItemMeta {
         this.attributeModifiers = HashMultimap.create();
         this.customTagContainer = new MockCustomItemTagContainer();
         this.spigot = new MockSpigot(this);
+    }
+
+    @Override
+    public boolean hasDamage() {
+        return this.damage > 0;
     }
 
     @Override
