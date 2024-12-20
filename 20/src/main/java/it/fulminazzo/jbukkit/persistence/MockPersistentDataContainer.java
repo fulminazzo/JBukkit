@@ -1,6 +1,7 @@
 package it.fulminazzo.jbukkit.persistence;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
+import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataAdapterContext;
@@ -17,7 +18,7 @@ import java.util.Set;
  * The type Mock persistent data container.
  */
 @Getter
-public class MockPersistentDataContainer implements PersistentDataContainer {
+public class MockPersistentDataContainer extends Equable implements PersistentDataContainer {
     private final Map<NamespacedKey, DataContainer<?, ?>> data;
     private final PersistentDataAdapterContext adapterContext;
 
