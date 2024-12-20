@@ -70,13 +70,12 @@ public class Equable extends Printable {
      */
     public boolean equalsNull(Object object) {
         if (object == null) return compareNull();
-        return Equable.this.equals(object);
+        return equals(this, object);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Equable) return equals(this, o);
-        return super.equals(o);
+        return equals(this, o);
     }
 
     /**
