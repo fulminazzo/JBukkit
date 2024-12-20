@@ -225,4 +225,9 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
         throw new NotImplementedException();
     }
 
+    @Override
+    public boolean equals(Object object) {
+        return super.equalsNull(object);
+    }
+
 }

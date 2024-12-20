@@ -113,6 +113,11 @@ public class MockItemMeta extends Equable implements ItemMeta {
         throw new NotImplementedException();
     }
 
+    @Override
+    public boolean equals(Object object) {
+        return super.equalsNull(object);
+    }
+
     private static class MockSpigot extends Spigot {
         private boolean unbreakable;
 
