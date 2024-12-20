@@ -18,7 +18,7 @@ class MockEnchantmentTest {
         BukkitUtils.setupServer();
     }
 
-    private static Enchantment[] getTypes() {
+    private static Enchantment[] getEnchantments() {
         BukkitUtils.setupServer();
         Refl<?> enchantment = new Refl<>(Enchantment.class);
         return enchantment.getStaticFields().stream()
@@ -29,13 +29,13 @@ class MockEnchantmentTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getTypes")
+    @MethodSource("getEnchantments")
     void testAllTypes(Enchantment enchantment) {
         assertInstanceOf(MockEnchantment.class, enchantment);
     }
 
     @ParameterizedTest
-    @MethodSource("getTypes")
+    @MethodSource("getEnchantments")
     void shouldNotBeAbleToCreateVanillaEffect(Enchantment enchantment) {
         assertThrowsExactly(IllegalArgumentException.class, () -> new MockEnchantment(enchantment.getName(),
                 0, 1, EnchantmentTarget.ARMOR));
