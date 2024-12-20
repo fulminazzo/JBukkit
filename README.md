@@ -43,3 +43,27 @@ It does so by providing many **implementations of Bukkit classes** with the help
   </dependency>
   ```
 - **Manual** (discouraged): download the JAR file from the [latest release](../../releases/latest) and import it using your IDE.
+
+## Version choice
+**JBukkit** provides one version for **every Minecraft version from 1.8** to the latest.
+To choose the correct one, the **second leading number** should be used as reference for the modules.
+
+So, for example, when importing for **Minecraft 1.13**:
+- **Gradle** (preferred):
+  ```groovy
+  dependencies {
+  	implementation 'it.fulminazzo.JBukkit:13:latest'
+  }
+  ```
+- **Maven** (alternative):
+  ```xml
+  <dependency>
+  	<groupId>it.fulminazzo.JBukkit</groupId>
+  	<artifact>13</artifact>
+  	<version>LATEST</version>
+  </dependency>
+  ```
+  
+**NOTE:** every module uses as reference **the latest patch** of its version.
+This means that module `13` is compatible with Minecraft `1.13.2`, 
+but **might not support** Minecraft `1.13` and `1.13.2`.
