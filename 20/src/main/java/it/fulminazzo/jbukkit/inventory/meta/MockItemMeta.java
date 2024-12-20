@@ -242,7 +242,7 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
 
     @Override
     public boolean removeAttributeModifier(@NotNull Attribute attribute) {
-        return this.attributeModifiers.removeAll(attribute) != null;
+        return !this.attributeModifiers.removeAll(attribute).isEmpty();
     }
 
     @Override
