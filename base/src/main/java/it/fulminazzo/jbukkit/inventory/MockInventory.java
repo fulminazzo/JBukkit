@@ -38,7 +38,7 @@ public class MockInventory implements Inventory {
     public MockInventory(final int size) {
         this.contents = new ItemStack[size];
         this.type = InventoryType.CHEST;
-        this.title = "";
+        this.title = null;
         this.viewers = new LinkedList<>();
     }
 
