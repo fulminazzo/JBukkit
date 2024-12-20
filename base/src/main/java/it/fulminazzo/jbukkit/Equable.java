@@ -28,6 +28,7 @@ public class Equable extends Printable {
             final Object obj = refl.getFieldObject(field);
             if (obj == null) continue;
             if (checkPrimitive(type, obj)) continue;
+            if (obj instanceof Equable && ((Equable) obj).compareNull()) continue;
             Refl<?> objRefl = new Refl<>(obj);
             try {
                 if (!((boolean) Objects.requireNonNull(objRefl.invokeMethod(boolean.class, "isEmpty"))))
