@@ -1,5 +1,6 @@
 package it.fulminazzo.jbukkit.inventory.meta.tags;
 
+import it.fulminazzo.jbukkit.Equable;
 import lombok.Getter;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
@@ -15,7 +16,7 @@ import java.util.Map;
  * Represents a mock for {@link CustomItemTagContainer}.
  */
 @Getter
-public class MockCustomItemTagContainer implements CustomItemTagContainer {
+public class MockCustomItemTagContainer extends Equable implements CustomItemTagContainer {
     private final Map<NamespacedKey, TagContainer<?, ?>> customDataTags;
     private final ItemTagAdapterContext adapterContext;
 
