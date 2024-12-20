@@ -67,3 +67,46 @@ So, for example, when importing for **Minecraft 1.13**:
 **NOTE:** every module uses as reference **the latest patch** of its version.
 This means that module `13` is compatible with Minecraft `1.13.2`, 
 but **might not support** Minecraft `1.13` and `1.13.2`.
+
+## How to use
+After [importing the project](#how-to-import) with the [appropriate version](#version-choice), 
+it is possible to create a **JUnit test**.
+
+The main class of reference for **JBukkit** is 
+[BukkitUtils](../../tree/master/base/src/main/java/it/fulminazzo/jbukkit/BukkitUtils.java) 
+which provides various methods:
+
+- `setUp` (**mandatory for proper functioning**): it verifies the **Minecraft version in use**.
+  This method will also use the annotations 
+  [Before1_](../../tree/master/base/src/main/java/it/fulminazzo/jbukkit/annotations/Before1_.java) and
+  [After1_](../../tree/master/base/src/main/java/it/fulminazzo/jbukkit/annotations/After1_.java) 
+  to check if the **current version** is, **respectively**, **before** or **after** the specified versions.
+  If it is not, the **annotated tests will be skipped**;
+- `setupServer`: initializes the `Bukkit#getServer` object with various parameters 
+  (loggers, recipes, support for inventories creation, players list and more).
+  In **Minecraft 1.20+** it **initializes the registries**, **mandatory** for certain classes;
+- `setupEnchantments`: initializes all the **enchantments** found in the 
+  [Bukkit Enchantment class](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html).
+  The initialization method and the parameters will vary from version to version;
+- various 
+  [Player](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/Player.html) and 
+  [OfflinePlayer](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/OfflinePlayer.html) 
+  methods to **add**, **remove** or **get** players.
+  
+  **NOTE:** at the time of writing, adding a player **will not trigger PlayerJoinEvent**.
+
+To use
+[BukkitUtils](../../tree/master/base/src/main/java/it/fulminazzo/jbukkit/BukkitUtils.java) 
+it is possible to **extend it** from the **testing class** and calling the **super method** `setUp`:
+```java
+import it.fulminazzo.jbukkit.BukkitUtils;
+
+class PluginTest extends BukkitUtils {
+    
+    @BeforeEach
+    void setUp() {
+        super.setUp();
+    }
+    
+}
+```
