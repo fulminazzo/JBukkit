@@ -95,7 +95,7 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
     }
 
     @Override
-    public BookMeta.Spigot spigot() {
+    public BookMeta.@NotNull Spigot spigot() {
         return this.spigot;
     }
 

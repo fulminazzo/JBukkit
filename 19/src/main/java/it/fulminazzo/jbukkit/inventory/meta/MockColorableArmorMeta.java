@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.meta.ColorableArmorMeta;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a mock implementation for {@link ColorableArmorMeta}.
@@ -19,7 +20,7 @@ public class MockColorableArmorMeta extends MockLeatherArmorMeta implements Colo
     }
 
     @Override
-    public MockColorableArmorMeta clone() {
+    public @NotNull MockColorableArmorMeta clone() {
         return (MockColorableArmorMeta) super.clone();
     }
 

@@ -8,6 +8,7 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +39,7 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
         return this.color != null;
     }
 
-    public boolean setMainEffect(PotionEffectType mainEffect) {
+    public boolean setMainEffect(@NotNull PotionEffectType mainEffect) {
         this.mainEffect = mainEffect;
         return true;
     }
@@ -54,7 +55,7 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     }
 
     @Override
-    public List<PotionEffect> getCustomEffects() {
+    public @NotNull List<PotionEffect> getCustomEffects() {
         return new ArrayList<>(this.customEffects);
     }
 
@@ -65,12 +66,12 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     }
 
     @Override
-    public boolean removeCustomEffect(PotionEffectType type) {
+    public boolean removeCustomEffect(@NotNull PotionEffectType type) {
         return this.customEffects.removeIf(p -> p.getType().equals(type));
     }
 
     @Override
-    public boolean hasCustomEffect(PotionEffectType type) {
+    public boolean hasCustomEffect(@NotNull PotionEffectType type) {
         return this.customEffects.stream().anyMatch(a -> a.getType().equals(type));
     }
 
@@ -82,7 +83,7 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     }
 
     @Override
-    public MockPotionMeta clone() {
+    public @NotNull MockPotionMeta clone() {
         return (MockPotionMeta) super.clone();
     }
 

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a mock implementation for {@link ArmorMeta}.
@@ -19,7 +20,7 @@ public class MockArmorMeta extends MockItemMeta implements ArmorMeta {
     }
 
     @Override
-    public MockArmorMeta clone() {
+    public @NotNull MockArmorMeta clone() {
         return (MockArmorMeta) super.clone();
     }
 

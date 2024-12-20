@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerProfile;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a mock implementation for {@link SkullMeta}.
@@ -35,7 +36,7 @@ public class MockSkullMeta extends MockItemMeta implements SkullMeta {
     }
 
     @Override
-    public MockSkullMeta clone() {
+    public @NotNull MockSkullMeta clone() {
         return (MockSkullMeta) super.clone();
     }
 
