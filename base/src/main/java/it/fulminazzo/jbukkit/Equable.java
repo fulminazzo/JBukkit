@@ -22,7 +22,17 @@ public class Equable extends Printable {
      * @return true only if every field is "empty". More specifically, a field is empty only if: <ul>     <li>is a primitive type and {@link #checkPrimitive(Class, Object)} returns <code>true</code>;</li>     <li>is null;</li>     <li>is not null, has the method <code>boolean isEmpty</code> and when invoked it returns <code>true</code>.</li> </ul>
      */
     protected boolean compareNull() {
-        Refl<?> refl = new Refl<>(this);
+        return compareNull(this);
+    }
+
+    /**
+     * Simulates the comparison of the given object with <code>null</code>.
+     *
+     * @param object the object
+     * @return true only if every field is "empty". More specifically, a field is empty only if: <ul>     <li>is a primitive type and {@link #checkPrimitive(Class, Object)} returns <code>true</code>;</li>     <li>is null;</li>     <li>is not null, has the method <code>boolean isEmpty</code> and when invoked it returns <code>true</code>.</li> </ul>
+     */
+    public static boolean compareNull(final @NotNull Object object) {
+        Refl<?> refl = new Refl<>(object);
         for (final Field field : refl.getNonStaticFields()) {
             final Class<?> type = field.getType();
             final Object obj = refl.getFieldObject(field);
@@ -48,7 +58,7 @@ public class Equable extends Printable {
      * @param object the object
      * @return true if it is
      */
-    boolean checkPrimitive(final @NotNull Class<?> type, final @NotNull Object object) {
+    static boolean checkPrimitive(final @NotNull Class<?> type, final @NotNull Object object) {
         if (!ReflectionUtils.isPrimitive(type)) return false;
         if (type.equals(boolean.class)) return !((boolean) object);
         else if (type.equals(byte.class)) return ((byte) object) == 0;
