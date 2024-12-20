@@ -28,7 +28,8 @@ public class MockBannerMeta extends MockItemMeta implements BannerMeta {
     @Override
     public void setPatterns(List<Pattern> patterns) {
         this.patterns.clear();
-        this.patterns.addAll(patterns);
+        if (patterns != null)
+            this.patterns.addAll(patterns);
     }
 
     @Override

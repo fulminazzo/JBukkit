@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a mock implementation for {@link WritableBookMeta}.
@@ -37,7 +38,7 @@ public class MockWritableBookMeta extends MockItemMeta implements WritableBookMe
     @Override
     public void setPages(@NotNull List<String> pages) {
         this.pages.clear();
-        this.pages.addAll(pages);
+        this.pages.addAll(Objects.requireNonNull(pages));
     }
 
     @Override

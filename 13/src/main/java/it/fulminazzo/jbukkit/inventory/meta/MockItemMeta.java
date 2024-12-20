@@ -86,7 +86,8 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     @Override
     public void setLore(List<String> lore) {
         this.lore.clear();
-        this.lore.addAll(lore);
+        if (lore != null)
+            this.lore.addAll(lore);
     }
 
     @Override
@@ -164,7 +165,8 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     @Override
     public void setAttributeModifiers(@Nullable Multimap<Attribute, AttributeModifier> attributeModifiers) {
         this.attributeModifiers.clear();
-        this.attributeModifiers.putAll(attributeModifiers);
+        if (attributeModifiers != null)
+            this.attributeModifiers.putAll(attributeModifiers);
     }
 
     @Override

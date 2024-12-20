@@ -31,7 +31,8 @@ public class MockCrossbowMeta extends MockItemMeta implements CrossbowMeta {
     @Override
     public void setChargedProjectiles(@Nullable List<ItemStack> projectiles) {
         this.chargedProjectiles.clear();
-        if (projectiles != null) this.chargedProjectiles.addAll(projectiles);
+        if (projectiles != null)
+            this.chargedProjectiles.addAll(projectiles);
     }
 
     @Override

@@ -58,7 +58,8 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
     @Override
     public void setPages(List<String> pages) {
         this.pages.clear();
-        this.pages.addAll(pages);
+        if (pages != null)
+            this.pages.addAll(pages);
     }
 
     @Override

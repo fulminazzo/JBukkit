@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -120,7 +121,7 @@ public class MockBookMeta extends MockItemMeta implements BookMeta {
         @Override
         public void setPages(@NotNull List<BaseComponent[]> pages) {
             this.pages.clear();
-            this.pages.addAll(pages);
+            this.pages.addAll(Objects.requireNonNull(pages));
         }
 
         @Override

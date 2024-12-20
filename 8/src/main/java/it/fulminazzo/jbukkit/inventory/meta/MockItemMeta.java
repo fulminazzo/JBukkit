@@ -48,7 +48,8 @@ public class MockItemMeta extends Equable implements ItemMeta {
     @Override
     public void setLore(List<String> lore) {
         this.lore.clear();
-        this.lore.addAll(lore);
+        if (lore != null)
+            this.lore.addAll(lore);
     }
 
     @Override

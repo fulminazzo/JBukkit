@@ -33,7 +33,8 @@ public class MockBundleMeta extends MockItemMeta implements BundleMeta {
     @Override
     public void setItems(@Nullable List<ItemStack> list) {
         this.items.clear();
-        if (list != null) this.items.addAll(list);
+        if (list != null)
+            this.items.addAll(list);
     }
 
     @Override

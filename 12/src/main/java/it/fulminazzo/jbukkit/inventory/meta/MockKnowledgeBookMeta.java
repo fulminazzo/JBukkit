@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a mock implementation for {@link MockItemMeta}.
@@ -31,7 +32,7 @@ public class MockKnowledgeBookMeta extends MockItemMeta implements KnowledgeBook
     @Override
     public void setRecipes(@NotNull List<NamespacedKey> recipes) {
         this.recipes.clear();
-        this.recipes.addAll(recipes);
+        this.recipes.addAll(Objects.requireNonNull(recipes));
     }
 
     @Override
