@@ -113,6 +113,7 @@ public class BukkitUtils {
         when(server.addRecipe(any())).thenAnswer(r -> RECIPES.add(r.getArgument(0)));
         when(server.recipeIterator()).thenAnswer(r -> RECIPES.iterator());
         when(server.getItemFactory()).thenReturn(new MockItemFactory());
+        when(server.getUnsafe()).thenReturn(new MockUnsafeValues());
         // Inventories
         when(server.createInventory(any(), anyInt())).thenAnswer(a -> {
             MockInventory inventory = new MockInventory(a.getArgument(1));
