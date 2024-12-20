@@ -32,7 +32,8 @@ class EquableTest {
     @ParameterizedTest
     @MethodSource("getPrimitives")
     void testCheckPrimitive(Class<?> type, Object value) {
-        assertTrue(new MockClass().checkPrimitive(type, value),
+        new MockClass();
+        assertTrue(Equable.checkPrimitive(type, value),
                 String.format("%s of value %s should have returned true", type, value));
     }
 
@@ -47,10 +48,10 @@ class EquableTest {
         private byte b1;
         private char c;
         private String s1;
-        private List<String> l1 = new ArrayList<>();
+        private final List<String> l1 = new ArrayList<>();
         private Set<String> s2;
-        private Collection<String> c1 = new ArrayList<>();
-        private Map<String, Integer> m = new HashMap<>();
+        private final Collection<String> c1 = new ArrayList<>();
+        private final Map<String, Integer> m = new HashMap<>();
         private Map<String, Integer> m2;
         private Object o1;
         private Object o2;
