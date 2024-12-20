@@ -132,20 +132,29 @@ public class MockEnchantment extends Enchantment {
      */
     @SneakyThrows
     public static void setupEnchantments() {
-        Refl<Class<Enchantment>> enchantmentClass = new Refl<>(Enchantment.class);
-        Map<Integer, Enchantment> byId = enchantmentClass.getFieldObject("byId");
-        Map<String, Enchantment> byName = enchantmentClass.getFieldObject("byName");
-        byId.clear();
+        Map<Integer, Enchantment> byKey = getByIdMap();
+        Map<String, Enchantment> byName = getByNameMap();
+        byKey.clear();
         byName.clear();
-        for (Field field : enchantmentClass.getStaticFields())
-            if (field.getType().equals(Enchantment.class)) {
-                Enchantment enchantment = (Enchantment) ReflectionUtils.setAccessibleOrThrow(field)
-                        .get(Enchantment.class);
-                MockEnchantment mock = new MockEnchantment(enchantment);
-                field.set(Enchantment.class, mock);
-                byId.put(mock.getId(), enchantment);
-                byName.put(mock.getName(), enchantment);
-            }
+        Refl<Class<MockEnchantment>> mockEnchantmentClass = new Refl<>(MockEnchantment.class);
+        for (Field field : mockEnchantmentClass.getFields(f -> Modifier.isStatic(f.getModifiers()) &&
+                f.getType().equals(MockEnchantment.class))) {
+            MockEnchantment enchantment = mockEnchantmentClass.getFieldObject(field);
+            byKey.put(enchantment.getId(), enchantment);
+            byName.put(enchantment.getName(), enchantment);
+        }
+        // Protection
+        MockEnchantment.PROTECTION_ENVIRONMENTAL.conflictsWith(MockEnchantment.PROTECTION_FIRE, MockEnchantment.PROTECTION_EXPLOSIONS, MockEnchantment.PROTECTION_PROJECTILE);
+        MockEnchantment.PROTECTION_FIRE.conflictsWith(MockEnchantment.PROTECTION_ENVIRONMENTAL, MockEnchantment.PROTECTION_EXPLOSIONS, MockEnchantment.PROTECTION_PROJECTILE);
+        MockEnchantment.PROTECTION_EXPLOSIONS.conflictsWith(MockEnchantment.PROTECTION_FIRE, MockEnchantment.PROTECTION_ENVIRONMENTAL, MockEnchantment.PROTECTION_PROJECTILE);
+        MockEnchantment.PROTECTION_PROJECTILE.conflictsWith(MockEnchantment.PROTECTION_FIRE, MockEnchantment.PROTECTION_EXPLOSIONS, MockEnchantment.PROTECTION_ENVIRONMENTAL);
+        // Sharpness
+        MockEnchantment.DAMAGE_ALL.conflictsWith(MockEnchantment.DAMAGE_UNDEAD, MockEnchantment.DAMAGE_ARTHROPODS);
+        MockEnchantment.DAMAGE_UNDEAD.conflictsWith(MockEnchantment.DAMAGE_ALL, MockEnchantment.DAMAGE_ARTHROPODS);
+        MockEnchantment.DAMAGE_ARTHROPODS.conflictsWith(MockEnchantment.DAMAGE_UNDEAD, MockEnchantment.DAMAGE_ALL);
+        // Fortune
+        MockEnchantment.LOOT_BONUS_BLOCKS.conflictsWith(MockEnchantment.SILK_TOUCH);
+        MockEnchantment.SILK_TOUCH.conflictsWith(MockEnchantment.LOOT_BONUS_BLOCKS);
     }
 
 }
