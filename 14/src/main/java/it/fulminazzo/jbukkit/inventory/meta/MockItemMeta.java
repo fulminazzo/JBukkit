@@ -58,6 +58,11 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     }
 
     @Override
+    public @NotNull String getDisplayName() {
+        return this.displayName == null ? "" : this.displayName;
+    }
+
+    @Override
     public boolean hasDamage() {
         return this.damage > 0;
     }
