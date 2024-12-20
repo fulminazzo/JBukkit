@@ -149,8 +149,6 @@ public class BukkitUtils {
         if (setupRegistries) RegistryUtils.setupRegistries();
         // Potions
         setupPotionEffectTypes();
-        // Enchantments
-        setupEnchantments();
     }
 
     /**
