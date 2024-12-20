@@ -21,8 +21,10 @@ public class MockInventoryView extends InventoryView {
      *
      * @param topInventory the inventory displayed
      * @param player       the player viewing it
+     * @param title        the title
      */
-    public MockInventoryView(final @Nullable Inventory topInventory, final @NotNull Player player) {
+    public MockInventoryView(final @Nullable Inventory topInventory, final @NotNull Player player,
+                             final @NotNull String title) {
         this.topInventory = topInventory;
         this.player = player;
     }
