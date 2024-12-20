@@ -1,16 +1,49 @@
 package it.fulminazzo.jbukkit;
 
 import it.fulminazzo.fulmicollection.objects.Printable;
+import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.lang.reflect.Field;
+import java.util.Objects;
 
 /**
  * A class used to compare two objects field by field.
  */
 @NoArgsConstructor
 public class Equable extends Printable {
+
+    /**
+     * Simulates the comparison of the current object with <code>null</code>.
+     *
+     * @return true only if every field is "empty".
+     * More specifically, a field is empty only if:
+     * <ul>
+     *     <li>is a primitive type and {@link #checkPrimitive(Class, Object)} returns <code>true</code>;</li>
+     *     <li>is null;</li>
+     *     <li>is not null, has the method <code>boolean isEmpty</code> and when invoked it returns <code>true</code>.</li>
+     * </ul>
+     */
+    protected boolean compareNull() {
+        Refl<?> refl = new Refl<>(this);
+        for (final Field field : refl.getNonStaticFields()) {
+            final Class<?> type = field.getType();
+            final Object obj = refl.getFieldObject(field);
+            if (obj == null) continue;
+            if (checkPrimitive(type, obj)) continue;
+            Refl<?> objRefl = new Refl<>(obj);
+            try {
+                if (!((boolean) Objects.requireNonNull(objRefl.invokeMethod(boolean.class, "isEmpty"))))
+                    return false;
+            } catch (IllegalArgumentException e) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Verifies that the given object is of primitive type.
