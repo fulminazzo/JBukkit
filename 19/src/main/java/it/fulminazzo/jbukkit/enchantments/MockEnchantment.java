@@ -69,18 +69,6 @@ public class MockEnchantment extends Enchantment {
 
     /**
      * Instantiates a new Mock enchantment.
-     * It will copy each value from the given enchantment.
-     *
-     * @param enchantment the enchantment
-     */
-    public MockEnchantment(final @NotNull Enchantment enchantment) {
-        this(enchantment.getKey(), enchantment.getName(), enchantment.getStartLevel(),
-                enchantment.getMaxLevel(), enchantment.getItemTarget());
-        setTreasure(enchantment.isTreasure()).setCursed(enchantment.isCursed());
-    }
-
-    /**
-     * Instantiates a new Mock enchantment.
      *
      * @param name       the name
      * @param startLevel the start level
