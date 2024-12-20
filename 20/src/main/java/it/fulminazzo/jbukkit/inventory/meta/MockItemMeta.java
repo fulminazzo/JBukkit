@@ -2,6 +2,7 @@ package it.fulminazzo.jbukkit.inventory.meta;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import it.fulminazzo.jbukkit.Equable;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
 import it.fulminazzo.jbukkit.persistence.MockPersistentDataContainer;
@@ -29,7 +30,7 @@ import java.util.*;
  */
 @Getter
 @Setter
-public class MockItemMeta implements ItemMeta {
+public class MockItemMeta extends Equable implements ItemMeta {
     private String displayName;
     private String localizedName;
     private String itemName;
