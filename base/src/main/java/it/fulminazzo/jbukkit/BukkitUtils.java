@@ -2,11 +2,13 @@ package it.fulminazzo.jbukkit;
 
 import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.ReflectionUtils;
+import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.annotations.After1_;
 import it.fulminazzo.jbukkit.annotations.Before1_;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
 import it.fulminazzo.jbukkit.inventory.MockInventory;
 import it.fulminazzo.jbukkit.inventory.MockItemFactory;
+import it.fulminazzo.jbukkit.potion.MockPotionEffectType;
 import it.fulminazzo.jbukkit.utils.RegistryUtils;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -15,16 +17,20 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.ArgumentMatchers.*;
@@ -149,6 +155,40 @@ public class BukkitUtils {
      */
     public static void setupEnchantments() {
         MockEnchantment.setupEnchantments();
+    }
+
+    /**
+     * Initializes the potion effect types located at {@link PotionEffectType}.
+     */
+    public static void setupPotionEffectTypes() {
+        Refl<?> potionEffectType = new Refl<>(PotionEffectType.class);
+        @NotNull List<Field> potionFields = potionEffectType.getStaticFields().stream()
+                .filter(f -> PotionEffectType.class.isAssignableFrom(f.getType()))
+                .collect(Collectors.toList());
+        List<PotionEffectType> potions = new LinkedList<>();
+        for (int i = 0; i < potionFields.size(); i++)
+            try {
+                potions.add(new MockPotionEffectType(i + 1, StringUtils.capitalize(potionFields.get(i).getName())));
+            } catch (NoSuchMethodError e) {
+                return;
+            }
+        setPotionEffectTypesInMap(potions, "byName", PotionEffectType::getName);
+        setPotionEffectTypesInMap(potions, "byKey", p -> new Refl<>(p).invokeMethod("getKey"));
+        try {
+            PotionEffectType[] byId = potionEffectType.getFieldObject("byId");
+            if (byId != null)
+                for (int i = 0; i < potions.size(); i++) byId[i] = potions.get(i);
+        } catch (IllegalArgumentException ignored) {}
+    }
+
+    private static <T> void setPotionEffectTypesInMap(final @NotNull List<PotionEffectType> potions,
+                                                      final @NotNull String mapName,
+                                                      final @NotNull Function<PotionEffectType, T> conversionFunction) {
+        try {
+            Refl<?> potionEffectType = new Refl<>(PotionEffectType.class);
+            Map<T, PotionEffectType> map = potionEffectType.getFieldObject(mapName);
+            if (map != null) potions.forEach(p -> map.put(conversionFunction.apply(p), p));
+        } catch (IllegalArgumentException ignored) {}
     }
 
     /**
