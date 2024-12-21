@@ -46,18 +46,19 @@ public class Equable extends Printable {
             else if (obj instanceof Equable)
                 if (((Equable) obj).compareNull()) continue;
                 else return false;
-            Refl<?> objRefl = new Refl<>(obj);
-            try {
-                if (((boolean) Objects.requireNonNull(objRefl.invokeMethod(boolean.class, "isEmpty"))))
-                    continue;
-                else return false;
-            } catch (IllegalArgumentException ignored) {}
-            if (field.getType().isArray()) {
+            else if (field.getType().isArray()) {
                 for (int i = 0; i < Array.getLength(obj); i ++) {
                     Object arrayElement = Array.get(obj, i);
                     if (!compareNull(arrayElement)) return false;
                 }
                 continue;
+            } else {
+                Refl<?> objRefl = new Refl<>(obj);
+                try {
+                    if (((boolean) Objects.requireNonNull(objRefl.invokeMethod(boolean.class, "isEmpty"))))
+                        continue;
+                    else return false;
+                } catch (IllegalArgumentException ignored) {}
             }
             return compareNull(obj);
         }
