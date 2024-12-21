@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
@@ -50,6 +51,13 @@ public class Equable extends Printable {
                 if (((boolean) Objects.requireNonNull(objRefl.invokeMethod(boolean.class, "isEmpty"))))
                     continue;
             } catch (IllegalArgumentException ignored) {}
+            if (field.getType().isArray()) {
+                for (int i = 0; i < Array.getLength(obj); i ++) {
+                    Object arrayElement = Array.get(obj, i);
+                    if (!compareNull(arrayElement)) return false;
+                }
+                continue;
+            }
             return compareNull(obj);
         }
         return true;
