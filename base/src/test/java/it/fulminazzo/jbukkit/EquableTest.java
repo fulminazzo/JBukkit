@@ -1,12 +1,15 @@
 package it.fulminazzo.jbukkit;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.*;
+import java.util.function.Consumer;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EquableTest {
 
@@ -14,6 +17,41 @@ class EquableTest {
     void testCompareNull() {
         assertTrue(new MockClass().compareNull(),
                 "When comparing with null should return true");
+    }
+
+    private static Object[] getCompareNotNullConsumers() {
+        return new Consumer[] {
+                m -> ((MockClass) m).i = 1,
+                m -> ((MockClass) m).d = 1,
+                m -> ((MockClass) m).f = 1,
+                m -> ((MockClass) m).l = 1,
+                m -> ((MockClass) m).b = true,
+                m -> ((MockClass) m).s = 1,
+                m -> ((MockClass) m).b1 = 1,
+                m -> ((MockClass) m).c = 1,
+                m -> ((MockClass) m).s1 = "Hello world",
+                m -> ((MockClass) m).l1.add("Hello world"),
+                m -> ((MockClass) m).s2.add("Hello world"),
+                m -> ((MockClass) m).c1.add("Hello world"),
+                m -> ((MockClass) m).m.put("Hello", 1),
+                m -> ((MockClass) m).m2.put("Hello", 1),
+                m -> ((MockClass) m).o1 = new Refl<>(String.class),
+                m -> ((MockClass) m).o2 = Integer.class,
+                m -> {
+                    MockClass mc = (MockClass) m;
+                    mc.f = 1;
+                    ((MockClass) m).o3 = mc;
+                },
+        };
+    }
+
+    @ParameterizedTest
+    @MethodSource("getCompareNotNullConsumers")
+    void testCompareNotNull(Consumer<MockClass> setter) {
+        MockClass mockClass = new MockClass();
+        setter.accept(mockClass);
+        assertFalse(mockClass.compareNull(),
+                "When comparing with null should not return true");
     }
 
     private static Object[][] getPrimitives() {
@@ -39,23 +77,23 @@ class EquableTest {
 
     @SuppressWarnings("unused")
     static class MockClass extends Equable {
-        private int i;
-        private double d;
-        private float f;
-        private long l;
-        private boolean b;
-        private short s;
-        private byte b1;
-        private char c;
-        private String s1;
-        private final List<String> l1 = new ArrayList<>();
-        private Set<String> s2;
-        private final Collection<String> c1 = new ArrayList<>();
-        private final Map<String, Integer> m = new HashMap<>();
-        private Map<String, Integer> m2;
-        private Object o1;
-        private Object o2;
-        private MockClass o3;
+        int i;
+        double d;
+        float f;
+        long l;
+        boolean b;
+        short s;
+        byte b1;
+        char c;
+        String s1;
+        final List<String> l1 = new ArrayList<>();
+        Set<String> s2;
+        final Collection<String> c1 = new ArrayList<>();
+        final Map<String, Integer> m = new HashMap<>();
+        Map<String, Integer> m2;
+        Object o1;
+        Object o2;
+        MockClass o3;
     }
 
 }
