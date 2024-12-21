@@ -60,6 +60,7 @@ public class Equable extends Printable {
      * @return true if it is
      */
     static boolean checkPrimitive(final @NotNull Class<?> type, final @NotNull Object object) {
+        if (type.equals(String.class)) return false;
         if (!ReflectionUtils.isPrimitive(type)) return false;
         if (type.equals(boolean.class)) return !((boolean) object);
         else if (type.equals(byte.class)) return ((byte) object) == 0;
