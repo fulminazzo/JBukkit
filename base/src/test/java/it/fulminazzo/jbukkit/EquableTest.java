@@ -31,10 +31,18 @@ class EquableTest {
                 m -> ((MockClass) m).c = 1,
                 m -> ((MockClass) m).s1 = "Hello world",
                 m -> ((MockClass) m).l1.add("Hello world"),
-                m -> ((MockClass) m).s2.add("Hello world"),
+                m -> {
+                    MockClass mc = (MockClass) m;
+                    mc.s2 = new HashSet<>();
+                    mc.s2.add("Hello world");
+                },
                 m -> ((MockClass) m).c1.add("Hello world"),
                 m -> ((MockClass) m).m.put("Hello", 1),
-                m -> ((MockClass) m).m2.put("Hello", 1),
+                m -> {
+                    MockClass mc = (MockClass) m;
+                    mc.m2 = new HashMap<>();
+                    mc.m2.put("Hello", 1);
+                },
                 m -> ((MockClass) m).o1 = new Refl<>(String.class),
                 m -> ((MockClass) m).o2 = Integer.class,
                 m -> {
