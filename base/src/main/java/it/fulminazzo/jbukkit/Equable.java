@@ -40,6 +40,7 @@ public class Equable extends Printable {
             final Class<?> type = field.getType();
             final Object obj = refl.getFieldObject(field);
             if (obj == null) continue;
+            else if (type.isAssignableFrom(Class.class)) return false;
             else if (ReflectionUtils.isPrimitive(type))
                 if (checkPrimitive(type, obj)) continue;
                 else return false;
