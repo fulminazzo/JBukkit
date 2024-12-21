@@ -50,6 +50,7 @@ public class Equable extends Printable {
             try {
                 if (((boolean) Objects.requireNonNull(objRefl.invokeMethod(boolean.class, "isEmpty"))))
                     continue;
+                else return false;
             } catch (IllegalArgumentException ignored) {}
             if (field.getType().isArray()) {
                 for (int i = 0; i < Array.getLength(obj); i ++) {
