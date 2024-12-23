@@ -26,6 +26,7 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     private PotionData basePotionData;
     private PotionType basePotionType;
     private Color color;
+    private String customName;
 
     /**
      * Instantiates a new Mock potion meta.
@@ -37,6 +38,11 @@ public class MockPotionMeta extends MockItemMeta implements PotionMeta {
     @Override
     public boolean hasColor() {
         return this.color != null;
+    }
+
+    @Override
+    public boolean hasCustomName() {
+        return this.customName != null;
     }
 
     public boolean setMainEffect(@NotNull PotionEffectType mainEffect) {
