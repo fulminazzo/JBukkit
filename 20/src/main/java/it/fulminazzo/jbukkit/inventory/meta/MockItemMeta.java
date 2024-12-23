@@ -40,10 +40,10 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     private final Set<ItemFlag> itemFlags;
     private boolean unbreakable;
     private int damage;
-    private Integer maxDamage;
     private boolean hideTooltip;
     private boolean fireResistant;
     private Boolean enchantmentGlintOverride;
+    private Integer maxDamage;
     private Integer maxStackSize;
     private Integer customModelData;
     private ItemRarity rarity;
