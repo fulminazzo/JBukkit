@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.mockito.Mockito.mock;
@@ -51,6 +52,13 @@ public class TypeRegistry<T extends Keyed> implements Registry<T> {
                 return blockType;
             }
         } else return null;
+    }
+
+    @Override
+    public @NotNull T getOrThrow(@NotNull NamespacedKey namespacedKey) {
+        return Optional.ofNullable(get(namespacedKey)).orElseThrow(() ->
+                new IllegalArgumentException(String.format("Could not find %s with key: %s",
+                        this.type.getSimpleName(), namespacedKey)));
     }
 
     @Override

@@ -10,10 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -43,6 +40,13 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
     public @Nullable T get(final @NotNull NamespacedKey key) {
         checkInternalMap();
         return this.internalMap.get(key);
+    }
+
+    @Override
+    public @NotNull T getOrThrow(@NotNull NamespacedKey namespacedKey) {
+        return Optional.ofNullable(get(namespacedKey)).orElseThrow(() ->
+                new IllegalArgumentException(String.format("Could not find %s with key: %s",
+                        this.clazz.getSimpleName(), namespacedKey)));
     }
 
     @Override
