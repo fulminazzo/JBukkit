@@ -1,4 +1,4 @@
 dependencies {
-    compileOnly "org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT"
-    testImplementation "org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT"
+    compileOnly libs.spigot.v16
+    testImplementation libs.spigot.v16
 }
