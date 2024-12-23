@@ -18,12 +18,12 @@ public class MockUnsafeValues implements UnsafeValues {
 
     @Override
     public Material toLegacy(Material material) {
-        return Material.getMaterial(LEGACY_PREFIX + material.name());
+        return Material.valueOf(LEGACY_PREFIX + material.name());
     }
 
     @Override
     public Material fromLegacy(Material material) {
-        return Material.getMaterial(material.name().substring(LEGACY_PREFIX.length()));
+        return Material.valueOf(material.name().substring(LEGACY_PREFIX.length()));
     }
 
     @Override
