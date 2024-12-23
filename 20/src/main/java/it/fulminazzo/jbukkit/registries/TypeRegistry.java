@@ -1,9 +1,13 @@
 package it.fulminazzo.jbukkit.registries;
 
+import it.fulminazzo.fulmicollection.objects.Refl;
+import it.fulminazzo.jbukkit.types.MockItemType;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
+import org.bukkit.block.BlockType;
+import org.bukkit.inventory.ItemType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,10 +20,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * A registry helper for {@link org.bukkit.block.BlockType} and {@link org.bukkit.inventory.ItemType}.
+ * A registry helper for {@link BlockType} and {@link ItemType}.
  *
  * @param <T> the type of the objects
  */
+@SuppressWarnings("UnstableApiUsage")
 public class TypeRegistry<T extends Keyed> implements Registry<T> {
     private final Class<T> type;
 
@@ -35,9 +40,16 @@ public class TypeRegistry<T extends Keyed> implements Registry<T> {
     @Override
     public @Nullable T get(@NotNull NamespacedKey key) {
         if (Arrays.stream(this.type.getFields()).anyMatch(f -> f.getName().equalsIgnoreCase(key.getKey()))) {
-            T blockType = mock(this.type);
-            when(blockType.getKey()).thenReturn(key);
-            return blockType;
+            if (this.type.isAssignableFrom(ItemType.class) || this.type.isAssignableFrom(BlockType.class)) {
+                return new Refl<T>(MockItemType.class.getPackage().getName() +
+                        ".Mock" + this.type.getSimpleName() +
+                        ".MockTyped",
+                        key).getObject();
+            } else {
+                T blockType = mock(this.type);
+                when(blockType.getKey()).thenReturn(key);
+                return blockType;
+            }
         } else return null;
     }
 
