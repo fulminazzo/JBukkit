@@ -61,6 +61,11 @@ public class MockFireworkMeta extends MockItemMeta implements FireworkMeta {
     }
 
     @Override
+    public boolean hasPower() {
+        return this.power > 0;
+    }
+
+    @Override
     public MockFireworkMeta clone() {
         return (MockFireworkMeta) super.clone();
     }
