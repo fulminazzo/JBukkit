@@ -1,61 +1,51 @@
 package it.fulminazzo.jbukkit.registries;
 
 import org.bukkit.Keyed;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Stream;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 /**
- * Represents a registry where elements can be manually added.
- * Used mainly for {@link org.bukkit.inventory.ItemType} and {@link org.bukkit.block.BlockType}.
+ * A registry helper for {@link org.bukkit.block.BlockType} and {@link org.bukkit.inventory.ItemType}.
  *
- * @param <T> the type parameter
+ * @param <T> the type of the objects
  */
 public class TypeRegistry<T extends Keyed> implements Registry<T> {
-    private final Set<T> contents;
+    private final Class<T> type;
 
     /**
      * Instantiates a new Type registry.
-     */
-    public TypeRegistry() {
-        this.contents = new HashSet<>();
-    }
-
-    /**
-     * Adds to the internal contents list.
      *
-     * @param t the element
+     * @param type the type of the objects
      */
-    public void add(final @NotNull T t) {
-        this.contents.add(t);
-    }
-
-    /**
-     * Removes from the internal contents list.
-     *
-     * @param t the element
-     */
-    public void remove(final @NotNull T t) {
-        this.contents.remove(Objects.requireNonNull(t));
+    public TypeRegistry(final @NotNull Class<T> type) {
+        this.type = Objects.requireNonNull(type);
     }
 
     @Override
-    public @Nullable T get(final @NotNull NamespacedKey key) {
-        return this.contents.stream()
-                .filter(t -> t.getKey().equals(key))
-                .findFirst().orElse(null);
+    public @Nullable T get(@NotNull NamespacedKey key) {
+        if (Arrays.stream(this.type.getFields()).anyMatch(f -> f.getName().equalsIgnoreCase(key.getKey()))) {
+            T blockType = mock(this.type);
+            when(blockType.getKey()).thenReturn(key);
+            return blockType;
+        } else return null;
     }
 
     @Override
     public @NotNull Stream<T> stream() {
-        return this.contents.stream();
+        return Arrays.stream(Material.values())
+                .map(m -> get(NamespacedKey.minecraft(m.name().toLowerCase())))
+                .filter(Objects::nonNull);
     }
 
     @Override
