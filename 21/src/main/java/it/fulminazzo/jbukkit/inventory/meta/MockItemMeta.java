@@ -9,16 +9,19 @@ import it.fulminazzo.jbukkit.persistence.MockPersistentDataContainer;
 import it.fulminazzo.yagl.utils.ObjectUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Tag;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.damage.DamageType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.FoodComponent;
-import org.bukkit.inventory.meta.components.ToolComponent;
+import org.bukkit.inventory.meta.components.*;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -40,15 +43,25 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     private final Set<ItemFlag> itemFlags;
     private boolean unbreakable;
     private int damage;
-    private Integer maxDamage;
     private boolean hideTooltip;
     private boolean fireResistant;
+    private boolean glider;
     private Boolean enchantmentGlintOverride;
+    private Integer enchantable;
+    private Integer maxDamage;
     private Integer maxStackSize;
     private Integer customModelData;
     private ItemRarity rarity;
+    private NamespacedKey itemModel;
+    private NamespacedKey tooltipStyle;
+    private ItemStack useRemainder;
+    private Tag<DamageType> damageResistant;
     private FoodComponent food;
     private ToolComponent tool;
+    private UseCooldownComponent useCooldown;
+    private EquippableComponent equippable;
+    private JukeboxPlayableComponent jukeboxPlayable;
+    private CustomModelDataComponent customModelDataComponent;
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
     private final MockCustomItemTagContainer customTagContainer;
     private final PersistentDataContainer persistentDataContainer;
@@ -127,6 +140,15 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     }
 
     @Override
+    public boolean hasEnchantable() {
+        return this.enchantable != null && this.enchantable != 0;
+    }
+
+    public int getEnchantable() {
+        return this.enchantable == null ? 0 : this.enchantable;
+    }
+
+    @Override
     public boolean hasEnchants() {
         return !this.enchants.isEmpty();
     }
@@ -179,8 +201,23 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     }
 
     @Override
+    public boolean hasTooltipStyle() {
+        return this.tooltipStyle != null;
+    }
+
+    @Override
+    public boolean hasItemModel() {
+        return this.itemModel != null;
+    }
+
+    @Override
     public boolean hasEnchantmentGlintOverride() {
         return this.enchantmentGlintOverride != null;
+    }
+
+    @Override
+    public boolean hasDamageResistant() {
+        return this.damageResistant != null;
     }
 
     @Override
@@ -198,6 +235,16 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     }
 
     @Override
+    public boolean hasUseRemainder() {
+        return this.useRemainder != null;
+    }
+
+    @Override
+    public boolean hasUseCooldown() {
+        return this.useCooldown != null;
+    }
+
+    @Override
     public boolean hasFood() {
         return this.food != null;
     }
@@ -205,6 +252,16 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     @Override
     public boolean hasTool() {
         return this.tool != null;
+    }
+
+    @Override
+    public boolean hasEquippable() {
+        return this.equippable != null;
+    }
+
+    @Override
+    public boolean hasJukeboxPlayable() {
+        return this.jukeboxPlayable != null;
     }
 
     @Override
