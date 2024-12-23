@@ -99,8 +99,7 @@ public final class RegistryUtils {
         Class<?> enclosingClass = clazz.getEnclosingClass();
         if (enclosingClass != null) clazzName = enclosingClass.getSimpleName() + clazzName;
         clazzName = FIELD_BY_CLASS_NAME.getOrDefault(clazzName, clazzName);
-        if (clazz.equals(BlockType.class)) return new TypeRegistry<>();
-        else if (clazz.equals(ItemType.class)) return new TypeRegistry<>();
+        if (clazz.equals(BlockType.class) || clazz.equals(ItemType.class)) return new TypeRegistry<>(clazz);
         // Field registries
         Object converterFunction = FIELDS_CLASSES.get(clazzName);
         if (converterFunction != null)
