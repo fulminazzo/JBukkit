@@ -149,7 +149,7 @@ public class MockUnsafeValues implements UnsafeValues {
 
     @Override
     public <B extends Keyed> B get(Registry<B> registry, NamespacedKey key) {
-        throw new NotImplementedException();
+        return registry.get(key);
     }
 
     @Override
