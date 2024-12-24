@@ -39,7 +39,7 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
     @Override
     public @Nullable T get(final @NotNull NamespacedKey key) {
         checkInternalMap();
-        return this.internalMap.get(key);
+        return this.internalMap.get(NamespacedKey.minecraft(key.getKey().replace(".", "_")));
     }
 
     @Override

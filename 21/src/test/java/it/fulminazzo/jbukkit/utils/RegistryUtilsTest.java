@@ -100,4 +100,10 @@ class RegistryUtilsTest {
         assertNotNull(MenuType.GENERIC_3X3);
     }
 
+    @Test
+    void testSound() {
+        BukkitUtils.setupServer();
+        assertNotNull(Sound.AMBIENT_BASALT_DELTAS_ADDITIONS);
+    }
+
 }
