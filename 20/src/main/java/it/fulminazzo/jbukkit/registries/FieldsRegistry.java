@@ -59,7 +59,7 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
     private void checkInternalMap() {
         if (this.internalMap.isEmpty()) {
             Refl<?> refl = new Refl<>(Objects.requireNonNull(this.clazz));
-            for (final Field field : refl.getFields(f -> Modifier.isStatic(f.getModifiers()) && f.getType().isAssignableFrom(this.clazz)))
+            for (final Field field : refl.getFields(f -> Modifier.isStatic(f.getModifiers()) && this.clazz.isAssignableFrom(f.getType())))
                 try {
                     NamespacedKey k = NamespacedKey.minecraft(field.getName().toLowerCase());
                     this.internalMap.put(k, this.conversionFunction.apply(k));
