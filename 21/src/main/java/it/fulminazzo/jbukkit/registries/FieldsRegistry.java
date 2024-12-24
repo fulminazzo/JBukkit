@@ -1,6 +1,6 @@
 package it.fulminazzo.jbukkit.registries;
 
-import it.fulminazzo.fulmicollection.interfaces.functions.FunctionException;
+import it.fulminazzo.fulmicollection.interfaces.functions.BiFunctionException;
 import it.fulminazzo.fulmicollection.objects.Refl;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 public class FieldsRegistry<T extends Keyed> implements Registry<T> {
     private final @NotNull Map<NamespacedKey, T> internalMap;
     private final @NotNull Class<T> clazz;
-    private final @NotNull FunctionException<NamespacedKey, T> conversionFunction;
+    private final @NotNull BiFunctionException<Class<T>, NamespacedKey, T> conversionFunction;
 
     /**
      * Instantiates a new Fields registry.
@@ -30,7 +30,7 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
      * @param conversionFunction a function to convert a {@link NamespacedKey} to the given type
      */
     public FieldsRegistry(final @NotNull Class<T> clazz,
-                          final @NotNull FunctionException<NamespacedKey, T> conversionFunction) {
+                          final @NotNull BiFunctionException<Class<T>, NamespacedKey, T> conversionFunction) {
         this.clazz = Objects.requireNonNull(clazz);
         this.conversionFunction = Objects.requireNonNull(conversionFunction);
         this.internalMap = new LinkedHashMap<>();
@@ -60,13 +60,14 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
         return stream().iterator();
     }
 
+    @SuppressWarnings("unchecked")
     private void checkInternalMap() {
         if (this.internalMap.isEmpty()) {
             Refl<?> refl = new Refl<>(Objects.requireNonNull(this.clazz));
             for (final Field field : refl.getFields(f -> Modifier.isStatic(f.getModifiers()) && this.clazz.isAssignableFrom(f.getType())))
                 try {
                     NamespacedKey k = NamespacedKey.minecraft(field.getName().toLowerCase());
-                    this.internalMap.put(k, this.conversionFunction.apply(k));
+                    this.internalMap.put(k, this.conversionFunction.apply((Class<T>) field.getType(), k));
                 } catch (Exception e) {
                     throw new RegistryException("Could not convert field " + field.getName(), e);
                 }

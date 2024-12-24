@@ -1,6 +1,6 @@
 package it.fulminazzo.jbukkit.utils;
 
-import it.fulminazzo.fulmicollection.interfaces.functions.FunctionException;
+import it.fulminazzo.fulmicollection.interfaces.functions.BiFunctionException;
 import it.fulminazzo.fulmicollection.objects.Refl;
 import it.fulminazzo.fulmicollection.utils.StringUtils;
 import it.fulminazzo.jbukkit.enchantments.MockEnchantment;
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
 public final class RegistryUtils {
     private static final Map<String, String> FIELD_BY_CLASS_NAME = new HashMap<>();
     // Represents classes with static fields in them.
-    private static final Map<String, FunctionException<NamespacedKey, Object>> FIELDS_CLASSES = new HashMap<>();
+    private static final Map<String, BiFunctionException<Class<Object>, NamespacedKey, Object>> FIELDS_CLASSES = new HashMap<>();
 
     static {
         FIELD_BY_CLASS_NAME.put("PatternType", "BannerPattern");
@@ -48,18 +48,18 @@ public final class RegistryUtils {
         FIELD_BY_CLASS_NAME.put("KeyedBossBar", "BossBars");
         FIELD_BY_CLASS_NAME.put("MemoryKey", "MemoryModuleType");
 
-        FIELDS_CLASSES.put("GameEvent", k -> mockKeyed(GameEvent.class, k));
-        FIELDS_CLASSES.put("WolfVariant", k -> mockKeyed(Wolf.Variant.class, k));
-        FIELDS_CLASSES.put("DamageType", k -> mockKeyed(DamageType.class, k));
-        FIELDS_CLASSES.put("TrimPattern", k -> mockKeyed(TrimPattern.class, k));
-        FIELDS_CLASSES.put("TrimMaterial", k -> mockKeyed(TrimMaterial.class, k));
-        FIELDS_CLASSES.put("StructureType", k -> mockKeyed(StructureType.class, k));
-        FIELDS_CLASSES.put("Structure", k -> mockKeyed(Structure.class, k));
-        FIELDS_CLASSES.put("MusicInstrument", k -> mockKeyed(MusicInstrument.class, k));
+        FIELDS_CLASSES.put("GameEvent", (c, k) -> mockKeyed(GameEvent.class, k));
+        FIELDS_CLASSES.put("WolfVariant", (c, k) -> mockKeyed(Wolf.Variant.class, k));
+        FIELDS_CLASSES.put("DamageType", (c, k) -> mockKeyed(DamageType.class, k));
+        FIELDS_CLASSES.put("TrimPattern", (c, k) -> mockKeyed(TrimPattern.class, k));
+        FIELDS_CLASSES.put("TrimMaterial", (c, k) -> mockKeyed(TrimMaterial.class, k));
+        FIELDS_CLASSES.put("StructureType", (c, k) -> mockKeyed(StructureType.class, k));
+        FIELDS_CLASSES.put("Structure", (c, k) -> mockKeyed(Structure.class, k));
+        FIELDS_CLASSES.put("MusicInstrument", (c, k) -> mockKeyed(MusicInstrument.class, k));
         // Necessary to avoid compilation conflicts.
-        FIELDS_CLASSES.put("PotionEffectType", k ->
+        FIELDS_CLASSES.put("PotionEffectType", (c, k) ->
                 new Refl<>(MockPotionEffectType.class).invokeMethod("getVanillaPotionEffectType", k));
-        FIELDS_CLASSES.put("Enchantment", k ->
+        FIELDS_CLASSES.put("Enchantment", (c, k) ->
                 new Refl<>(MockEnchantment.class).invokeMethod("getVanillaEnchantment", k));
     }
 
@@ -103,7 +103,7 @@ public final class RegistryUtils {
         // Field registries
         Object converterFunction = FIELDS_CLASSES.get(clazzName);
         if (converterFunction != null)
-            return new FieldsRegistry<>(clazz, (FunctionException<NamespacedKey, T>) converterFunction);
+            return new FieldsRegistry<>(clazz, (BiFunctionException<Class<T>, NamespacedKey, T>) converterFunction);
         // Default case, registry already initialized.
         clazzName = StringUtils.decapitalize(clazzName);
         Registry<T> registry = new Refl<>(Registry.class).getFieldObject(clazzName);

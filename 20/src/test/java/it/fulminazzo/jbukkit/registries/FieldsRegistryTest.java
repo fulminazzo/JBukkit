@@ -26,7 +26,7 @@ class FieldsRegistryTest {
         Server server = mock(Server.class);
         new Refl<>(Bukkit.class).setFieldObject("server", server);
         when(server.getRegistry(any())).thenAnswer(a -> mock(Registry.class));
-        this.registry = new FieldsRegistry<>(MockClass.class, MockClass::new);
+        this.registry = new FieldsRegistry<>(MockClass.class, (c, k) -> new MockClass(k));
     }
 
     private static Object[][] getParameters() {
