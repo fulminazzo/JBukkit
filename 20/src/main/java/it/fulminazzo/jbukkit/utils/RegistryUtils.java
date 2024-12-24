@@ -124,6 +124,11 @@ public final class RegistryUtils {
                                                 final @NotNull NamespacedKey key) {
         T t = mock(clazz);
         when(t.getKey()).thenReturn(key);
+        try {
+            when(new Refl<>(t).invokeMethod(String.class, "name")).thenReturn(key.getKey().toUpperCase());
+        } catch (IllegalArgumentException ignored) {
+            // Object does not have name() method
+        }
         return t;
     }
 
