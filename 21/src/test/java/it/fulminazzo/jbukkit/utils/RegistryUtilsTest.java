@@ -104,6 +104,7 @@ class RegistryUtilsTest {
     void testSound() {
         BukkitUtils.setupServer();
         assertNotNull(Sound.AMBIENT_BASALT_DELTAS_ADDITIONS);
+        assertEquals("AMBIENT_BASALT_DELTAS_ADDITIONS", Sound.AMBIENT_BASALT_DELTAS_ADDITIONS.name());
     }
 
 }
