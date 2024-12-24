@@ -15,17 +15,20 @@ import org.bukkit.entity.*;
 import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.generator.structure.StructureType;
+import org.bukkit.inventory.MenuType;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.loot.LootTables;
 import org.bukkit.map.MapCursor;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SuppressWarnings("UnstableApiUsage")
 class RegistryUtilsTest {
 
     private static Object[][] getRegistries() {
@@ -89,6 +92,12 @@ class RegistryUtilsTest {
         assertNotNull(registry, "Registry " + registryName + " was not initialized");
         assertFalse(registry.getClass().getName().contains("MockitoMock"),
                 "Expected registry " + registryName + " to not be mock");
+    }
+
+    @Test
+    void testMenuType() {
+        BukkitUtils.setupServer();
+        assertNotNull(MenuType.GENERIC_3X3);
     }
 
 }
