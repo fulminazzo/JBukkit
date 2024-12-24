@@ -85,7 +85,7 @@ public class BukkitUtils {
      * Initializes the {@link Server} object returned by {@link Bukkit#getServer()}.
      */
     public static void setupServer() {
-        setupServer(numericalVersion >= 14);
+        setupServer(true);
     }
 
     /**
