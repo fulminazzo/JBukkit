@@ -56,7 +56,6 @@ allprojects {
         testCompileOnly libs.annotations
 
         api libs.fulmicollection
-        api libs.yagl.common
         implementation libs.mockito
 
         if (project.name != 'base') api project(':base')

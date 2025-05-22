@@ -2,7 +2,7 @@ package it.fulminazzo.jbukkit.inventory.meta;
 
 import it.fulminazzo.jbukkit.Equable;
 import it.fulminazzo.jbukkit.NotImplementedException;
-import it.fulminazzo.yagl.utils.ObjectUtils;
+import it.fulminazzo.fulmicollection.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

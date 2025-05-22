@@ -6,7 +6,7 @@ import it.fulminazzo.jbukkit.Equable;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
 import it.fulminazzo.jbukkit.persistence.MockPersistentDataContainer;
-import it.fulminazzo.yagl.utils.ObjectUtils;
+import it.fulminazzo.fulmicollection.utils.ObjectUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.NamespacedKey;

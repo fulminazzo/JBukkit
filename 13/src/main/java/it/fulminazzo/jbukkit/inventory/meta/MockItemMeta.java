@@ -5,7 +5,7 @@ import com.google.common.collect.Multimap;
 import it.fulminazzo.jbukkit.Equable;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
-import it.fulminazzo.yagl.utils.ObjectUtils;
+import it.fulminazzo.fulmicollection.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
