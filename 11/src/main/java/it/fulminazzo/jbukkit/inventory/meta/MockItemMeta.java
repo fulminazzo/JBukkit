@@ -2,6 +2,7 @@ package it.fulminazzo.jbukkit.inventory.meta;
 
 import it.fulminazzo.jbukkit.Equable;
 import it.fulminazzo.jbukkit.NotImplementedException;
+import it.fulminazzo.yagl.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -108,7 +109,7 @@ public class MockItemMeta extends Equable implements ItemMeta {
 
     @Override
     public ItemMeta clone() {
-        throw new NotImplementedException();
+        return ObjectUtils.copy(this, getClass());
     }
 
     @Override
