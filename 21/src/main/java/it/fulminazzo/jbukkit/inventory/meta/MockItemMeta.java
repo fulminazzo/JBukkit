@@ -22,6 +22,7 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.*;
+import org.bukkit.inventory.meta.components.consumable.ConsumableComponent;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
@@ -62,6 +63,7 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     private EquippableComponent equippable;
     private JukeboxPlayableComponent jukeboxPlayable;
     private CustomModelDataComponent customModelDataComponent;
+    private ConsumableComponent consumable;
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
     private final MockCustomItemTagContainer customTagContainer;
     private final PersistentDataContainer persistentDataContainer;
@@ -247,6 +249,11 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
     @Override
     public boolean hasFood() {
         return this.food != null;
+    }
+
+    @Override
+    public boolean hasConsumable() {
+        return this.consumable != null;
     }
 
     @Override
