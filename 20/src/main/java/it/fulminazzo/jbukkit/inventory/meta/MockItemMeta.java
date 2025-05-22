@@ -6,7 +6,6 @@ import it.fulminazzo.jbukkit.Equable;
 import it.fulminazzo.jbukkit.NotImplementedException;
 import it.fulminazzo.jbukkit.inventory.meta.tags.MockCustomItemTagContainer;
 import it.fulminazzo.jbukkit.persistence.MockPersistentDataContainer;
-import it.fulminazzo.yagl.utils.ObjectUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.attribute.Attribute;
@@ -283,7 +282,7 @@ public class MockItemMeta extends Equable implements ItemMeta, Damageable {
 
     @Override
     public @NotNull MockItemMeta clone() {
-        return ObjectUtils.copy(this, getClass());
+        throw new NotImplementedException();
     }
 
     @Override
