@@ -108,6 +108,7 @@ public class BukkitUtils {
                 }
                 return null;
             });
+        when(server.isPrimaryThread()).thenReturn(true);
         when(server.getRecipesFor(any())).thenAnswer(a -> RECIPES.stream()
                 .filter(r -> r.getResult().isSimilar(a.getArgument(0)))
                 .collect(Collectors.toList()));
@@ -255,6 +256,8 @@ public class BukkitUtils {
         Player player = mock(Player.class);
         when(player.getUniqueId()).thenReturn(uuid);
         when(player.getName()).thenReturn(name);
+        when(player.getDisplayName()).thenReturn(name);
+        when(player.getServer()).thenAnswer(a -> Bukkit.getServer());
         PLAYERS.add(player);
         return player;
     }
