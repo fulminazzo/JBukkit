@@ -221,7 +221,7 @@ public class MockInventory implements Inventory {
     }
 
     public @NotNull ItemStack[] getStorageContents() {
-        return new ItemStack[getStorageContentsSize()];
+        return Arrays.copyOfRange(this.contents, 0, getStorageContentsSize());
     }
 
     public void setStorageContents(@NotNull ItemStack[] items) throws IllegalArgumentException {
