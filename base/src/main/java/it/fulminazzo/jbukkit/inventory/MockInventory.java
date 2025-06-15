@@ -228,7 +228,7 @@ public class MockInventory implements Inventory {
         if (getStorageContentsSize() >= 0) System.arraycopy(items, 0, this.contents, 0, getStorageContentsSize());
     }
 
-    private int getStorageContentsSize() {
+    protected int getStorageContentsSize() {
         switch (this.type) {
             case ANVIL:
                 return 2;
