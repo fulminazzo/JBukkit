@@ -148,6 +148,11 @@ public class MockPlayerInventory extends MockInventory implements PlayerInventor
         setItem(getHeldItemSlot(), stack);
     }
 
+    @Override
+    protected int getStorageContentsSize() {
+        return 36;
+    }
+
     /**
      * Clear int.
      *
