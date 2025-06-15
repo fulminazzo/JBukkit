@@ -225,7 +225,7 @@ public class MockInventory implements Inventory {
     }
 
     public void setStorageContents(@NotNull ItemStack[] items) throws IllegalArgumentException {
-        setContents(items, 0, getStorageContentsSize());
+        if (getStorageContentsSize() >= 0) System.arraycopy(items, 0, this.contents, 0, getStorageContentsSize());
     }
 
     private int getStorageContentsSize() {
