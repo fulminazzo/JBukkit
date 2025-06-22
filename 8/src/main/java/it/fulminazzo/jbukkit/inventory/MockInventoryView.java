@@ -17,7 +17,6 @@ import static org.mockito.Mockito.when;
 public class MockInventoryView extends InventoryView {
     private final @Nullable Inventory topInventory;
     private final @NotNull Player player;
-    private final @NotNull String title;
 
     /**
      * Instantiates a new Mock inventory view.
@@ -30,7 +29,6 @@ public class MockInventoryView extends InventoryView {
                              final @NotNull String title) {
         this.topInventory = topInventory;
         this.player = player;
-        this.title = title;
         if (player.getClass().getCanonicalName().contains("MockitoMock"))
             when(player.getOpenInventory()).thenReturn(this);
     }
