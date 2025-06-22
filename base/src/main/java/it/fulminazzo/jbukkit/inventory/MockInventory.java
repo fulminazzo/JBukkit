@@ -24,7 +24,6 @@ import java.util.*;
 public class MockInventory implements Inventory {
     private final ItemStack[] contents;
     private final InventoryType type;
-    @Getter
     private String title;
     private int maxStackSize;
     private final List<HumanEntity> viewers;
