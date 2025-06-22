@@ -28,6 +28,7 @@ public class MockInventoryView extends InventoryView {
     public MockInventoryView(final @Nullable Inventory topInventory, final @NotNull Player player,
                              final @NotNull String title) {
         this.topInventory = topInventory;
+        if (this.topInventory instanceof MockInventory) ((MockInventory) this.topInventory).setTitle(title);
         this.player = player;
         if (player.getClass().getCanonicalName().contains("MockitoMock"))
             when(player.getOpenInventory()).thenReturn(this);
