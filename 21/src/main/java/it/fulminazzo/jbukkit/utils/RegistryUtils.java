@@ -35,7 +35,7 @@ import static org.mockito.Mockito.when;
 public final class RegistryUtils {
     private static final Map<String, String> FIELD_BY_CLASS_NAME = new HashMap<>();
     // Represents classes with static fields in them.
-    private static final Map<String, BiFunctionException<Class<Object>, NamespacedKey, Object>> FIELDS_CLASSES = new HashMap<>();
+    private static final Map<String, BiFunctionException<Class<Object>, NamespacedKey, Object, Exception>> FIELDS_CLASSES = new HashMap<>();
 
     static {
         FIELD_BY_CLASS_NAME.put("PatternType", "BannerPattern");
@@ -102,7 +102,7 @@ public final class RegistryUtils {
         // Default case, field registries
         Object converterFunction = FIELDS_CLASSES.computeIfAbsent(clazzName, c ->
                 (t, k) -> mockKeyed((Class<T>) (Object) t, k));
-        return new FieldsRegistry<>(clazz, (BiFunctionException<Class<T>, NamespacedKey, T>) converterFunction);
+        return new FieldsRegistry<>(clazz, (BiFunctionException<Class<T>, NamespacedKey, T, Exception>) converterFunction);
     }
 
     /**

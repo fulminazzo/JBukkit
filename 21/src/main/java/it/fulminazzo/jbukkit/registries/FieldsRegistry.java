@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 public class FieldsRegistry<T extends Keyed> implements Registry<T> {
     private final @NotNull Map<NamespacedKey, T> internalMap;
     private final @NotNull Class<T> clazz;
-    private final @NotNull BiFunctionException<Class<T>, NamespacedKey, T> conversionFunction;
+    private final @NotNull BiFunctionException<Class<T>, NamespacedKey, T, Exception> conversionFunction;
 
     /**
      * Instantiates a new Fields registry.
@@ -30,7 +30,7 @@ public class FieldsRegistry<T extends Keyed> implements Registry<T> {
      * @param conversionFunction a function to convert a {@link NamespacedKey} to the given type
      */
     public FieldsRegistry(final @NotNull Class<T> clazz,
-                          final @NotNull BiFunctionException<Class<T>, NamespacedKey, T> conversionFunction) {
+                          final @NotNull BiFunctionException<Class<T>, NamespacedKey, T, Exception> conversionFunction) {
         this.clazz = Objects.requireNonNull(clazz);
         this.conversionFunction = Objects.requireNonNull(conversionFunction);
         this.internalMap = new LinkedHashMap<>();
