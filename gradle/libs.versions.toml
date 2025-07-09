@@ -1,8 +1,7 @@
 [versions]
 delombok = "8.4"
 
-# Latest versions
-fulmicollection = "1.7.4"
+fulmicollection = "1.8.1"
 
 lombok = "1.18.32"
 annotations = "24.1.0"
