@@ -34,8 +34,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class BukkitUtils {
     private static final Logger LOGGER = Logger.getLogger("Bukkit");
@@ -97,7 +96,7 @@ public class BukkitUtils {
     public static void setupServer(boolean setupRegistries) {
         setupVersion();
 
-        PluginManager pluginManager = mock(PluginManager.class);
+        PluginManager pluginManager = (PluginManager) mock(MockPluginManager.class, withSettings().extraInterfaces(PluginManager.class));
 
         Server server = mock(Server.class);
         new Refl<>(Bukkit.class).setFieldObject("server", server);
