@@ -16,6 +16,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -95,9 +96,13 @@ public class BukkitUtils {
      */
     public static void setupServer(boolean setupRegistries) {
         setupVersion();
+
+        PluginManager pluginManager = mock(PluginManager.class);
+
         Server server = mock(Server.class);
         new Refl<>(Bukkit.class).setFieldObject("server", server);
 
+        when(server.getPluginManager()).thenReturn(pluginManager);
         if (Arrays.stream(server.getClass().getDeclaredMethods()).anyMatch(m -> m.getName().equals("getRecipe")))
             when(server.getRecipe(any())).thenAnswer(r -> {
                 Object key = r.getArgument(0);
