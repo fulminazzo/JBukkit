@@ -121,7 +121,7 @@ public class MockInventory implements Inventory {
                         break;
                     } else {
                         // More than a single stack!
-                        if (item.getAmount() > getMaxStackSize()) {
+                        if (item != null && item.getAmount() > getMaxStackSize()) {
                             ItemStack stack = item.clone();
                             stack.setAmount(getMaxStackSize());
                             this.setItem(firstFree, stack);
