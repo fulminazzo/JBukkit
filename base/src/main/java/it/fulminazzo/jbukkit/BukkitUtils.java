@@ -262,6 +262,7 @@ public class BukkitUtils {
         when(player.getName()).thenReturn(name);
         when(player.getDisplayName()).thenReturn(name);
         when(player.getServer()).thenAnswer(a -> Bukkit.getServer());
+        when(player.isOnline()).thenReturn(true);
         PLAYERS.add(player);
         return player;
     }
