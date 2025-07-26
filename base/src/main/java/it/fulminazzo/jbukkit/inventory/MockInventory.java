@@ -104,8 +104,8 @@ public class MockInventory implements Inventory {
     public @NotNull HashMap<Integer, ItemStack> addItem(final ItemStack @NotNull ... itemStacks) throws IllegalArgumentException {
         HashMap<Integer, ItemStack> leftover = new HashMap<>();
 
-        for (int i = 0; i < contents.length; i++) {
-            ItemStack item = contents[i];
+        for (int i = 0; i < itemStacks.length; i++) {
+            ItemStack item = itemStacks[i];
             while (true) {
                 // Do we already have a stack of it?
                 int firstPartial = this.firstPartial(item);
