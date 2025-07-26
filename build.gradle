@@ -145,4 +145,3 @@ tasks.register('cleanModules') {
 dependencies {
     subprojects.forEach { api project(it.path) }
 }
-
